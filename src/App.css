@@ -1,3 +1,9 @@
+@import '~antd/dist/antd.css';
+@import './resources/lib/css/slick-theme.min.css';
+@import './resources/lib/css/slick.min.css';
+@import './resources/css/Header.css';
+
+
 .App {
   text-align: center;
 }

@@ -1,5 +1,12 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+install npm
+install antd (ant design) : npm install antd
+install react-slick for carousel components : 
+    npm install react-slick --save
+    npm install slick-carousel --save
+
 ## Available Scripts
 
 In the project directory, you can run:

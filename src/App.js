@@ -1,15 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import ReactPlayer from 'react-player';
+import 'antd/dist/antd.css';
+import HeaderX from './pages/layout/HeaderX/HeaderX.js';
+import Content from './pages/Home/Content.js';
+import Footer from './pages/layout/Footer/Footer.js';
 
-function App() {
-  return (
-    <div className="App">
-     
-      
-    </div>
-  );
-}
+
+function App(){
+   
+      return (
+         <div>
+            <HeaderX/>
+           
+            <Content /> 
+            <Footer/>
+         </div>
+      );
+   }
 
 export default App;

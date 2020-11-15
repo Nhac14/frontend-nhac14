@@ -1,0 +1,72 @@
+Carousel {
+    z-index: 9;
+}
+
+.content-side{
+    background-color: #182434;
+    padding-top: 15px;;
+}
+
+.main-content .left-side ul {
+    display: inline;
+}
+
+    .main-content .albums ul li{
+        display: inline;
+    }
+
+    .main-content .left-side ul li{
+        display: inline;
+    }
+
+        .main-content .left-side ul li h2{
+            display: inline;
+        }
+
+.list-album img{
+    width: 100%;
+}
+
+.relative{
+    position: relative;
+    
+}
+
+.col1{
+    width: 20%;
+    float: left;
+}
+
+.col2{
+    width: 75%;
+    
+}
+    .music-video-content p{
+        margin-bottom: 0px;
+        left: 0px;
+    }
+
+    .music-video-content img{
+        width: 100%;
+    }
+
+    .music-video-content .duration-video{
+        position: absolute;
+    }
+
+    .music-video-content .duration-video{
+        right: 0px;
+        bottom: 0px;
+        background-color: rgb(70, 68, 68);
+    }
+
+.new-release-music ul li{
+    clear: both;
+    display: table;
+}
+
+a{cursor: pointer;}
+
+.title-music-video ul li{
+    display: inline;
+}

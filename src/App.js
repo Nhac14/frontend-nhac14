@@ -3,8 +3,8 @@ import 'antd/dist/antd.css';
 import HeaderX from './pages/layout/HeaderX/HeaderX.js';
 import Content from './pages/Home/Content.js';
 import Footer from './pages/layout/Footer/Footer.js';
-import Login from './pages/layout/Login/Login.js';
-import Register from './pages/layout/Register/Register.js';
+import Register from './pages/Register/Register.js';
+import Login from './pages/Login/Login.js';
 
 function App(){
    
@@ -12,7 +12,7 @@ function App(){
          <div>
             <HeaderX/>
             <Register/>
-            {/* <Login/> */}
+            <Login/>
             {/* <Content />  */}
             <Footer/>
          </div>

@@ -1,6 +1,6 @@
-import Form from 'antd/lib/form/Form';
+import {Form} from 'antd';
 import React from 'react';
-import './Style_login.css';
+import './style.css';
 function Login() {
     return (
         <div className="container">

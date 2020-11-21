@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { Row, Col } from 'antd';
 import { FacebookOutlined, AppleOutlined, AndroidOutlined } from '@ant-design/icons';
 import './style.css';
 
-function FooterX() {
+function Footer() {
 
     return (
         <div className='wrapper'>
@@ -114,4 +115,4 @@ function FooterX() {
     )
 }
 
-export default FooterX;
+export default Footer;

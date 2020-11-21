@@ -1,4 +1,6 @@
-
+.wrapper{
+    background-color: #21324a;
+}
 .footer-top{
     clear: both;
 }
@@ -20,9 +22,14 @@
 .download-app{
     float: left;
 }
-    .download-app img{
-        float: left;
+    .download-app #download-option{
+        display: flex;
     }
+
+        .download-app #download-option div{
+            padding : 5px;
+            margin-top: 5px;
+        }
 .association{
     float: left;
     clear: right;
@@ -56,4 +63,9 @@
 
 a{
     cursor: pointer;
+}
+
+.color-white{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
 }

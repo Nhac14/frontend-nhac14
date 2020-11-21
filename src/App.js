@@ -10,11 +10,13 @@ function App(){
    
       return (
          <div>
-            <HeaderX/>
+            {/* <HeaderX/>
            
             <Content /> 
-            <FooterX/>
-            {/* <UserProfile></UserProfile> */}
+            <FooterX/> */}
+            <HeaderX></HeaderX>
+            <UserProfile></UserProfile>
+            <FooterX></FooterX>
          </div>
       );
    }

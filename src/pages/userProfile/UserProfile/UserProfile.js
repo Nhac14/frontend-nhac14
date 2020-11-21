@@ -1,7 +1,5 @@
 import React from 'react';
 import { Tabs, Row, Col, Button, Checkbox } from 'antd';
-import HeaderX from '../../layout/HeaderX/HeaderX.js';
-import FooterX from '../../layout/Footer/FooterX.js';
 import './style.scss';
 import { DeleteOutlined, PlusCircleOutlined, YoutubeOutlined, HeartOutlined, SendOutlined, ShareAltOutlined, DownloadOutlined } from '@ant-design/icons';
 class UserProfile extends React.Component {
@@ -32,7 +30,7 @@ class UserProfile extends React.Component {
 
         return (
             <div>
-                <HeaderX></HeaderX>
+                
                 <div class='content-side'>
                     <div class='brand-side'>
                         <img src='images/8732187.png' id='brand-img'></img>
@@ -41,8 +39,8 @@ class UserProfile extends React.Component {
                                 <img src="images/avatar-default.png" id='ava'></img>
                             </a>
                             <div class='profile-info'>
-                                <strong>tel_0906213612</strong>
-                                <p>Tài khoản miễn phí</p>
+                                <strong class="color-white">tel_0906213612</strong>
+                                <p class='color-wheat'>Tài khoản miễn phí</p>
                                 <div class='two-button'>
                                     <Button shape='round' type='primary'>Đăng ký Vip</Button>
                                     <Button shape='round' type='primary'>Thay ảnh nền</Button>
@@ -57,14 +55,14 @@ class UserProfile extends React.Component {
                             <Col xs={20} sm={16} md={12} lg={16} xl={16} >
                                 <div class='topic'>
                                     <Tabs defaultActiveKey="1" onChange={this.callback}>
-                                        <TabPane tab="NHẠC YÊU THÍCH" key="1">
+                                        <TabPane class='color-white' tab="NHẠC YÊU THÍCH" key="1">
                                             <Row gutter={24}>
                                                 <Col xs={18} sm={18} md={18} lg={18} xl={18}>
                                                     <div class='title'>
-                                                        <h1>Bài hát yêu thích</h1>
+                                                        <h1 class='color-white'>Bài hát yêu thích</h1>
                                                         <a href='#'>
                                                             <SendOutlined />
-                                                            <h3>Nghe tất cả</h3>
+                                                            <h3 class='color-white'>Nghe tất cả</h3>
                                                         </a>
                                                     </div>
                                                     <hr></hr>
@@ -73,8 +71,8 @@ class UserProfile extends React.Component {
                                                             <li class='item'>
                                                                 <a href='#'><img src='images/24238074.jpg'></img></a>
                                                                 <div class='music-name'>
-                                                                    <h3>Tình nhân ơi</h3>
-                                                                    <p>Superbrothers, Orange, Binz</p>
+                                                                    <h3 class='color-white'>Tình nhân ơi</h3>
+                                                                    <p class='color-wheat'>Superbrothers, Orange, Binz</p>
                                                                 </div>
 
                                                                 <ul>
@@ -89,8 +87,8 @@ class UserProfile extends React.Component {
                                                             <li class='item'>
                                                                 <a href='#'><img src='images/24229140.jpg'></img></a>
                                                                 <div class='music-name'>
-                                                                    <h3>Đừng có mơ</h3>
-                                                                    <p>Erik</p>
+                                                                    <h3 class='color-white'>Đừng có mơ</h3>
+                                                                    <p class='color-wheat'>Erik</p>
                                                                 </div>
                                                                 <ul>
                                                                     <li><a href='#'><YoutubeOutlined class='a' /></a></li>
@@ -104,8 +102,8 @@ class UserProfile extends React.Component {
                                                             <li class='item'>
                                                                 <a href='#'><img src='images/24114665.jpg'></img></a>
                                                                 <div class='music-name'>
-                                                                    <h3>Em có bao giờ</h3>
-                                                                    <p>XKey Band</p>
+                                                                    <h3 class='color-white'>Em có bao giờ</h3>
+                                                                    <p class='color-wheat'>XKey Band</p>
                                                                 </div>
                                                                 <ul>
                                                                     <li><a href='#'><YoutubeOutlined class='a' /></a></li>
@@ -120,14 +118,14 @@ class UserProfile extends React.Component {
                                                         </ul>
                                                         <br></br>
 
-                                                        <Button>Xem tất cả</Button>
+                                                        <Button class='color-white'>Xem tất cả</Button>
                                                     </div>
                                                 </Col>
 
                                                 <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                                     <div class='my-playlist'>
                                                         <div class='my-playlist-title'>
-                                                            <h1 id='title'>Playlist Của Tôi</h1>
+                                                            <h1 id='title' class='color-white'>Playlist Của Tôi</h1>
                                                             <a href='#'><PlusCircleOutlined /></a>
                                                         </div>
                                                         <hr>
@@ -136,33 +134,33 @@ class UserProfile extends React.Component {
                                                             <ul>
                                                                 <li class='flex'>
                                                                     <a href='#'><img src="images/26594790.png"></img></a>
-                                                                    <p>Playlist1</p>
+                                                                    <p class='color-white'>Playlist1</p>
                                                                     <a href='#' class='auto' ><YoutubeOutlined /></a>
                                                                     <a href='#' class='auto' ><DeleteOutlined /></a>
                                                                 </li>
                                                                 <hr></hr>
                                                                 <li class='flex'>
                                                                     <a href='#'><img src="images/26594790.png"></img></a>
-                                                                    <p>Playlist2</p>
+                                                                    <p class='color-white'>Playlist2</p>
                                                                     <a href='#' class='auto' ><YoutubeOutlined /></a>
                                                                     <a href='#' class='auto' ><DeleteOutlined /></a>
                                                                 </li>
                                                                 <hr></hr>
                                                                 <li class='flex'>
                                                                     <a href='#'><img src="images/26594790.png"></img></a>
-                                                                    <p>Playlist3</p>
+                                                                    <p class='color-white'>Playlist3</p>
                                                                     <a href='#' class='auto' ><YoutubeOutlined /></a>
                                                                     <a href='#' class='auto' ><DeleteOutlined /></a>
                                                                 </li>
                                                                 <hr></hr>
                                                                 <li class='flex'>
                                                                     <a href='#'><img src="images/26594790.png"></img></a>
-                                                                    <p>Playlist4</p>
+                                                                    <p class='color-white'>Playlist4</p>
                                                                     <a href='#' class='auto' ><YoutubeOutlined /></a>
                                                                     <a href='#' class='auto' ><DeleteOutlined /></a>
                                                                 </li>
                                                                 <hr></hr>
-                                                                <Button>Xem tất cả</Button>
+                                                                <Button class='color-white'>Xem tất cả</Button>
                                                             </ul>
 
                                                         </div>
@@ -174,10 +172,10 @@ class UserProfile extends React.Component {
                                         <TabPane tab="NHẠC ĐÃ NGHE" key="3">
 
                                             <div class='title'>
-                                                <h1>Bài hát yêu thích</h1>
+                                                <h1 class='color-white'>Bài hát yêu thích</h1>
                                                 <a href='#'>
                                                     <SendOutlined />
-                                                    <h3>Nghe tất cả</h3>
+                                                    <h3 class='color-white'>Nghe tất cả</h3>
                                                 </a>
                                             </div>
                                             <hr></hr>
@@ -186,8 +184,8 @@ class UserProfile extends React.Component {
                                                     <li class='item'>
                                                         <a href='#'><img src='images/24238074.jpg'></img></a>
                                                         <div class='music-name'>
-                                                            <h3>Tình nhân ơi</h3>
-                                                            <p>Superbrothers, Orange, Binz</p>
+                                                            <h3 class='color-white'>Tình nhân ơi</h3>
+                                                            <p class='color-wheat'>Superbrothers, Orange, Binz</p>
                                                         </div>
 
                                                         <ul>
@@ -202,8 +200,8 @@ class UserProfile extends React.Component {
                                                     <li class='item'>
                                                         <a href='#'><img src='images/24229140.jpg'></img></a>
                                                         <div class='music-name'>
-                                                            <h3>Đừng có mơ</h3>
-                                                            <p>Erik</p>
+                                                            <h3 class='color-white'>Đừng có mơ</h3>
+                                                            <p class='color-wheat'>Erik</p>
                                                         </div>
                                                         <ul>
                                                             <li><a href='#'><YoutubeOutlined class='a' /></a></li>
@@ -217,8 +215,8 @@ class UserProfile extends React.Component {
                                                     <li class='item'>
                                                         <a href='#'><img src='images/24114665.jpg'></img></a>
                                                         <div class='music-name'>
-                                                            <h3>Em có bao giờ</h3>
-                                                            <p>XKey Band</p>
+                                                            <h3 class='color-white'>Em có bao giờ</h3>
+                                                            <p class='color-wheat'>XKey Band</p>
                                                         </div>
                                                         <ul>
                                                             <li><a href='#'><YoutubeOutlined class='a' /></a></li>
@@ -233,7 +231,7 @@ class UserProfile extends React.Component {
                                                 </ul>
                                                 <br></br>
 
-                                                <Button>Xem tất cả</Button>
+                                                <Button class='color-white'>Xem tất cả</Button>
                                             </div>
 
 
@@ -244,26 +242,26 @@ class UserProfile extends React.Component {
                                         <TabPane tab="TÙY CHỌN" key="4">
                                             <div class='liked-artist'>
                                                 <div class='title'>
-                                                    <h1>Nghệ Sỹ Yêu Thích</h1>
-                                                    <a href='#'><PlusCircleOutlined class='d' />Thêm nghệ sỹ yêu thích</a>
+                                                    <h1 class='color-white'>Nghệ Sỹ Yêu Thích</h1>
+                                                    <a class='color-white' href='#'><PlusCircleOutlined class='d' />Thêm nghệ sỹ yêu thích</a>
 
                                                 </div>
                                                 <div class='list-liked-artist'>
                                                     <ul>
                                                         <li>
                                                             <a href='#'><img src='/images/default-avatar-artist.jpg'></img></a>
-                                                            <h3>Hồ  Ngọc Hà</h3>
-                                                            <p>3,401 người yêu thích</p>
+                                                            <h3 class='color-white'>Hồ  Ngọc Hà</h3>
+                                                            <p class='color-wheat'>3,401 người yêu thích</p>
                                                         </li>
                                                         <li>
                                                             <a href='#'><img src='/images/default-avatar-artist.jpg'></img></a>
-                                                            <h3>Hồ  Ngọc Hà</h3>
-                                                            <p>3,401 người yêu thích</p>
+                                                            <h3 class='color-white'>Hồ  Ngọc Hà</h3>
+                                                            <p class='color-wheat'>3,401 người yêu thích</p>
                                                         </li>
                                                         <li>
                                                             <a href='#'><img src='/images/default-avatar-artist.jpg'></img></a>
-                                                            <h3>Hồ  Ngọc Hà</h3>
-                                                            <p>3,401 người yêu thích</p>
+                                                            <h3 class='color-white'>Hồ  Ngọc Hà</h3>
+                                                            <p class='color-wheat'>3,401 người yêu thích</p>
                                                         </li>
 
                                                     </ul>
@@ -272,56 +270,56 @@ class UserProfile extends React.Component {
                                             </div>
                                             <br></br>
                                             <div class='liked-music-type'>
-                                                <h1>Thể Loại Nhạc Yêu Thích</h1>
+                                                <h1 class='color-white'>Thể Loại Nhạc Yêu Thích</h1>
                                                 <div class='list-music-type'>
                                                     <ul>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Nhạc trẻ</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>nhạc trẻ</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Trữ Tình</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Trữ Tình</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Rock Việt</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Rock Việt</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Dân Ca/Nhạc Cổ</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Dân ca/ nhạc cổ</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}> Nhạc Trịnh</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>nhạc trẻ</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Thiếu Nhi</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Thiếu nhi</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}> Việt Remix</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Việt remix</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Âu Mỹ</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Âu Mỹ</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Nhạc Hoa</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Nhạc Hoa</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}> Nhạc Nhật</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Nhạc Nhật</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}> Nhạc Hàn</Checkbox>
+                                                            <Checkbox onChange={this.onChange}> <span class='color-white'>Nhạc Hàn</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Nhạc Không Lời</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Nhạc không lời</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Thể loại khác</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Thể loại khác</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Cách Mạng</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Nhạc cách mạng</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}>Quê Hương</Checkbox>
+                                                            <Checkbox onChange={this.onChange}><span class='color-white'>Quê Hương</span></Checkbox>
                                                         </li>
                                                         <li>
-                                                            <Checkbox onChange={this.onChange}> Rap/Hiphop Việt</Checkbox>
+                                                            <Checkbox onChange={this.onChange}> <span class='color-white'>Rap/Hiphop Việt</span></Checkbox>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -335,7 +333,7 @@ class UserProfile extends React.Component {
                         </Row>
                     </div>
                 </div>
-                <FooterX></FooterX>
+                
             </div>
         )
     }

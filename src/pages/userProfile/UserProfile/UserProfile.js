@@ -1,9 +1,20 @@
 import React from 'react';
-import { Tabs, Row, Col, Button, Checkbox } from 'antd';
-import HeaderX from '../../layout/HeaderX/HeaderX.js';
-import FooterX from '../../layout/Footer/FooterX.js';
+import { Tabs,
+        Row,
+        Col,
+        Button,
+        Checkbox } from 'antd';
+import { 
+    DeleteOutlined,
+    PlusCircleOutlined,
+    YoutubeOutlined,
+    HeartOutlined,
+    SendOutlined,
+    ShareAltOutlined,
+    DownloadOutlined } from '@ant-design/icons';
 import './style.scss';
-import { DeleteOutlined, PlusCircleOutlined, YoutubeOutlined, HeartOutlined, SendOutlined, ShareAltOutlined, DownloadOutlined } from '@ant-design/icons';
+
+
 class UserProfile extends React.Component {
     constructor(props) {
         super(props);
@@ -32,7 +43,6 @@ class UserProfile extends React.Component {
 
         return (
             <div>
-                <HeaderX></HeaderX>
                 <div class='content-side'>
                     <div class='brand-side'>
                         <img src='images/8732187.png' id='brand-img'></img>
@@ -335,7 +345,6 @@ class UserProfile extends React.Component {
                         </Row>
                     </div>
                 </div>
-                <FooterX></FooterX>
             </div>
         )
     }

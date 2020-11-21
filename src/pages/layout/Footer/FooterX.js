@@ -3,7 +3,7 @@ import { Row, Col } from 'antd';
 import { FacebookOutlined, AppleOutlined, AndroidOutlined } from '@ant-design/icons';
 import './style.css';
 
-function Footer() {
+function FooterX() {
 
     return (
         <div className='wrapper'>
@@ -114,4 +114,4 @@ function Footer() {
     )
 }
 
-export default Footer;
+export default FooterX;

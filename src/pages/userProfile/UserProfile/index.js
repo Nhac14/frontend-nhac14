@@ -1,7 +1,10 @@
 import React from 'react';
 import { Tabs, Row, Col, Button, Checkbox } from 'antd';
-import './style.scss';
 import { DeleteOutlined, PlusCircleOutlined, YoutubeOutlined, HeartOutlined, SendOutlined, ShareAltOutlined, DownloadOutlined } from '@ant-design/icons';
+import './style.scss';
+
+
+
 class UserProfile extends React.Component {
     constructor(props) {
         super(props);

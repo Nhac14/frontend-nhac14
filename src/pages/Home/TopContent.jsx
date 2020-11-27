@@ -1,8 +1,7 @@
 import React from 'react';
-import { Carousel, Col, Row } from 'antd';
+import { Col, Row } from 'antd';
 import './Content.scss';
 import Slider from "react-slick";
-import { PlayCircleOutlined } from '@ant-design/icons';
 
 export default function TopContent(props) {
 
@@ -17,7 +16,6 @@ export default function TopContent(props) {
     };
 
     const arrData = ["images/2909.jpg", "images/2909.jpg", "images/2909.jpg", "images/2909.jpg", "images/2909.jpg", "images/2909.jpg"]
-
 
     return (
         <div>
@@ -34,7 +32,6 @@ export default function TopContent(props) {
                                    );
                                })
                            }
-                            
                         </Slider>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>

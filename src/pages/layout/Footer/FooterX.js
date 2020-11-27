@@ -7,7 +7,7 @@ import './style.css';
 function Footer() {
 
     return (
-        <div className='wrapper'>
+        <div style={{background: "#21324a"}}>
             <Row>
                 <Col xs={2} sm={4} md={6} lg={4} xl={4}>
 

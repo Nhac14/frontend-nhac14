@@ -3,6 +3,10 @@ import { Carousel, Col, Row } from 'antd';
 import './Content.scss';
 import Slider from "react-slick";
 import { PlayCircleOutlined } from '@ant-design/icons';
+import TopContent from './TopContent';
+import AlbumSlide from './AlbumSlide';
+import PartnerSlide from './PartnerSlide';
+
 class Content extends React.Component {
     constructor(props) {
         super(props);
@@ -24,32 +28,6 @@ class Content extends React.Component {
             textAlign: 'center',
             background: '#364d79',
         };
-        const settings_top_content = {
-            dots: true,
-            fade: true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            adaptiveHeight: true
-        };
-        const settings_playlist = {
-            dots: true,
-            infinite: true,
-            slidesToShow: 5,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000
-        };
-
-        const settings_partner = {
-            dots: true,
-            infinite: true,
-            slidesToShow: 6,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000
-        };
 
         return (
             <div>
@@ -60,74 +38,11 @@ class Content extends React.Component {
                         </Col>
                         <Col xs={20} sm={16} md={12} lg={16} xl={16}>
                             <div class='wrapper'>
-                                <div class='top-content'>
-                                    <Row gutter={24}>
-                                        <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                            <Slider {...settings_top_content}>
-                                                <div>
-                                                    <a href='#'><img alt='#' src='images/2909.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a href='#'><img alt='#' src='images/3892.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a href='#'><img alt='#' src='images/3972.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a href='#'><img alt='#' src='images/3981.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a href='#'><img alt='#' src='images/3984.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a href='#'><img alt='#' src='images/4005.jpg'></img></a>
-                                                </div>
-                                            </Slider>
-                                        </Col>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            
-                                        </Col>
-                                    </Row>
-                                </div>
-                                <br></br>
+                                <TopContent />
                                 <div>
                                     <h1>Playlist cho hôm nay</h1>
+                                    <AlbumSlide />
                                 </div>
-                                <div class='playlist'>
-                                    <Slider ref={slider => (this.slider = slider)} {...settings_playlist}>
-                                        <div>
-                                            <a href='#'><img src='/images/371.jpg'></img></a>
-                                        </div>
-                                        <div>
-                                            <a href='#'><img src='/images/219284.jpg'></img></a>
-                                        </div>
-                                        <div>
-                                            <a href='#'><img src='/images/280644.jpg'></img></a>
-                                        </div>
-                                        <div>
-                                            <a href='#'><img src='/images/21298727.jpg'></img></a>
-                                        </div>
-                                        <div>
-                                            <a href='#'><img src='/images/21375776.jpg'></img></a>
-                                        </div>
-                                        <div>
-                                            <a href='#'><img src='/images/22865288.jpg'></img></a>
-                                        </div>
-                                        <div>
-                                            <a href='#'><img src='/images/22971890.jpg'></img></a>
-                                        </div>
-                                        <div>
-                                            <a href='#'><img src='/images/24382198.jpg'></img></a>
-                                        </div>
-                                        <div>
-                                            <a href='#'><img src='/images/25599934.jpg'></img></a>
-                                        </div>
-                                        <div>
-                                            <a href='#'><img src='/images/25912009.jpg'></img></a>
-                                        </div>
-                                    </Slider>
-                                </div>
-                                <br></br>
                                 <div class='main-content'>
                                     <Row gutter={24}>
                                         <Col xs={18} sm={18} md={18} lg={18} xl={18}>
@@ -666,38 +581,8 @@ class Content extends React.Component {
                                             </div>
                                         </Col>
                                     </Row>
-                                    <br></br>
-                                    <div>
-                                        <h1>Đối Tác</h1>
-                                        <div>
-                                            <Slider ref={slider => (this.slider = slider)} {...settings_partner}>
-                                                <div>
-                                                    <a><img src='/images/vng.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a><img src='/images/ht.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a><img src='/images/mtp.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a><img src='/images/pnc.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a><img src='/images/tam_nhin_viet.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a><img src='/images/thang_long.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a><img src='/images/universal.jpg'></img></a>
-                                                </div>
-                                                <div>
-                                                    <a> <img src='/images/vcpmc.jpg'></img></a>
-                                                </div>
-                                            </Slider>
-                                        </div>
-                                    </div>
+                                    
+                                    <PartnerSlide/>
                                 </div>
                             </div>
                         </Col>

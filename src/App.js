@@ -11,7 +11,8 @@ function App(){
       return (
          <div>
             <HeaderX/>
-            <UserProfile></UserProfile>
+
+               <Content/>
             <FooterX/>
 
          </div>

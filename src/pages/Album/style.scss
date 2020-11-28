@@ -1,0 +1,42 @@
+
+
+.album-content{
+
+    h1, h3{
+        color: white;
+        margin: 0px;
+    }
+
+    .wrapper-list-album{
+
+        width: 100%;
+        display: flex;
+
+        div.list-album{
+            display: inline-flex;
+            
+            .cardAlbum{
+                width: 230px;
+                margin: 10px 10px;
+                overflow: hidden;
+    
+                img{
+                    width: 195px;
+                    height: 195px;
+                    overflow: hidden;
+                }
+            
+                p{
+                    width: 100%;
+                    margin-top: 3px;
+                    color: white;
+                    font-size: 14px;
+    
+                }
+                
+            }
+        }
+    }
+
+    
+}

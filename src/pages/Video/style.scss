@@ -1,0 +1,50 @@
+
+
+.music-video-content{
+
+    h1, h3{
+        color: white;
+        margin: 0px;
+    }
+.wrapper-list-video{
+    width: 100%;
+    display: flex;
+
+    div.list-video{
+        display: inline-flex;
+        padding-left: 0px;
+
+        .cardVideo{
+            width: 25%;
+            margin: 10px 10px;
+            overflow: hidden;
+
+            img{
+                width: 100%;
+            }
+        
+            p{
+                margin-bottom: 0px;
+            }
+            p.nameSong{
+                color: white;
+                
+            }
+            p.nameSinger{
+                color: rgb(102, 97, 97);
+            }
+            .durationVideo{
+                position: absolute;
+                right: 0px;
+                bottom: 0px;
+                background-color: rgb(117, 114, 114);
+                span{
+                    color: rgb(214, 205, 205);
+                }
+            }
+            
+        }
+    }
+}
+    
+}

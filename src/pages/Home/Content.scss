@@ -7,62 +7,39 @@ Carousel {
     padding-top: 15px;;
 }
 
-.main-content .left-side ul {
-    display: inline;
-}
+.new-release-music{
 
-    .main-content .albums ul li{
-        display: inline;
+    h1{
+        color: white;
     }
+    
+    .new-music-list{
+        width: 100%;
+        padding-left: 0px;
+        display: inline-flex;
+        .new-music-card{
+            width: 48%;
+            border-bottom: 0.5px solid #5a5858;
+            padding: 10px 0px;
+            margin: 0px 10px;
+            div{
+                float: right;
+                margin-right: 34%;
+                padding-top: 10px;
 
-    .main-content .left-side ul li{
-        display: inline;
-    }
-
-        .main-content .left-side ul li h2{
-            display: inline;
+                h3{
+                    color: white;
+                    margin: 0px;
+                }
+                p{
+                    color: rgb(110, 108, 108);
+                    margin: 0px;
+                }
+            }
         }
 
-.list-album img{
-    width: 100%;
-}
-
-.relative{
-    position: relative;
+    }
     
-}
-
-.col1{
-    width: 20%;
-    float: left;
-}
-
-.col2{
-    width: 75%;
-    
-}
-    .music-video-content p{
-        margin-bottom: 0px;
-        left: 0px;
-    }
-
-    .music-video-content img{
-        width: 100%;
-    }
-
-    .music-video-content .duration-video{
-        position: absolute;
-    }
-
-    .music-video-content .duration-video{
-        right: 0px;
-        bottom: 0px;
-        background-color: rgb(70, 68, 68);
-    }
-
-.new-release-music ul li{
-    clear: both;
-    display: table;
 }
 
 a{cursor: pointer;}

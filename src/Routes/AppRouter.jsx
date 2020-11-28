@@ -11,7 +11,7 @@ import PublicRouter from './PublicRouter';
 const AppRouter = (props) => {
 
 
-    const [isLoginedAdmin, setIsAdminLogined] = useState(true);
+    const [isLoginedAdmin, setIsAdminLogined] = useState(false);
 
     useEffect(() => {
 

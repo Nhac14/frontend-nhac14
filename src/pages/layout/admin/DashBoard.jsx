@@ -26,7 +26,7 @@ const DashBoard = ({children}) => {
     return (
         <Layout style={{ minHeight: '100vh' }}>
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-                <div className="logo"><img src='/icons/nhacvn.png' alt="nhacvn"></img> </div>
+                <div className="logoAd"><img src='/icons/nhacvn.png' alt="nhacvn"></img> </div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                     <Menu.Item key="1" icon={<PieChartOutlined />}>
                         <Link to="/admin/albums">Album</Link>

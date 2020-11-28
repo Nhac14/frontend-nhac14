@@ -226,17 +226,17 @@ function HeaderX() {
                             </li>
                             <li>
                                 <Dropdown overlay={album_menu}>
-                                    <a href="#" >Album</a>
+                                   <Link to="/album">Album</Link>
                                 </Dropdown>
                             </li>
                             <li>
                                 <Dropdown overlay={music_video_menu}>
-                                    <a href="#" >Music video</a>
+                                    <Link to="/video">Video</Link>
                                 </Dropdown>
                             </li>
                             <li>
                                 <Dropdown overlay={artist_menu}>
-                                    <a href="#" >Nghệ Sỹ</a>
+                                <Link to="#">Nghệ sỹ</Link>
                                 </Dropdown>
                             </li>
                             <li>

@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
-import { Switch, BrowserRouter } from 'react-router-dom'
+import React, { useEffect, useState, lazy } from 'react';
+import { Switch, BrowserRouter, Route } from 'react-router-dom';
+import { Spin, Space } from 'antd';
 import adminRouter from '../pages/Admin/routes';
 import DashBoard from '../pages/layout/admin/DashBoard';
 import MainLayout from '../pages/layout/MainLayout';
 import publicRouter from '../pages/routes';
 import AdminRouter from './AdminRouter';
 import PublicRouter from './PublicRouter';
+
 const AppRouter = (props) => {
 
-console.log("hihi: ", publicRouter);
-console.log("dddd: ", adminRouter);
+
+    const [isLoginedAdmin, setIsAdminLogined] = useState(true);
+
+    useEffect(() => {
+
+    })
+
     const AdminApp = () => {
         return (
             <DashBoard>
@@ -40,18 +47,31 @@ console.log("dddd: ", adminRouter);
                             )
                         })
                     }
+                    {
+                        isLoginedAdmin ? '' :  <Route exact path="/admin/login" component={lazy(() => import('../pages/Admin/Login/AdminLogin'))} />
+                    }
                 </Switch>
             </MainLayout>
         )
     }
 
 
-    return (
-        <React.Suspense fallback={<div>Loading...</div>}>
-            <BrowserRouter>
+    const Loading = () => {
+        return (
+            <Space size="middle" style={{ position: 'absolute', top: '48%', left: '48%' }}>
+                <Spin size="large" />
+            </Space>
+        )
+    }
 
-                <AdminRouter component={AdminApp}/>
-                <PublicRouter component={PublicApp} />
+    return (
+        <React.Suspense fallback={<div style={{ position: 'relative' }}><Loading /></div>}>
+            <BrowserRouter>
+                {
+                    isLoginedAdmin
+                         ? <AdminRouter component={AdminApp} />
+                        : <PublicRouter component={PublicApp} />
+                }
 
 
             </BrowserRouter>

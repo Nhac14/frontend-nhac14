@@ -1,6 +1,6 @@
 let routes = [];
 
-const context = require.context(".", true, /route.js$/);
+const context = require.context(".", true, /routeAd.js$/);
 context.keys().forEach((path) => {
     const result = context(`${path}`).default;
     if(Array.isArray(result)){

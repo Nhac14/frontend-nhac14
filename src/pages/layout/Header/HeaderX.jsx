@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link, Redirect} from 'react-router-dom';
 import { Menu, Dropdown, Row, Col, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import MenuItem from 'antd/lib/menu/MenuItem';
@@ -198,15 +199,15 @@ function HeaderX() {
                     <div className='align14 search-option'>
                         <ul>
                             <li><a onClick='#'>Video</a></li>
-                            <li> | </li>
+                            <li style={{color: 'white'}}> | </li>
                             <li><a onClick='#'>Sách nói</a></li>
                         </ul>
                     </div>
                     <div className='align14 sign-in-up'>
                         <ul>
-                            <li><a onClick='#'>Đăng nhập</a></li>
-                            <li> / </li>
-                            <li><a onClick='#'>Đăng ký</a></li>
+                            <li><Link to='/login'>Đăng nhập</Link></li>
+                            <li style={{color: 'white'}}> | </li>
+                            <li><Link to="/register">Đăng ký</Link></li>
                         </ul>
                     </div>
                 </div>

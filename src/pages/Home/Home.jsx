@@ -35,26 +35,25 @@ class Home extends React.Component {
 
         return (
             <div>
-                <div class='content-side'>
+                <div className='content-side'>
                     <Row>
                         <Col xs={2} sm={4} md={6} lg={4} xl={4}>
 
                         </Col>
                         <Col xs={20} sm={16} md={12} lg={16} xl={16}>
-                            <div class='wrapper'>
+                            <div className='wrapper'>
                                 <TopContent />
-                                <div>
-                                    <h1>Playlist cho hôm nay</h1>
-                                    <AlbumSlide />
-                                </div>
-                                <div class='main-content'>
+                                <AlbumSlide />
+
+                                
+                                <div className='main-content'>
                                     <Row gutter={24}>
                                         <Col xs={18} sm={18} md={18} lg={18} xl={18}>
-                                            <div class='left-side'>
+                                            <div className='left-side'>
                                                 <ListAlbum />
                                                 <ListVideo />
                                                 <NewReleaseMusic />
-                                                <div class='top-artist'>
+                                                <div className='top-artist'>
                                                     <div>
                                                         <h1>Nghệ Sĩ Nổi Bật</h1>
                                                     </div>
@@ -84,8 +83,8 @@ class Home extends React.Component {
                                         </Col>
 
                                         <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                            <div class='right-side'>
-                                                <div class='title-music-rank'>
+                                            <div className='right-side'>
+                                                <div className='title-music-rank'>
                                                     <h1>BXH Bài Hát</h1>
                                                     <a>Việt Nam</a>
                                                     <span> / </span>
@@ -96,10 +95,10 @@ class Home extends React.Component {
                                                 </div>
                                             </div>
                                             <br></br>
-                                            <div class='music-rank'>
+                                            <div className='music-rank'>
                                                 <ul>
                                                     <li>
-                                                        <div class='rank'>
+                                                        <div className='rank'>
                                                             <span>7</span>
                                                         </div>
                                                         <a href='#'>
@@ -108,7 +107,7 @@ class Home extends React.Component {
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <div class='rank'>
+                                                        <div className='rank'>
                                                             <span>10</span>
                                                         </div>
                                                         <a href='#'>
@@ -119,7 +118,7 @@ class Home extends React.Component {
 
                                                 </ul>
                                             </div>
-                                            <div class='title-MV-rank'>
+                                            <div className='title-MV-rank'>
                                                 <div>
                                                     <h1>BXH MV</h1>
                                                     <a>Việt Nam</a>
@@ -132,7 +131,7 @@ class Home extends React.Component {
                                                 <div>
                                                     <ul>
                                                         <li>
-                                                            <div class='rank'>
+                                                            <div className='rank'>
                                                                 <span>1</span>
                                                             </div>
                                                             <a href='#'>

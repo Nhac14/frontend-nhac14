@@ -12,10 +12,12 @@ const AppRouter = (props) => {
 
 
     const [isLoginedAdmin, setIsAdminLogined] = useState(false);
+    console.log(publicRouter);
 
     useEffect(() => {
 
-    })
+    }, [])
+
 
     const AdminApp = () => {
         return (
@@ -47,6 +49,7 @@ const AppRouter = (props) => {
                             )
                         })
                     }
+                    
                     {
                         isLoginedAdmin ? '' :  <Route exact path="/admin/login" component={lazy(() => import('../pages/Admin/Login/AdminLogin'))} />
                     }

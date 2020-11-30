@@ -3,7 +3,6 @@ import { Route, Redirect } from 'react-router-dom';
 
 function AdminRouter({component: Component, ...rest}){
 
-    console.log("allllo: ", Component);
     return (
         <Route
         {...rest}

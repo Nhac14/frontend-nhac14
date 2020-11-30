@@ -2,37 +2,39 @@
 
 .album-content{
 
-    h1, h3{
-        color: white;
-        margin: 0px;
-    }
-
     .wrapper-list-album{
 
         width: 100%;
-        display: flex;
+        display: inherit;
 
         div.list-album{
-            display: inline-flex;
             
             .cardAlbum{
-                width: 230px;
-                margin: 10px 10px;
+                width: 25%;
+                height: 280px;
+
+                padding: 10px 8px;
+                display: inline-block;
                 overflow: hidden;
     
                 img{
-                    width: 195px;
-                    height: 195px;
+                    width: 100%;
                     overflow: hidden;
                 }
             
-                p{
+                .card-content{
                     width: 100%;
-                    margin-top: 3px;
-                    color: white;
-                    font-size: 14px;
-    
+                    padding: 3px;
+                    margin: 0px;
+                    p{
+                        width: 100%;
+                        margin-top: 3px;
+                        color: white;
+                        font-size: 14px;
+                        margin-bottom: 0px;
+                    }
                 }
+
                 
             }
         }

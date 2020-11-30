@@ -1,7 +1,10 @@
 import Form from 'antd/lib/form/Form';
 import React from 'react';
 import './style_register.css';
+
+
 function Register() {
+    console.log("regisster");
     return (
         <div className="container">
             <Form>
@@ -47,4 +50,4 @@ function Register() {
     )
 }
 
-export default Register
+export default Register;

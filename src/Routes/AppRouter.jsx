@@ -11,7 +11,8 @@ import PublicRouter from './PublicRouter';
 const AppRouter = (props) => {
 
 
-    const [isLoginedAdmin, setIsAdminLogined] = useState(false);
+    const [isLoginedAdmin, setIsAdminLogined] = useState(true);
+    // isLoginedAdmin = true;
 
     useEffect(() => {
 
@@ -31,10 +32,9 @@ const AppRouter = (props) => {
                     }
                 </Switch>
             </DashBoard>
-
         )
     }
-
+    
     const PublicApp = () => {
         return (
             <MainLayout>

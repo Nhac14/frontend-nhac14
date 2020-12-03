@@ -1,42 +1,13 @@
 import React, { useState } from 'react';
 import { Table, Tag, Space,Image, AutoComplete } from 'antd';
+import { Button } from 'antd';
 import { Upload } from 'antd';
-import ImgCrop from 'antd-img-crop';
+import './style.css';
 
-const Demo = () => {
-  const [fileList, setFileList] = useState([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-  ]);
-
-  const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
-
-  const onPreview = async file => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise(resolve => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow.document.write(image.outerHTML);
-  };
-
-};
 const ListSinger = () => {
-    let { Column, ColumnGroup } = Table;
+    const { Column, ColumnGroup } = Table;
 
-    let data = [
+    const data = [
         {
             key: '1',
             name: 'John',
@@ -110,7 +81,10 @@ const ListSinger = () => {
         ];
     return ( <div>
         <h1>ListSinger</h1>
-
+        <div className='right-pos'> 
+          <Button type="primary" href='/admin/singers/new'>Create Singer</Button>
+        </div>
+        
             <Table dataSource={data}>
                 
                 <Column title="Name" dataIndex="name" key="name" />
@@ -135,19 +109,7 @@ const ListSinger = () => {
         </Table>
         
         <h1>this is ListSinger component</h1>
-        return (
-    <ImgCrop rotate>
-      <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        listType="picture-card"
-        fileList={fileList}
-        onChange={onChange}
-        onPreview={onPreview}
-      >
-        {fileList.length < 5 && '+ Upload'}
-      </Upload>
-    </ImgCrop>
-  );
+       
     </div> );
 }
  

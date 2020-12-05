@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs } from 'antd';
 import CardVideo from './CardVideo';
+import songAPI from '../../api/song';
+
 import './style.scss'
 
 const { TabPane } = Tabs;
@@ -10,7 +12,6 @@ const ListVideo = ({ onHome }) => {
     // Nếu inHome thì chỉ gen ra 1 số lượng nhất định cardVieo
     const [listVideo, setListVideo] = useState([]);
     
-
     const testData = [
         {
             image: '/images/53885.jpg',
@@ -50,16 +51,20 @@ const ListVideo = ({ onHome }) => {
         },
     ]
 
-    const achiveVideos = () => {
-        // gọi API
-    }
-
     useEffect(() => {
-        const data = achiveVideos();
+        rechieveMusicVideoList();
 
-        setListVideo(testData);
-    }, [listVideo])
+    }, [])
 
+    const rechieveMusicVideoList = async () => {
+        let {data} = await songAPI.getAllVideo();
+        if(data.status === 1){
+            console.log("data MVs: ", data.result.mvs);
+            setListVideo(data.result.mvs);
+        }
+
+
+    }
 
     const NewestVideos = () => {
         // Do sth to get newest

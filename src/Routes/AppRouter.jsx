@@ -1,5 +1,7 @@
 import React, { useEffect, useState, lazy } from 'react';
-import { Switch, BrowserRouter, Route } from 'react-router-dom';
+import { Switch, BrowserRouter, Route} from 'react-router-dom';
+import {Redirect, useHistory} from 'react-router';
+import {useCookies} from 'react-cookie';
 import { Spin, Space } from 'antd';
 import adminRouter from '../pages/Admin/routes';
 import DashBoard from '../pages/layout/admin/DashBoard';
@@ -10,13 +12,36 @@ import PublicRouter from './PublicRouter';
 
 const AppRouter = (props) => {
 
-
+    const history = useHistory();
     const [isLoginedAdmin, setIsAdminLogined] = useState(false);
-    console.log(publicRouter);
+    const [userToken, setUserToken] = useState(null);
+    const [cookies, setCookie, removeCookie] = useCookies(["userToken", "user"]);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
+       getAuth();
+    }, [cookies]);
 
-    }, [])
+    const getAuth = async () => {
+        let token = await cookies.userToken;
+        let userCookie = await cookies.user;
+        console.log("token: ", token);
+        console.log("user: ", user);
+        if(userCookie)
+            setUser({name: userCookie.name, avatar: userCookie.avatar});
+
+
+    }
+
+    const onLogout = (e) => {
+        if(e){
+            removeCookie("userToken");
+            removeCookie("user");
+            setUser(null);
+        }
+      
+    }
+
 
 
     const AdminApp = () => {
@@ -26,6 +51,8 @@ const AppRouter = (props) => {
                     {
                         adminRouter.map(router => {
                             const { exact, path, component } = router;
+
+                            if(user) 
                             return (
                                 <AdminRouter exact={exact} path={path} component={component} />
                             )
@@ -39,7 +66,7 @@ const AppRouter = (props) => {
 
     const PublicApp = () => {
         return (
-            <MainLayout>
+            <MainLayout user={user} logout={onLogout}>
                 <Switch>
                     {
                         publicRouter.map(router => {

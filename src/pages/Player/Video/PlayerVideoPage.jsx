@@ -1,12 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import { Carousel, Col, Row } from 'antd';
-
+import VideoPlayer from './VideoPlayer';
+import songAPI from '../../../api/song';
 import '../../../resources/common.css';
 import './style.scss';
-import VideoPlayer from './VideoPlayer';
 
+const initialVideo = {
+    path: '',
+    name: ''
+}
+const PlayerVideoPage = (props) => {
 
-const PlayerVideoPage = ({ }) => {
+    const [cookies, setCookie] = useCookies(["userToken"]);
+
+    const [musicVideo, setMusicVideo] = useState(initialVideo);
+
+    useEffect(() => {
+        let songId = props.match.params.videoId;
+        rechieveVideo(songId);
+    });
+
+    const rechieveVideo = async (songId) => {
+        let { data } = await songAPI.getSongById(songId, cookies.userToken);
+        let mv = data.result.song;
+        console.log(mv);
+        if (mv) {
+            setMusicVideo({ path: mv.file.path, name: mv.name });
+        }
+        else {
+            setMusicVideo(initialVideo);
+        }
+    }
+
 
     return (
         <div className="content-side">
@@ -21,14 +47,13 @@ const PlayerVideoPage = ({ }) => {
                             <Col xs={18} sm={18} md={18} lg={18} xl={18}>
                                 <div className='left-side'>
 
-                                    <VideoPlayer/>
+                                    <VideoPlayer video={musicVideo} />
 
-                                    
+
 
                                     <div className="infor-video">
-                                        <h1 className="hd-white">Đời là thế thôi</h1>
+                                        <h1 className="hd-white">{musicVideo.name}</h1>
                                         <p>Thể loại: <span className="hd-white"> Nhạc trẻ</span></p>
-                                       
                                     </div>
 
                                 </div>
@@ -36,7 +61,6 @@ const PlayerVideoPage = ({ }) => {
 
                             <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                 <div className='right-side'>
-
                                 </div>
                             </Col>
                         </Row>

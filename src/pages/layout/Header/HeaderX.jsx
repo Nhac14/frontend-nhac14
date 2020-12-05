@@ -1,11 +1,14 @@
 import React from 'react';
-import {Link, Redirect} from 'react-router-dom';
-import { Menu, Dropdown, Row, Col, Input } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { Link, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router';
+import { useCookies } from 'react-cookie';
+import { Menu, Dropdown, Row, Col, Input, Avatar } from 'antd';
+import { SearchOutlined, UserOutlined} from '@ant-design/icons';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import './style.scss';
 
-function HeaderX() {
+function HeaderX({ user, logout }) {
+
 
     const topic_menu = (
         <div className='sub-menu'>
@@ -86,9 +89,9 @@ function HeaderX() {
                         <li><a href="#">Trữ tình</a></li>
                         <li></li>
                     </ul>
-                    
+
                 </Col>
-                <Col  span={6}>
+                <Col span={6}>
                     <a className="sub-title" href="#">ÂU MỸ</a>
                     <ul>
                         <li> <a href="#">Pop</a></li>
@@ -96,7 +99,7 @@ function HeaderX() {
                         <li><a href="#">Việt remix</a></li>
                     </ul>
                 </Col>
-                <Col  span={6}>
+                <Col span={6}>
                     <a className="sub-title" href="#">CHÂU Á</a>
                     <ul>
                         <li><a href="#">Nhạc Hoa</a></li>
@@ -104,7 +107,7 @@ function HeaderX() {
                         <li></li>
                     </ul>
                 </Col>
-                <Col  span={6}>
+                <Col span={6}>
                     <a className="sub-title" href="#">THỂ LOẠI KHÁC</a>
                     <ul>
                         <li><a href="#">Nhạc không lời</a></li>
@@ -179,36 +182,66 @@ function HeaderX() {
     );
 
 
+
+    const onLogout = () => {
+        logout(true);
+    }
+
+    const menuUser = (
+    <Menu>
+        <Menu.Item key="1" style={{background: '#ffe58f'}}>
+            <Link to={'/ca-nhan'} className="dropdown-item" >Trang cá nhân</Link>
+        </Menu.Item>
+        <Menu.Item key="3" onClick={onLogout} icon={<UserOutlined />}>
+            Đăng xuất
+        </Menu.Item>
+    </Menu>);
+
+
     return (
         <div className='header'>
             <div className="wrapper">
                 <div className='header-top'>
                     <div className='logo'>
                         <div title='nghe nhac online, tai nhac mpc'>
-                            <a href='#'>
+                            <Link to={'/'}>
                                 <img src='/icons/nhacvn.png' alt="nhacvn"></img>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <div className='search-side'>
-                        <form  action='#' method='get'>
+                        <form action='#' method='get'>
                             <Input size="large" className='search' placeholder="Từ khóa tìm kiếm..." suffix={<SearchOutlined />} />
-                            
+
                         </form>
                     </div>
                     <div className='align14 search-option'>
                         <ul>
                             <li><a onClick='#'>Video</a></li>
-                            <li style={{color: 'white'}}> | </li>
+                            <li style={{ color: 'white' }}> | </li>
                             <li><a onClick='#'>Sách nói</a></li>
                         </ul>
                     </div>
                     <div className='align14 sign-in-up'>
-                        <ul>
-                            <li><Link to='/login'>Đăng nhập</Link></li>
-                            <li style={{color: 'white'}}> | </li>
-                            <li><Link to="/register">Đăng ký</Link></li>
-                        </ul>
+                            {
+                                user ?
+                                 <Dropdown.Button
+                                    overlay={menuUser}
+                                    placement="bottomCenter"
+                                    size="large"
+                                    style={{ border: '1px solid #fa8c16', borderRadius: '5px', verticalAlign: 'center' }}
+                                    icon={<Avatar
+                                        src={user.avatar ? user.avatar.path : "https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png"}
+                                        size="medium" icon={<UserOutlined />} />}>
+                                    {user.name}
+                                </Dropdown.Button>
+                                :
+                                <ul>
+                                    <li><Link to='/login'>Đăng nhập</Link></li>
+                                    <li style={{ color: 'white' }}> | </li>
+                                    <li><Link to="/register">Đăng ký</Link></li>
+                                </ul>
+                            }
                     </div>
                 </div>
                 <div className='header-menu'>
@@ -226,7 +259,7 @@ function HeaderX() {
                             </li>
                             <li>
                                 <Dropdown overlay={album_menu}>
-                                   <Link to="/album">Album</Link>
+                                    <Link to="/album">Album</Link>
                                 </Dropdown>
                             </li>
                             <li>
@@ -236,11 +269,11 @@ function HeaderX() {
                             </li>
                             <li>
                                 <Dropdown overlay={artist_menu}>
-                                <Link to="#">Nghệ sỹ</Link>
+                                    <Link to="#">Nghệ sỹ</Link>
                                 </Dropdown>
                             </li>
                             <li>
-                                <a  onClick={e => e.preventDefault()}>
+                                <a onClick={e => e.preventDefault()}>
                                     <span><img alt='VIP' src='/icons/icon-vip.png'></img></span>
                                     <span>VIP</span>
                                 </a>

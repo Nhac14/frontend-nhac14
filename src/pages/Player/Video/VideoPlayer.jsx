@@ -13,7 +13,7 @@ import handleTime from '../../../utils/handleTime';
 
 
 const initialControl = {
-    url: 'https://nhac14.s3.ap-northeast-2.amazonaws.com/VID_20190404_225927(0).mp4',
+    url: '',
     playing: true,
     volume: 0.8,
     muted: false,
@@ -23,12 +23,13 @@ const initialControl = {
     loop: false
 }
 
-const VideoPlayer = ({ }) => {
+const VideoPlayer = ({video}) => {
 
 
     const [controls, setControls] = useState({ ...initialControl });
 
     useEffect(() => {
+        setControls({...controls, url: video.path})
     })
 
 
@@ -36,7 +37,6 @@ const VideoPlayer = ({ }) => {
         <div className="card-video">
             <ReactPlayer
                 //   ref={playerRef}
-                className='react-player'
                 width='100%'
                 height='100%'
                 url={controls.url}

@@ -23,7 +23,7 @@ const initialControl = {
     loop: false
 }
 
-const MusicPlayer = ({ }) => {
+const AlbumPlayer = ({ }) => {
 
 
     const [controls, setControls] = useState({ ...initialControl });
@@ -90,7 +90,7 @@ const MusicPlayer = ({ }) => {
 
 
     return (
-        <div className="card-music">
+        <div className="card-album">
 
             <div className="cover-image">
                 <img src="/images/53885.jpg" alt="" />
@@ -162,4 +162,4 @@ const MusicPlayer = ({ }) => {
         </div>);
 }
 
-export default MusicPlayer;
+export default AlbumPlayer;

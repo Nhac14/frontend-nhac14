@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Carousel, Col, Row } from 'antd';
 
 import '../../../resources/common.css';
-
-import MusicPlayer from './MusicPlayer';
-import BoxActions from '../BoxActions/BoxActions';
-import Lyric from './Lyric';
 import './style.scss';
+import VideoPlayer from './VideoPlayer';
 
-const PlayerMusicPage = ({ }) => {
+
+const PlayerVideoPage = ({ }) => {
 
     return (
         <div className="content-side">
@@ -22,18 +20,18 @@ const PlayerMusicPage = ({ }) => {
                         <Row gutter={24}>
                             <Col xs={18} sm={18} md={18} lg={18} xl={18}>
                                 <div className='left-side'>
-                                    <MusicPlayer/>
+
+                                    <VideoPlayer/>
+
+                                    
+
+                                    <div className="infor-video">
+                                        <h1 className="hd-white">Đời là thế thôi</h1>
+                                        <p>Thể loại: <span className="hd-white"> Nhạc trẻ</span></p>
+                                       
+                                    </div>
 
                                 </div>
-
-                                <Row  gutter={24}>
-                                    <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                        <Lyric/>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <BoxActions/>
-                                    </Col>
-                                </Row>
                             </Col>
 
                             <Col xs={6} sm={6} md={6} lg={6} xl={6}>
@@ -50,4 +48,4 @@ const PlayerMusicPage = ({ }) => {
         </div>);
 }
 
-export default PlayerMusicPage;
+export default PlayerVideoPage;

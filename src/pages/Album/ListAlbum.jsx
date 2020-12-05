@@ -5,7 +5,7 @@ import { Tabs } from 'antd';
 import CardAlbum from './CardAlbum';
 const { TabPane } = Tabs;
 
-const ListAlbum = () => {
+const ListAlbum = ({onHome}) => {
     // Nếu inHome thì chỉ gen ra 1 số lượng nhất định cardAlbum
     const [listAlbum, setListAlbum] = useState([]);
     const testData = [

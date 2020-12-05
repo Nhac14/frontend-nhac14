@@ -5,7 +5,7 @@ import './style.scss'
 
 const { TabPane } = Tabs;
 
-const ListVideo = ({ inHome }) => {
+const ListVideo = ({ onHome }) => {
 
     // Nếu inHome thì chỉ gen ra 1 số lượng nhất định cardVieo
     const [listVideo, setListVideo] = useState([]);

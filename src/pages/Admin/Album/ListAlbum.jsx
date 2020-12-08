@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
 import { Space, Table, Button, Modal } from 'antd';
 import Demo from './form-create-album.jsx';
+import getListAlbum from '../../../api/album';
 
 const ListAlbum = () => {
-
-
     const [isShowModal, setIsShowModal] = useState(false);
+
+    const [filterAlbum, setFilterAlbum] = useState(
+       {
+           sort: 0,
+           page: 0,
+           limit: 0
+       } 
+    );
+
+    const [response, setResponse] = useState({});
+    const rp = getListAlbum.getListAlbum(filterAlbum);
+    setResponse(rp);
 
     const showModal = () => {
         debugger
@@ -138,6 +149,22 @@ const ListAlbum = () => {
             modifiedAt: '11-30-2020'
         }
     ];
+
+    const albums = [];
+    debugger
+    response.data.forEach(element => {
+        const abl = {
+            key: albums.length - 1,
+            name: element.name,
+            description: element.description,
+            category: element.category,
+            single: element.singers,
+            createAt: element.createdDate,
+            modifiedAt: element.modifiedDate
+        }
+        albums.push(abl);
+    });
+
     return (<div>
         <h1>this is ListAlbum component </h1>
         <Button type="primary" onClick={showModal}>Create new album</Button>

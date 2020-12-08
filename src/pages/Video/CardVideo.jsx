@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import {PlayCircleOutlined} from '@ant-design/icons';
 import './style.scss';
+import { useHistory } from 'react-router';
 const CardVieo = ({ video }) => {
+
+    const history = useHistory();
 
     const style = {
         relative: {
@@ -8,17 +12,23 @@ const CardVieo = ({ video }) => {
         }
     }
 
+    const onSelectVideo = () => {
+        history.push(`/video/${video._id}`);
+    }
+    
+
 
     return (
             <div className="cardVideo">
-                <div style={style.relative}>
-                    <a><img src={video.image}></img></a>
+                <div style={style.relative} className="image-card">
+                <span onClick={onSelectVideo} className="on-hover-video"><PlayCircleOutlined /></span>
+                    <a onClick={onSelectVideo}><img src={video.cover_image.path}></img></a>
                     <div className="durationVideo">
-                        <span>{video.duration}</span>       
+                        <span>03:32</span>       
                     </div>
                 </div>
-                <p className="nameSong">{video.nameSong}</p>
-                <p className="nameSinger">{video.nameSinger}</p>
+                <p className="nameSong">{video.name}</p>
+                <p className="nameSinger">"Default"</p>
             </div>
     );
 }

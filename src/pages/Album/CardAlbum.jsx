@@ -7,7 +7,9 @@ const CardAlbum = ({album}) => {
     return (
         <div className="cardAlbum">
             <img src={album.image} alt="aa"/>
-            <p>{album.name}</p>
+            <div className="card-content">
+                <p>{album.name}</p>
+            </div>
         </div>
      );
 }

@@ -3,5 +3,5 @@ import {lazy} from "react";
 export default {
         path: "/album",
         exact: true,
-        component: lazy(() => import("./ListAlbum"))
+        component: lazy(() => import("./AlbumPage"))
     }

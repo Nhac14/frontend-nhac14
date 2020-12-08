@@ -1,7 +1,7 @@
 import {lazy} from "react";
 
 export default {
-        path: "/" | "/home",
+        path: "/",
         exact: true,
         component: lazy(() => import("./Home"))
     };

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 const NewReleaseMusic = ({ props }) => {
+
+    
     return (
         <div class='new-release-music'>
-            <h1>Bài hát mới phát hành</h1>
+            <h1 className="hd-white">Bài hát mới phát hành</h1>
             <hr></hr>
             <ul className="new-music-list">
                 <li className="new-music-card">

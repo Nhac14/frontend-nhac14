@@ -1,7 +1,8 @@
-import React from 'react';
+import React , {useState, useRef} from 'react';
 import { Carousel, Col, Row } from 'antd';
 import './Content.scss';
 import Slider from "react-slick";
+
 import { PlayCircleOutlined } from '@ant-design/icons';
 
 function PartnerSlide() {
@@ -9,18 +10,20 @@ function PartnerSlide() {
     const settings_partner = {
         dots: true,
         infinite: true,
-        slidesToShow: 6,
+        slidesToShow: 5,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2000
     };
 
-    const arrData = ["/images/vng.jpg", "/images/vng.jpg", "/images/vng.jpg", "/images/vng.jpg", "/images/vng.jpg"];
+    
+
+    const arrData = ["/images/vng.jpg","/images/vng.jpg","/images/vng.jpg", "/images/vng.jpg", "/images/vng.jpg", "/images/vng.jpg", "/images/vng.jpg"];
 
 
     return (
-        <div>
-            <h1>Đối Tác</h1>
+        <div className="partner-slide">
+            <h1 className="hd-white">Đối Tác</h1>
             <div>
                 <Slider {...settings_partner}>
                     {

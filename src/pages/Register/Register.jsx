@@ -1,7 +1,46 @@
 import Form from 'antd/lib/form/Form';
-import React from 'react';
+import React, {useState} from 'react';
+import {Redirect} from 'react-router-dom';
+import { useHistory } from 'react-router';
+
+import {notification} from 'antd';
+
+import userAPI from '../../api/user';
+
 import './style_register.css';
+
+
+const initialUser = {
+    name: '',
+    password: '',
+    email: ''
+}
+
 function Register() {
+
+    const history = useHistory();
+    const [userRes, setUserRes] = useState(initialUser);
+
+    const onSubmit = async () => {
+        let {data} = await userAPI.register(userRes);
+
+        console.log("register: ", data);
+        if(data.status){
+            notification.success({message: 'Đăng ký tài khoản thành công!'});
+            window.scrollTo(0, 0);
+            history.push('/login');
+        }
+        else{
+            notification.error({message: data.message});
+        }
+    }
+
+    const onChange = (e) => {
+        const {name, value} = e.target;
+        setUserRes({...userRes, [name]: value});
+    }
+
+
     return (
         <div className="container">
             <Form>
@@ -10,16 +49,16 @@ function Register() {
 
                     <div className="input-group">
                         <label for="">Nhập email đăng kí</label>
-                        <input type="text" name="account_name"></input>
+                        <input type="text" name="email" value={userRes.email} onChange={onChange}></input>
                         <p id="eg" data-default-text="VD: abcdef@gmail.com">VD: abcdef@gmail.com</p>
                         <label for="">Nhập tên đăng kí</label>
-                        <input type="text" name="account_name"></input>
+                        <input type="text" name="name" value={userRes.name} onChange={onChange}></input>
                         <label>Nhập mật khẩu</label>
-                        <input type="password" name="account_Password"></input>
+                        <input type="password" name="password" value={userRes.password} onChange={onChange}></input>
                         {/* <p id="eg" data-default-text="VD: 0912345789, abc123, abcdef@gmail.com">VD: 0912345789, abc123, abcdef@gmail.com</p> */}
                     </div>
 
-                    <button className="login-btn">Đăng kí</button>
+                    <button onClick={onSubmit} className="login-btn">Đăng kí</button>
                 </div>
                 <div className="box-auth-panel">
                     <h4 className="top">hoặc đăng kí với </h4>
@@ -47,4 +86,4 @@ function Register() {
     )
 }
 
-export default Register
+export default Register;

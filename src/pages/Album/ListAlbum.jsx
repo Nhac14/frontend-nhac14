@@ -5,7 +5,7 @@ import { Tabs } from 'antd';
 import CardAlbum from './CardAlbum';
 const { TabPane } = Tabs;
 
-const ListAlbum = () => {
+const ListAlbum = ({onHome}) => {
     // Nếu inHome thì chỉ gen ra 1 số lượng nhất định cardAlbum
     const [listAlbum, setListAlbum] = useState([]);
     const testData = [
@@ -22,6 +22,18 @@ const ListAlbum = () => {
             name: "RapViet"
         },
 
+        {
+            image: '/images/26573415.jpg',
+            name: "RapViet"
+        },
+        {
+            image: '/images/26573415.jpg',
+            name: "Những bài hát hay nhất của Đức Phúc"
+        },
+        {
+            image: '/images/26573415.jpg',
+            name: "RapViet"
+        },
     ]
 
     useEffect(() => {
@@ -51,10 +63,10 @@ const ListAlbum = () => {
 
     return (
         <div className="album-content">
-            <h1>Album</h1>
+            <h1 className="hd-white">Album</h1>
             <Tabs defaultActiveKey="1" onChange={callback}>
                 <TabPane
-                    tab={<h3>Mới nhất</h3>} key="1">
+                    tab={<h3 className="hd-white">Mới nhất</h3>} key="1">
                    <div className="wrapper-list-album">
                         <div className="list-album">
                             {NewestAlbums()}
@@ -62,7 +74,7 @@ const ListAlbum = () => {
                     </div>
                 </TabPane>
                 <TabPane
-                    tab={<h3>Nghe nhiều</h3>} key="2">
+                    tab={<h3 className="hd-white">Nghe nhiều</h3>} key="2">
                     <div className="wrapper-list-album">
                         <div className="list-album">
                             {ViewestAlbums()}

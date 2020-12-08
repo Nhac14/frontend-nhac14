@@ -1,13 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tabs } from 'antd';
-
+import albumAPI from '../../api/album';
 import CardAlbum from './CardAlbum';
+
+
 const { TabPane } = Tabs;
 
-const ListAlbum = ({onHome}) => {
+const ListAlbum = ({onHome, page, limit}) => {
     // Nếu inHome thì chỉ gen ra 1 số lượng nhất định cardAlbum
     const [listAlbum, setListAlbum] = useState([]);
+
     const testData = [
         {
             image: '/images/26573415.jpg',
@@ -36,9 +39,26 @@ const ListAlbum = ({onHome}) => {
         },
     ]
 
+
     useEffect(() => {
+        console.log("OKKKKKK")
+            rechieveAlbumOnHome();
+        
+    }, [page]);
+
+    const rechieveAlbumOnHome = async () => {
+        let page = 1;
+        let limit = 16;
+        let {data} = await albumAPI.getAlbumList(page, limit);
+        console.log("data on home: ", data);
         setListAlbum(testData);
-    }, [])
+        }
+
+    const rechieveAlbum = async () => {
+        let {data} = await albumAPI.getAlbumList(page, limit);
+        console.log("data list album: ", data);
+        setListAlbum(testData);
+    }
 
 
     const NewestAlbums = () => {

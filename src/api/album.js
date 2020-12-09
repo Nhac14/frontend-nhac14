@@ -10,10 +10,27 @@ const getListAlbum = async (filter) => {
         url = url.concat('&&sort='+filter.sort);
     if(!filter.limit)
         url = url.concat('&&limit='+filter.limit);
-    const result = http.get(url);
-    console.log(url);
+    const response = await http.get(url);
+
+    let result = [];
+
+    response.data.data.forEach(function(element, index){
+        const abl = {
+            key: index,
+            name: element.name,
+            description: element.description,
+            category: element.category,
+            single: element.singers,
+            createAt: element.createdDate,
+            modifiedAt: element.modifiedDate
+        }
+
+        result.push(abl);
+        
+    })
+
     debugger
-    return await result;
+    return result;
 }
 
 export default {

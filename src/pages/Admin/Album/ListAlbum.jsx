@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Space, Table, Button, Modal } from 'antd';
 import Demo from './form-create-album.jsx';
 import getListAlbum from '../../../api/album';
@@ -7,16 +7,12 @@ const ListAlbum = () => {
     const [isShowModal, setIsShowModal] = useState(false);
 
     const [filterAlbum, setFilterAlbum] = useState(
-       {
-           sort: 0,
-           page: 0,
-           limit: 0
-       } 
+        {
+            sort: 0,
+            page: 0,
+            limit: 0
+        }
     );
-
-    const [response, setResponse] = useState({});
-    const rp = getListAlbum.getListAlbum(filterAlbum);
-    setResponse(rp);
 
     const showModal = () => {
         debugger
@@ -94,89 +90,29 @@ const ListAlbum = () => {
         },
     ];
 
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            description: 'some description in there',
-            category: "nhạc Rap",
-            single: "Justatee, Karik",
-            createdAt: '11-29-2020',
-            modifiedAt: '11-30-2020'
-        }, {
-            key: '2',
-            name: 'John Brown',
-            description: 'some description in there',
-            category: "nhạc Rap",
-            single: "Justatee, Karik",
-            createdAt: '11-29-2020',
-            modifiedAt: '11-30-2020'
-        },
-        {
-            key: '3',
-            name: 'John Brown',
-            description: 'some description in there',
-            category: "nhạc Rap",
-            single: "Justatee, Karik",
-            createdAt: '11-29-2020',
-            modifiedAt: '11-30-2020'
-        },
-        {
-            key: '4',
-            name: 'John Brown',
-            description: 'some description in there',
-            category: "nhạc Rap",
-            single: "Justatee, Karik",
-            createdAt: '11-29-2020',
-            modifiedAt: '11-30-2020'
-        },
-        {
-            key: '5',
-            name: 'John Brown',
-            description: 'some description in there',
-            category: "nhạc Rap",
-            single: "Justatee, Karik",
-            createdAt: '11-29-2020',
-            modifiedAt: '11-30-2020'
-        },
-        {
-            key: '6',
-            name: 'John Brown',
-            description: 'some description in there',
-            category: "nhạc Rap",
-            single: "Justatee, Karik",
-            createdAt: '11-29-2020',
-            modifiedAt: '11-30-2020'
-        }
-    ];
+    const[data, setData] = useState([]);
 
-    const albums = [];
-    debugger
-    response.data.forEach(element => {
-        const abl = {
-            key: albums.length - 1,
-            name: element.name,
-            description: element.description,
-            category: element.category,
-            single: element.singers,
-            createAt: element.createdDate,
-            modifiedAt: element.modifiedDate
-        }
-        albums.push(abl);
-    });
+
+
+    const getAlbums = async () => {
+        const rp = await getListAlbum.getListAlbum(filterAlbum);
+        setData(rp);
+    }
+
+    useEffect(() => getAlbums(), []);   
 
     return (<div>
-        <h1>this is ListAlbum component </h1>
+        <h1>List Album </h1>
         <Button type="primary" onClick={showModal}>Create new album</Button>
         <br></br>
         <Table columns={columns} dataSource={data} />
         <Modal
-          title="Add Album"
-          visible={isShowModal}
-          onOk={handleOk}
-          onCancel={handleCancel}
+            title="Add Album"
+            visible={isShowModal}
+            onOk={handleOk}
+            onCancel={handleCancel}
         >
-          <Demo/>
+            <Demo />
         </Modal>
     </div>);
 }

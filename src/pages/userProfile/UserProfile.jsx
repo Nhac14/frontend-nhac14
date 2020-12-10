@@ -82,7 +82,7 @@ function UserProfile() {
                                         </TabPane>
 
                                         <TabPane tab={<h4 className="hd-white">TÙY CHỌN</h4>} key="4">
-                                            <Options/>
+                                            <Options />
                                         </TabPane>
                                     </Tabs>
                                 </div>

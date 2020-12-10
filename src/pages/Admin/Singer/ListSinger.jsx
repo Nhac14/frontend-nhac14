@@ -21,81 +21,82 @@ const ListSinger = () => {
 
 
   
-    const data = [
-        {
-            key: '1',
-            name: 'John',
-            gender: 'Male',
-            age: 41,
-            avatar: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1606984213/v1/artists/s2/0/0/0/382.jpg?v=1606984213',
-            description:'',
-            favorites:'pop',
-            createdDate:'9/10/2001',
-            modifiedDate:'',
-            createdBy:'',
-            modifiedBy:'',
-            // tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Mixi',
-            gender: 'Male',
-            age: 30,
-            avatar: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1606984213/v1/artists/s2/0/0/3/3337.jpg?v=1606984213',
-            description:'',
-            favorites:'pop',
-            createdDate:'20/11/2000',
-            modifiedDate:'',
-            createdBy:'',
-            modifiedBy:'',
-            // tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Pew',
-            gender: 'Male',
-            age: 31,
-            avatar: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1606984213/v1/artists/s2/0/0/0/982.jpg?v=1606984213',
-            description:'',
-            favorites:'country',
-            createdDate:'11/11/1999',
-            modifiedDate:'',
-            createdBy:'',
-            modifiedBy:'',
-            // tags: ['cool', 'teacher'],
-        },
-        {
-            key: '4',
-            name: 'Faker',
-            gender: 'Male',
-            age: 23,
-            avatar: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1606984213/v1/artists/s2/0/0/19/19897.jpg?v=1606984213',
-            description:'',
-            favorites:'k-pop',
-            createdDate:'10/8/2010',
-            modifiedDate:'',
-            createdBy:'',
-            modifiedBy:'',
-            // tags: ['cool', 'teacher'],
-        },
-        {
-            key: '5',
-            name: 'TestName',
-            gender: 'Female',
-            age: 32,
-            avatar: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1606984213/v1/artists/s2/0/0/0/120.jpg?v=1606984213',
-            description:'',
-            favorites:'pop',
-            createdDate:'20/11/2020',
-            modifiedDate:'',
-            createdBy:'',
-            modifiedBy:'',
-            // tags: ['cool', 'teacher'],
-        },
-        ];
+    // const data = [
+    //     {
+    //         key: '1',
+    //         name: 'John',
+    //         gender: 'Male',
+    //         age: 41,
+    //         avatar: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1606984213/v1/artists/s2/0/0/0/382.jpg?v=1606984213',
+    //         description: '',
+    //         favorites: 'pop',
+    //         createdDate: '9/10/2001',
+    //         modifiedDate: '',
+    //         createdBy: '',
+    //         modifiedBy: '',
+    //         // tags: ['nice', 'developer'],
+    //     },
+    //     {
+    //         key: '2',
+    //         name: 'Mixi',
+    //         gender: 'Male',
+    //         age: 30,
+    //         avatar: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1606984213/v1/artists/s2/0/0/3/3337.jpg?v=1606984213',
+    //         description: '',
+    //         favorites: 'pop',
+    //         createdDate: '20/11/2000',
+    //         modifiedDate: '',
+    //         createdBy: '',
+    //         modifiedBy: '',
+    //         // tags: ['loser'],
+    //     },
+    //     {
+    //         key: '3',
+    //         name: 'Pew',
+    //         gender: 'Male',
+    //         age: 31,
+    //         avatar: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1606984213/v1/artists/s2/0/0/0/982.jpg?v=1606984213',
+    //         description: '',
+    //         favorites: 'country',
+    //         createdDate: '11/11/1999',
+    //         modifiedDate: '',
+    //         createdBy: '',
+    //         modifiedBy: '',
+    //         // tags: ['cool', 'teacher'],
+    //     },
+    //     {
+    //         key: '4',
+    //         name: 'Faker',
+    //         gender: 'Male',
+    //         age: 23,
+    //         avatar: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1606984213/v1/artists/s2/0/0/19/19897.jpg?v=1606984213',
+    //         description: '',
+    //         favorites: 'k-pop',
+    //         createdDate: '10/8/2010',
+    //         modifiedDate: '',
+    //         createdBy: '',
+    //         modifiedBy: '',
+    //         // tags: ['cool', 'teacher'],
+    //     },
+    //     {
+    //         key: '5',
+    //         name: 'TestName',
+    //         gender: 'Female',
+    //         age: 32,
+    //         avatar: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1606984213/v1/artists/s2/0/0/0/120.jpg?v=1606984213',
+    //         description: '',
+    //         favorites: 'pop',
+    //         createdDate: '20/11/2020',
+    //         modifiedDate: '',
+    //         createdBy: '',
+    //         modifiedBy: '',
+    //         // tags: ['cool', 'teacher'],
+    //     },
+    // ];
     useEffect(() => {
         console.log("aaaaaaa");
         getAllSinger();
+        
     }, [paging]);
 
 
@@ -121,7 +122,7 @@ const ListSinger = () => {
           <Button type="primary" href='/admin/singers/new'>Create Singer</Button>
         </div>
         
-            <Table dataSource={data} pagination={configPaging}>
+            <Table dataSource={dataTest} pagination={configPaging}>
                 
                 <Column title="Name" dataIndex="name" key="name" />
                 <Column title="Gender" dataIndex="gender" key="gender" />

@@ -13,12 +13,8 @@ import PublicRouter from './PublicRouter';
 const AppRouter = (props) => {
 
     const [isLoginedAdmin, setIsAdminLogined] = useState(false);
-    const [userToken, setUserToken] = useState(null);
     const [cookies, setCookie, removeCookie] = useCookies(["userToken", "user", "moderatorToken", "moderator"]);
     const [user, setUser] = useState(null);
-    const [userToken, setUserToken] = useState(null);
-    const [cookies, setCookie, removeCookie] = useCookies(["userToken", "user"]);
-    const [user, setUser] = useState("gggg");
     useEffect(() => {
         getAuthUser();
         getAuthAdmin();
@@ -36,8 +32,8 @@ const AppRouter = (props) => {
 
     const onLogout = (e) => {
         if(e){
-            removeCookie("userToken");
-            removeCookie("user");
+            removeCookie("userToken", {path: '/'});
+            removeCookie("user",  {path: '/'});
             setUser(null);
         }
       
@@ -85,8 +81,6 @@ const AppRouter = (props) => {
                     {
                         adminRouter.map(router => {
                             const { exact, path, component } = router;
-
-                            if(user) 
                             return (
                                 <AdminRouter exact={exact} path={path} component={component} />
                             )

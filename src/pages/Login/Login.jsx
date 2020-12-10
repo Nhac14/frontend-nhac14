@@ -15,7 +15,6 @@ function Login() {
 
     const [user, setUser] = useState({email: "", password: ""});
     
-console.log(cookie.userToken);
     const onSubmit = async () => {
         let {data} = await userAPI.login(user);
         if(data.result){
@@ -32,6 +31,7 @@ console.log(cookie.userToken);
         const {name, value} = e.target;
         setUser({...user, [name]: value});
     }
+
 
 
 

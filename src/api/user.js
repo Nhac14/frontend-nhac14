@@ -16,6 +16,23 @@ const register = (data) => {
     })
 }
 
+const register = (data) => {
+    return http.post('users/register', data, {
+        headers: {
+            'Content-Type': "application/json"
+        }
+    })
+}
+
+
+const getUserInfo = (token) => {
+    return http.get('users', {
+        headers: {
+            'Bearer': token
+        }
+    })
+}
+
 
 const getUserInfo = (token) => {
     return http.get('users', {

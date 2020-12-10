@@ -1,7 +1,7 @@
 import http from './config';
 
 const getAllSinger = () => {
-    return http.get('/singers/:singerId');
+    return http.get('/singers');
 }
 
 const getById = (singerId) => {

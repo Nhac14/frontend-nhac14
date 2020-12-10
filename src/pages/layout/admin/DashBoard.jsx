@@ -6,6 +6,7 @@ import {
     FileOutlined,
     TeamOutlined,
     UserOutlined,
+    LogoutOutlined,
 } from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 
@@ -14,13 +15,17 @@ import './style.scss';
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const DashBoard = ({children}) => {
+const DashBoard = ({children, onLogout}) => {
 
 
     const [collapsed, setCollapsed] = useState(false);
 
     const onCollapse = () => {
         setCollapsed(!collapsed);
+    }
+
+    const onLogoutModerator = () => {
+        onLogout(true);
     }
 
     return (
@@ -35,8 +40,14 @@ const DashBoard = ({children}) => {
                         <Link to="/admin/songs">Song</Link>
                     </Menu.Item>
                     <Menu.Item key="3" icon={<DesktopOutlined />}>
+                        <Link to="/admin/singers">Singer</Link>
+                    </Menu.Item>
+                    <Menu.Item key="4" icon={<UserOutlined />}>
                         <Link to="/admin/users">User</Link>
                     </Menu.Item>
+                    <SubMenu key="sub2" icon={<UserOutlined />} title="Moderator">
+                        <Menu.Item key="5" onClick={onLogoutModerator}>Đăng xuất</Menu.Item>
+                    </SubMenu>
                 </Menu>
             </Sider>
             <Layout className="site-layout">

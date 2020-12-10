@@ -26,6 +26,7 @@ const getUserInfo = (token) => {
 }
 
 
+
 export default {
     login,
     register,

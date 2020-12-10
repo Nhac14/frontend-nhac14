@@ -12,9 +12,11 @@ const getListAlbum = async (filter) => {
         url = url.concat('&&limit='+filter.limit);
     const response = await http.get(url);
 
-    let result = [];
+    let result = {};
 
-    response.data.data.forEach(function(element, index){
+    let temp = [];
+
+    response.data.results.forEach(function(element, index){
         const abl = {
             key: index,
             name: element.name,
@@ -25,12 +27,18 @@ const getListAlbum = async (filter) => {
             modifiedAt: element.modifiedDate
         }
 
-        result.push(abl);
+        temp.push(abl);
         
     })
 
-    debugger
+    result.data = response.data.results;
+    result.dataDisplay = temp;
     return result;
+}
+
+const deleteAlbumById = async (id, userToken) => {
+    let token = userToken ? userToken : "";
+   // const response = await http.delete("albums")
 }
 
 export default {

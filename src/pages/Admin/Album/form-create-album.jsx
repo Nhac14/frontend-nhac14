@@ -61,8 +61,8 @@ const Demo = () => {
       </Form.Item>
 
       <Form.Item
-        label="Description"
-        name="description"
+        label="Avatar"
+        name="avatar"
         rules={[{ required: false}]}
       >
       <Avatar/> 

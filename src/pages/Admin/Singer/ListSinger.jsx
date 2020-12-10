@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
-import { Table, Tag, Space,Image, AutoComplete } from 'antd';
+import { Table, Tag, Space,Image, AutoComplete, Pagination } from 'antd';
 import { Button } from 'antd';
 import { Upload } from 'antd';
+import singerAPI from '../../../api/singer';
 import './style.css';
 
 const ListSinger = () => {
     const { Column, ColumnGroup } = Table;
+    const [dataTest, setDataTest] = useState([]);
 
+    const getAllSinger = async () => {
+        // let {data} = await singerAPI.getAllSinger();
+        console.log(data);
+    }
+    // useEffect(() => {
+    //     effect
+    //     return () => {
+    //         cleanup
+    //     }
+    // }, [input])
     const data = [
         {
             key: '1',
@@ -79,13 +91,23 @@ const ListSinger = () => {
             // tags: ['cool', 'teacher'],
         },
         ];
+
+    const onChangePaging = (page, limit) => {
+        console.log("paging", page);
+    }
+
+    const configPaging = {
+        total: 50,
+        defaultCurrent: 1,
+        onChange:onChangePaging
+    }
     return ( <div>
         <h1>ListSinger</h1>
         <div className='right-pos'> 
           <Button type="primary" href='/admin/singers/new'>Create Singer</Button>
         </div>
         
-            <Table dataSource={data}>
+            <Table dataSource={data} pagination={configPaging}>
                 
                 <Column title="Name" dataIndex="name" key="name" />
                 <Column title="Gender" dataIndex="gender" key="gender" />

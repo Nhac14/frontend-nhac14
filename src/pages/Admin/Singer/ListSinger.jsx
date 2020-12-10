@@ -62,17 +62,17 @@ const ListSinger = () => {
         },
     ];
     const [data, setData] = useState([]);
-    const getAllSinger = async () => {
+    const getSinger = async () => {
         // console.log("getalll");
         const res = await singerAPI.getAllSinger(paging.page, paging.limit);
-        console.log("data singers : ", res);
+        // console.log("data singers : ", res);
         setData(res);
         // console.log("data singers : ", dt);
     }
     
     useEffect(() => {
             console.log("aaaaaaa");
-            getAllSinger();
+            getSinger();
             
         }, [paging]);
 

@@ -12,8 +12,15 @@
                 padding: 10px 8px;
                 display: inline-block;
                 overflow: hidden;
+                position: relative;
+                border-radius: 5px;
+                .image-card{
+                    overflow: hidden;
+                    height: 180px;
 
+                }
                 img{
+                border-radius: 5px;
                     width: 100%;
                 }
             
@@ -35,6 +42,24 @@
                     span{
                         color: rgb(214, 205, 205);
                     }
+                }
+                .on-hover-video{
+                    position: absolute;
+                    top: 38%;
+                    left: 43%;
+                    color: white;
+                    font-size: 30px;
+                    display: none;
+                }
+            }
+            .cardVideo:hover{
+                opacity: 0.5;
+                .on-hover-video{
+                    opacity: 1;
+                    display: block;
+                }
+                .on-hover-video:hover{
+                    cursor: pointer;
                 }
                 
             }

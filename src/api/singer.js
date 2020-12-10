@@ -2,6 +2,7 @@ import http from './config';
 
 const getAllSinger = (page, limit) => {
         let select="name,gender,age,favorites,avatar,_id";
+        console.log("debugging...")
         return http.get(`singers?page=${page}&limit=${limit}&select=${select}`);
     }
 

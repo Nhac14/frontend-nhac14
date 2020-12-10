@@ -1,13 +1,17 @@
 import React from 'react';
 import FooterX from './Footer/FooterX';
 import HeaderX from './Header/HeaderX';
+import Home from '../Home/Home';
 
-export default function MainLayout({children}){
+export default function MainLayout({children, user, logout}){
 
+    console.log("Mainlayout: ", user);
     return (
         <div>
-            <HeaderX/>
-                {children}
+            <HeaderX user={user} logout={(e) => logout(e)}/>
+                {
+                    children
+                }
             <FooterX/>
         </div>
     )

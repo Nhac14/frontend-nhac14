@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Tag, Space,Image, AutoComplete, Pagination } from 'antd';
 import { Button } from 'antd';
 import { Upload } from 'antd';
 import singerAPI from '../../../api/singer';
 import './style.css';
 
+
+const initialPaging = {
+    page: 1,
+    limit: 20,
+    prevPage: 1,
+    totalPage: 1,
+}
+
 const ListSinger = () => {
+
     const { Column, ColumnGroup } = Table;
     const [dataTest, setDataTest] = useState([]);
+    const [paging, setPaging] = useState(initialPaging);
 
-    const getAllSinger = async () => {
-        // let {data} = await singerAPI.getAllSinger();
-        console.log(data);
-    }
-    // useEffect(() => {
-    //     effect
-    //     return () => {
-    //         cleanup
-    //     }
-    // }, [input])
+
+  
     const data = [
         {
             key: '1',
@@ -91,15 +93,27 @@ const ListSinger = () => {
             // tags: ['cool', 'teacher'],
         },
         ];
+    useEffect(() => {
+        console.log("aaaaaaa");
+        getAllSinger();
+    }, [paging]);
+
+
+    const getAllSinger = async () => {
+        console.log("getalll")
+        const {data} = await singerAPI.getAllSinger(paging.page, paging.limit);
+        console.log("data singers : ", data);
+    }
+
 
     const onChangePaging = (page, limit) => {
-        console.log("paging", page);
+        setPaging({...paging, page: page});
     }
 
     const configPaging = {
         total: 50,
         defaultCurrent: 1,
-        onChange:onChangePaging
+        onChange: onChangePaging
     }
     return ( <div>
         <h1>ListSinger</h1>

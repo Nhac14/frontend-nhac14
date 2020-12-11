@@ -46,7 +46,7 @@ const ListSinger = () => {
             title: 'Avatar',
             dataIndex: 'avatar',
             key: 'avatar',
-            render:(image, avatarurl) => ( <Image width={40} src={avatarurl.avatar}/> ),
+            render:(avatar) => ( <Image width={40} height={40} src={avatar.path}/> ),
             
         },
         
@@ -61,12 +61,12 @@ const ListSinger = () => {
             ),
         },
     ];
-    const [data, setData] = useState([]);
+    const [singer, setSinger] = useState([]);
     const getSinger = async () => {
         // console.log("getalll");
-        const res = await singerAPI.getAllSinger(paging.page, paging.limit);
-        // console.log("data singers : ", res);
-        setData(res);
+        const {data} = await singerAPI.getAllSinger(paging.page, paging.limit);
+        console.log("data singers : ", data.data);
+        setSinger(data.data);
         // console.log("data singers : ", dt);
     }
     
@@ -92,9 +92,8 @@ const ListSinger = () => {
           <Button type="primary" href='/admin/singers/new'>Create Singer</Button>
         </div>
         
-        <Table columns={columns} dataSource={data}/>
-        
-        <h1>this is ListSinger component</h1>
+        <Table columns={columns} dataSource={singer}/>
+
        
     </div> );
 }

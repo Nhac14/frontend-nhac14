@@ -12,18 +12,11 @@ import PublicRouter from './PublicRouter';
 
 const AppRouter = (props) => {
 
-<<<<<<< HEAD
-    const history = useHistory();
-    const [isLoginedAdmin, setIsAdminLogined] = useState(true);
-    const [userToken, setUserToken] = useState(null);
-    const [cookies, setCookie, removeCookie] = useCookies(["userToken", "user"]);
-    const [user, setUser] = useState('123');
-=======
+
     const [isLoginedAdmin, setIsAdminLogined] = useState(false);
     const [userToken, setUserToken] = useState(null);
     const [cookies, setCookie, removeCookie] = useCookies(["userToken", "user", "moderatorToken", "moderator"]);
     const [user, setUser] = useState(null);
->>>>>>> master
 
     useEffect(() => {
         getAuthUser();
@@ -34,12 +27,6 @@ const AppRouter = (props) => {
     const getAuthUser = async () => {
         let token = await cookies.userToken;
         let userCookie = await cookies.user;
-<<<<<<< HEAD
-        console.log("token: ", token);
-        console.log("user: ", user);
-        if(userCookie)
-            setUser({name: userCookie.name, avatar: userCookie.avatar});
-=======
         if (userCookie)
             setUser({ name: userCookie.name, avatar: userCookie.avatar });
     }
@@ -49,7 +36,7 @@ const AppRouter = (props) => {
         let name = await cookies.moderator;
         if(token)
             setIsAdminLogined(true);
->>>>>>> master
+            
     }
 
     const onLogoutUser = (e) => {

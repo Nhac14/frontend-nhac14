@@ -1,9 +1,10 @@
 import {Modal} from 'antd';
 
-const confirmation = ({isShowModal, setIsShowModal}) => {
+const confirmation = ({isShowModal, setIsShowModal, indexOfRecord, data}) => {
 
     const handleOk = () => {
         setIsShowModal(false);
+        
     }
 
     const handleCancel = () => {

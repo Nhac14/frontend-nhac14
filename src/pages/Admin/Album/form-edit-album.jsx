@@ -1,14 +1,41 @@
 import { Space, Table, Button, Modal, Form, Input, Checkbox, Select } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Avatar from '../../Helper/Upload-image-preview.jsx';
+import categoryApi from '../../../api/category';
+import songApi from '../../../api/song';
+import singerApi from '../../../api/singer';
 
 const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
 
-    const { TextArea } = Input;
-
-
+    const [listCategory, setListCategory] = useState({});
+    const [listSinger, setListSinger] = useState({});
+    const [listSong, setListSong] = useState({});
 
     console.log(data);
+
+    const [inputDefaultValue, setInputDefaultValue] = useState({
+        name: "name",
+        category: ["category"],
+        singer: ["singer"],
+        song: ["song"],
+        description: "description"
+    });
+
+    console.log(inputDefaultValue);
+
+    useEffect(() => {
+        if (!isEmpty(data)) {
+            setInputDefaultValue({
+                name: data[indexOfRecord].name,
+                category: data[indexOfRecord].category,
+                singer: data[indexOfRecord].singer,
+                song: data[indexOfRecord].musiicList,
+                description: data[indexOfRecord].description
+            })
+        }
+    }, [indexOfRecord, data]);
+
+    const { TextArea } = Input;
 
     const layout = {
         labelCol: { span: 6 },
@@ -35,9 +62,23 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
         console.log('Failed:', errorInfo);
     };
 
+    const isEmpty = (obj) => {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
+
     const [selectedCategory, setSelectedCategory] = useState([]);
 
-    const OPTIONS1 = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
+    console.log(listCategory);
+    console.log(listSong);
+    console.log(listSinger);
+
+    const OPTIONS1 = !isEmpty(listCategory) ? listCategory.data.data.map(item => item.name) : [];
+
+    console.log(data);
 
     const category = () => {
         const handleChange = () => {
@@ -50,7 +91,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
                 mode="tags"
                 placeholder="Inserted are removed"
                 //value={categoryValue}
-                value={data?data[indexOfRecord].category:categoryValue}
+                value={inputDefaultValue.category}
                 onChange={handleChange}
                 style={{ width: '100%' }}
             >
@@ -65,7 +106,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
 
     const [selectedSingers, setSelectedSingers] = useState([]);
 
-    const OPTIONS2 = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
+    const OPTIONS2 = !isEmpty(listSinger) ? listSinger.data.data.map(item => item.name) : [];
 
 
     const singers = () => {
@@ -93,7 +134,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
 
     const [selectedSongs, setSelectedSongs] = useState([]);
 
-    const OPTIONS3 = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
+    const OPTIONS3 = !isEmpty(listSong) ? listSong.data.results.map(item => item.name) : [];
 
     const songs = () => {
         const handleChange = () => {
@@ -118,6 +159,18 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
         );
     }
 
+    const handleAsync = async () => {
+        let tmp1 = await categoryApi.getAllCategory();
+        let tmp2 = await songApi.getAllSongAsync();
+        let tmp3 = await singerApi.getAllSingerAsync();
+
+        setListCategory(tmp1);
+        setListSinger(tmp3);
+        setListSong(tmp2);
+    }
+
+    useEffect(() => handleAsync(), []);
+
     const form = () => (
         <Form
             {...layout}
@@ -131,7 +184,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
                 name="name"
                 rules={[{ required: true, message: 'Please input album\'s name!' }]}
             >
-                <Input defaultValue={data?data[indexOfRecord].name:""} name="name"/>
+                <Input defaultValue={inputDefaultValue.name} name="name" />
             </Form.Item>
 
             <Form.Item
@@ -162,25 +215,25 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
                 label="Description"
                 name="description"
                 rules={[{ required: false }]}
-                defaultValue={data?data[indexOfRecord].description:""}
+                defaultValue={data ? data[indexOfRecord].description : ""}
             >
                 <TextArea rows={6} />
             </Form.Item>
-
+            {/* 
             <Form.Item
                 label="Avatar"
                 name="avatar"
                 rules={[{ required: false }]}
             >
                 <Avatar />
-            </Form.Item>
+            </Form.Item> */}
 
 
-            {/* <Form.Item {...tailLayout}>
+            <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                     Submit
         </Button>
-            </Form.Item> */}
+            </Form.Item>
         </Form>
     )
 

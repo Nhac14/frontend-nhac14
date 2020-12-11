@@ -44,8 +44,10 @@ const ListAlbum = () => {
         setRecordSelected(record);
     }
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = (index, record) => {
         setIsShowModalConfirm(true);
+        setIndexSelected(index);
+        setRecordSelected(record);
     }
 
     const columns = [
@@ -74,9 +76,9 @@ const ListAlbum = () => {
             }
         },
         {
-            title: 'Single',
-            dataIndex: 'single',
-            key: 'single',
+            title: 'Singer',
+            dataIndex: 'singer',
+            key: 'singer',
 
         },
         {
@@ -106,7 +108,7 @@ const ListAlbum = () => {
                 return (
                     <Space size="middle">
                         <Button onClick={() => handleEditClick(index, record)}>Edit</Button>
-                        <Button onClick={handleDeleteClick}>Delete</Button>
+                        <Button onClick={() => handleDeleteClick(index, record)}>Delete</Button>
                     </Space>
                 )
             },
@@ -153,7 +155,13 @@ const ListAlbum = () => {
             indexOfRecord={indexSelected}
             data={data.data} />
 
-        <Confirmation isShowModal={isShowModalConfirm} setIsShowModal={onHandleShowModalConfirm} />
+        {/* modal xoa */}
+        <Confirmation
+            isShowModal={isShowModalConfirm}
+            setIsShowModal={onHandleShowModalConfirm}
+            indexOfRecord={indexSelected} data={data.data}
+        />
+        
     </div>);
 }
 export default ListAlbum;

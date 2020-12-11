@@ -17,9 +17,19 @@ const register = (data) => {
 }
 
 
+const getUserInfo = (token) => {
+    return http.get('users', {
+        headers: {
+            'Bearer': token
+        }
+    })
+}
+
+
 
 export default {
     login,
-    register
+    register,
+    getUserInfo
 
 }

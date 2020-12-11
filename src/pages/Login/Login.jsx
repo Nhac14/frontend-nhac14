@@ -15,7 +15,6 @@ function Login() {
 
     const [user, setUser] = useState({email: "", password: ""});
     
-console.log(cookie.userToken);
     const onSubmit = async () => {
         let {data} = await userAPI.login(user);
         if(data.result){

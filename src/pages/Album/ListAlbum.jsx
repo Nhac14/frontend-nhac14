@@ -1,44 +1,35 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tabs } from 'antd';
-
+import albumAPI from '../../api/album';
 import CardAlbum from './CardAlbum';
+
+
 const { TabPane } = Tabs;
 
-const ListAlbum = ({onHome}) => {
-    // Nếu inHome thì chỉ gen ra 1 số lượng nhất định cardAlbum
-    const [listAlbum, setListAlbum] = useState([]);
-    const testData = [
-        {
-            image: '/images/26573415.jpg',
-            name: "RapViet"
-        },
-        {
-            image: '/images/26573415.jpg',
-            name: "Những bài hát hay nhất của Đức Phúc"
-        },
-        {
-            image: '/images/26573415.jpg',
-            name: "RapViet"
-        },
+const ListAlbum = ({onHome, page, limit}) => {
 
-        {
-            image: '/images/26573415.jpg',
-            name: "RapViet"
-        },
-        {
-            image: '/images/26573415.jpg',
-            name: "Những bài hát hay nhất của Đức Phúc"
-        },
-        {
-            image: '/images/26573415.jpg',
-            name: "RapViet"
-        },
-    ]
+    // Nếu onHome thì chỉ gen ra 1 số lượng nhất định cardAlbum
+    const [listAlbum, setListAlbum] = useState([]);
 
     useEffect(() => {
-        setListAlbum(testData);
-    }, [])
+        if(onHome)
+            rechieveAlbumOnHome();
+        else
+            rechieveAlbum();
+    }, [page]);
+
+    const rechieveAlbumOnHome = async () => {
+        let {data} = await albumAPI.getAlbumList(page, limit);
+        if(data.success)
+            setListAlbum(data.results);
+        }
+
+    const rechieveAlbum = async () => {
+        let {data} = await albumAPI.getAlbumList(page, limit);
+        if(data.success)
+            setListAlbum(data.results);
+    }
 
 
     const NewestAlbums = () => {

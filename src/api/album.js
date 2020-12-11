@@ -87,7 +87,17 @@ const deleteAlbumById = async (id, userToken) => {
     let token = userToken ? userToken : "";
     // const response = await http.delete("albums")
 }
+const getAlbumList = (page, limit) => {
+    let select="cover_image,name,_id";
+    return http.get(`albums?page=${page}&limit=${limit}&select=${select}`);
+}
+
+const getAlbumById = (albumId) => {
+    return http.get(`albums/${albumId}`);
+}
 
 export default {
-    getListAlbum,
+    getAlbumList,
+    getAlbumById,
+    getListAlbum
 }

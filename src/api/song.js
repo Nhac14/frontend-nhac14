@@ -4,12 +4,22 @@ const getSong = (userId, songId) => {
     return http.get(`users/${userId}/songs/${songId}`);
 }
 
-const createSong = (data) => {
-    return http.post(``);
+const createSong = (data, accesstoken) => {
+    return http.post('admin/songs', data, {
+        headers: {
+            'Authorization': 'Bearer ' + accesstoken,
+            
+        }
+    });
 }
 
-const getAllVideo = () => {
-    return http.get('songs');
+const getAllVideo = (page, limit) => {
+    let select="cover_image,name,_id";
+    return http.get(`songs?page=${page}&limit=${limit}&select=${select}`);
+}
+
+const getSongs = (page, limit) => {
+    return http.get(`songs?page=${page}&limit=${limit}`);
 }
 
 const getAllSongAsync = async () => {
@@ -17,18 +27,21 @@ const getAllSongAsync = async () => {
 }
 
 const getSongById = (songId, userToken) => {
+    console.log("token axios ", userToken);
     let token = userToken ? userToken : "";
     return http.get(`users/songs/${songId}`, {
         headers: {
-            'Authorization': token
+            'Bearer': token
         }
     });
 }
 
 export default {
     getAllSongAsync,
+    createSong,
     getSong,
     getAllVideo,
-    getSongById
+    getSongById,
+    getSongs,
 
 }

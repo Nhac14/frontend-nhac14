@@ -19,12 +19,12 @@ const PlayerVideoPage = (props) => {
     useEffect(() => {
         let songId = props.match.params.videoId;
         rechieveVideo(songId);
-    });
+    }, []);
 
     const rechieveVideo = async (songId) => {
         let { data } = await songAPI.getSongById(songId, cookies.userToken);
         let mv = data.result.song;
-        console.log(mv);
+        console.log("MV aaa: ", mv);
         if (mv) {
             setMusicVideo({ path: mv.file.path, name: mv.name });
         }

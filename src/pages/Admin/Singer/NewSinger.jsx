@@ -2,6 +2,7 @@ import { Form, Input, Button, Checkbox, Select } from 'antd';
 // import { Select } from 'antd';
 import SelectGender from '../../Helper/SelectGender';
 import Avatar from '../../Helper/Upload-image-preview';
+import singerAPI from '../../../api/singer';
 
 
 const layout = {
@@ -46,7 +47,7 @@ function handleChange(value) {
       <Form.Item
         label="Gender"
         name="gender"
-        rules={[{ required: true , message:'Plese select your gender'}]}
+        rules={[{ required:false}]}
       >
          <SelectGender/>
       </Form.Item>
@@ -76,7 +77,7 @@ function handleChange(value) {
       </Form.Item>
 
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" onClick={singerAPI.createSinger}>
           Submit
         </Button>
       </Form.Item>

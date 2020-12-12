@@ -3,6 +3,7 @@ import { Form, Input, Button, Checkbox, Select } from 'antd';
 import SelectGender from '../../Helper/SelectGender';
 import Avatar from '../../Helper/Upload-image-preview';
 import singerAPI from '../../../api/singer';
+import {useEffect} from 'react';
 
 
 const layout = {
@@ -28,6 +29,13 @@ const { Option } = Select;
 function handleChange(value) {
   console.log(`selected ${value}`);
 }
+const create = singerAPI.createSinger; 
+// useEffect(() => {
+    
+//     return () => {
+//         cleanup
+//     }
+// }, [])
   return (
     <Form
       {...layout}
@@ -65,7 +73,7 @@ function handleChange(value) {
         name="favorites"
         rules={[{ required: false}]}
       >
-        <TextArea rows={6}/>
+        <Input/>
       </Form.Item>
 
       <Form.Item
@@ -77,7 +85,7 @@ function handleChange(value) {
       </Form.Item>
 
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit" onClick={singerAPI.createSinger}>
+        <Button type="primary" htmlType="submit" onClick={this.create}>
           Submit
         </Button>
       </Form.Item>

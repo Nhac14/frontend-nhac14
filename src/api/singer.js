@@ -6,6 +6,7 @@ const getAllSinger = (page, limit) => {
     }
 const createSinger = ()=>{
     return http.post(`admin/singers`);
+
 }
 const getById = (singerId) => {
     return http.get(`/singers/${singerId}`);

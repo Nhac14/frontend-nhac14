@@ -56,6 +56,7 @@ const NewSong = ({moderatorToken}) => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
+        console.log(moderatorToken)
         fetchCategories();
         fetchSingers();
     })

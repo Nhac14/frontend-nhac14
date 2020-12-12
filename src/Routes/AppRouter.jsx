@@ -51,7 +51,7 @@ const AppRouter = (props) => {
     const getAuthAdmin = async () => {
         let token = await cookies.moderatorToken;
         let name = await cookies.moderator;
-        if (token)
+        if(token)
             setIsAdminLogined(true);
     }
 
@@ -82,7 +82,7 @@ const AppRouter = (props) => {
                         adminRouter.map(router => {
                             const { exact, path, component } = router;
                             return (
-                                <AdminRouter exact={exact} path={path} component={component} />
+                                <AdminRouter exact={exact} path={path} component={component} moderatorToken={cookies.moderatorToken}/>
                             )
                         })
                     }

@@ -5,13 +5,22 @@ const getSong = (userId, songId) => {
     return http.get(`users/${userId}/songs/${songId}`);
 }
 
-const createSong = (data) => {
-    return http.post(``);
+const createSong = (data, accesstoken) => {
+    return http.post('admin/songs', data, {
+        headers: {
+            'Authorization': 'Bearer ' + accesstoken,
+            
+        }
+    });
 }
 
 const getAllVideo = (page, limit) => {
     let select="cover_image,name,_id";
     return http.get(`songs?page=${page}&limit=${limit}&select=${select}`);
+}
+
+const getSongs = (page, limit) => {
+    return http.get(`songs?page=${page}&limit=${limit}`);
 }
 
 const getSongById = (songId, userToken) => {
@@ -25,9 +34,10 @@ const getSongById = (songId, userToken) => {
 }
 
 export default {
-
+    createSong,
     getSong,
     getAllVideo,
-    getSongById
+    getSongById,
+    getSongs,
 
 }

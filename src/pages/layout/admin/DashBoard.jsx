@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
-    DesktopOutlined,
-    PieChartOutlined,
-    FileOutlined,
-    TeamOutlined,
     UserOutlined,
-    LogoutOutlined,
+    CustomerServiceOutlined,
+    BarsOutlined,
+    DingtalkOutlined,
+    TrademarkCircleOutlined
 } from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 
@@ -33,19 +32,19 @@ const DashBoard = ({children, onLogout}) => {
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
                 <div className="logoAd"><img src='/icons/nhacvn.png' alt="nhacvn"></img> </div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                    <Menu.Item key="1" icon={<PieChartOutlined />}>
+                    <Menu.Item key="1" icon={<BarsOutlined />}>
                         <Link to="/admin/albums">Album</Link>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<DesktopOutlined />}>
+                    <Menu.Item key="2" icon={<CustomerServiceOutlined />}>
                         <Link to="/admin/songs">Song</Link>
                     </Menu.Item>
-                    <Menu.Item key="3" icon={<DesktopOutlined />}>
+                    <Menu.Item key="3" icon={<DingtalkOutlined />}>
                         <Link to="/admin/singers">Singer</Link>
                     </Menu.Item>
                     <Menu.Item key="4" icon={<UserOutlined />}>
                         <Link to="/admin/users">User</Link>
                     </Menu.Item>
-                    <SubMenu key="sub2" icon={<UserOutlined />} title="Moderator">
+                    <SubMenu key="sub2" icon={<TrademarkCircleOutlined/>} title="Moderator">
                         <Menu.Item key="5" onClick={onLogoutModerator}>Đăng xuất</Menu.Item>
                     </SubMenu>
                 </Menu>

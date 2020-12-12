@@ -9,7 +9,7 @@ import './style.css';
 const ListSinger = () => {
 
     const [singer, setSinger] = useState([]);
-    const [paging, setPaging] = useState({current: 1, pageSize: 10, total: 100, defaultCurrent: 1});
+    const [paging, setPaging] = useState({current: 1, pageSize: 5, total: 100, defaultCurrent: 1});
     const [filters, setFilters] = useState();
     const [sorter, setSorter] = useState();
 

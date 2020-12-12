@@ -26,7 +26,10 @@ const getByIdAsync = async (singerId) => {
 
 export default {
     getAllSinger,
-    getById,
-    createSinger
-    getByIdAsync
+    createSinger,
+    getAllSingerAsync,
+    getByIdAsync,
+    getById
+    
+
 }

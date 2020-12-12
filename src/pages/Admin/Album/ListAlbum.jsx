@@ -4,6 +4,7 @@ import Demo from './form-create-album.jsx';
 import getListAlbum from '../../../api/album';
 import FormEdit from './form-edit-album';
 import Confirmation from './ModalConfirmDelete';
+import singer from '../../../api/singer.js';
 
 const ListAlbum = () => {
     const [isShowModal, setIsShowModal] = useState(false);
@@ -134,7 +135,7 @@ const ListAlbum = () => {
         setIsShowModalConfirm(value);
     }
 
-    console.log(data.data);
+    console.log("singer: ", singer.data);
 
     return (<div>
         <h1>List Album </h1>
@@ -159,7 +160,7 @@ const ListAlbum = () => {
         <Confirmation
             isShowModal={isShowModalConfirm}
             setIsShowModal={onHandleShowModalConfirm}
-            indexOfRecord={indexSelected} data={data.data}
+            indexOfRecord={indexSelected} data={singer.data}
         />
         
     </div>);

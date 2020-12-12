@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Tag, Space,Image, AutoComplete, Pagination } from 'antd';
 import { Button } from 'antd';
 import singerAPI from '../../../api/singer';
+import Confirmation from './ModalConfirmDelete';
 import './style.css';
 
 
@@ -12,12 +13,17 @@ const ListSinger = () => {
     const [paging, setPaging] = useState({current: 1, pageSize: 5, total: 100, defaultCurrent: 1});
     const [filters, setFilters] = useState();
     const [sorter, setSorter] = useState();
+    const [indexSelected, setIndexSelected] = useState(0);
+    const [recordSelected, setRecordSelected] = useState({});
+    const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
 
     useEffect(() => {
         getSinger();
         
 }, [paging.current]);
+ 
     // const [age,setAge] = useState([]);
+    // console.log("data: ", singer.data);
     const columns = [
         
         {
@@ -62,12 +68,16 @@ const ListSinger = () => {
         {
             title: 'Action',
             key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    <a>Edit</a>
-                    <a>Delete</a>
-                </Space>
-            ),
+            render: (text, record, index) => {
+                // console.log(index);
+                console.log("record:", record);
+                return (
+                    <Space size="middle">
+                        <Button >Edit</Button>
+                        <Button onClick={() => handleDeleteClick(index, record)}>Delete</Button>
+                    </Space>
+                )
+            },
         },
     ];
 
@@ -98,6 +108,14 @@ const ListSinger = () => {
         page: paging.page,
         onChange: onChangePaging
     }
+    const handleDeleteClick = (index, record) => {
+        setIsShowModalConfirm(true);
+        setIndexSelected(index);
+        setRecordSelected(record);
+    }
+    const onHandleShowModalConfirm = (value) => {
+        setIsShowModalConfirm(value);
+    }
     return ( <div>
         <h1>ListSinger</h1>
         <div className='right-pos'> 
@@ -105,7 +123,12 @@ const ListSinger = () => {
         </div>
         
         <Table columns={columns} dataSource={singer} pagination={configPagination} onChange={handleTableChange} />
-
+        
+        <Confirmation
+            isShowModal={isShowModalConfirm}
+            setIsShowModal={onHandleShowModalConfirm}
+            indexOfRecord={indexSelected} data={singer}
+        />
        
     </div> );
 }

@@ -9,7 +9,18 @@ function getBase64(img, callback) {
 }
 
 function beforeUpload(file) {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+import { Upload, message } from 'antd';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import React from 'react';
+
+function getBase64(img, callback) {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
+
+function beforeUpload(file) {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'|| file.type === 'image/jpg';
   if (!isJpgOrPng) {
     message.error('You can only upload JPG/PNG file!');
   }
@@ -38,6 +49,8 @@ export default class Avatar extends React.Component {
           loading: false,
         }),
       );
+      console.log(this.state.imageUrl);
+      alert(1);
     }
   };
 
@@ -55,7 +68,7 @@ export default class Avatar extends React.Component {
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        //action="https://www.mocky.io/v2/5cc8019d300000980a055e76" 
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76" 
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >

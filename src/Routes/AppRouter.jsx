@@ -12,6 +12,7 @@ import PublicRouter from './PublicRouter';
 
 const AppRouter = (props) => {
 
+
     const [isLoginedAdmin, setIsAdminLogined] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(["userToken", "user", "moderatorToken", "moderator"]);
     const [user, setUser] = useState(null);
@@ -53,6 +54,7 @@ const AppRouter = (props) => {
         let name = await cookies.moderator;
         if(token)
             setIsAdminLogined(true);
+            
     }
 
     const onLogoutUser = (e) => {
@@ -88,10 +90,9 @@ const AppRouter = (props) => {
                     }
                 </Switch>
             </DashBoard>
-
         )
     }
-
+    
     const PublicApp = () => {
         return (
             <MainLayout user={user} logout={onLogoutUser}>

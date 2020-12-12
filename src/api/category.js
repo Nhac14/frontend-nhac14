@@ -1,11 +1,14 @@
 import http from './config';
 
+const getAllCategory = async () => {
+    return await http.get('categorys');
+}
 
-const getListCategory = () => {
-    return http.get('categories');
+const getByIdAsync = async (categoryID) => {
+    return await http.get(`categorys/${categoryID}`);
 }
 
 export default {
-    getListCategory
-    
+    getAllCategory,
+    getByIdAsync
 }

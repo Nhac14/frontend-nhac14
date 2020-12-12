@@ -2,9 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Space, Table, Button, Modal } from 'antd';
 import Demo from './form-create-album.jsx';
 import getListAlbum from '../../../api/album';
+import FormEdit from './form-edit-album';
+import Confirmation from './ModalConfirmDelete';
 
 const ListAlbum = () => {
     const [isShowModal, setIsShowModal] = useState(false);
+
+    const [isShowModalEdit, setIsShowModalEdit] = useState(false);
+
+    const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
 
     const [filterAlbum, setFilterAlbum] = useState(
         {
@@ -14,8 +20,11 @@ const ListAlbum = () => {
         }
     );
 
+    const [indexSelected, setIndexSelected] = useState(0);
+
+    const [recordSelected, setRecordSelected] = useState({});
+
     const showModal = () => {
-        debugger
         setIsShowModal(true);
     }
 
@@ -27,6 +36,18 @@ const ListAlbum = () => {
     const handleCancel = e => {
         console.log(e);
         setIsShowModal(false);
+    }
+
+    const handleEditClick = (index, record) => {
+        setIsShowModalEdit(true);
+        setIndexSelected(index);
+        setRecordSelected(record);
+    }
+
+    const handleDeleteClick = (index, record) => {
+        setIsShowModalConfirm(true);
+        setIndexSelected(index);
+        setRecordSelected(record);
     }
 
     const columns = [
@@ -55,9 +76,9 @@ const ListAlbum = () => {
             }
         },
         {
-            title: 'Single',
-            dataIndex: 'single',
-            key: 'single',
+            title: 'Singer',
+            dataIndex: 'singer',
+            key: 'singer',
 
         },
         {
@@ -81,16 +102,20 @@ const ListAlbum = () => {
         {
             title: 'Action',
             key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    <a>Edit</a>
-                    <a>Delete</a>
-                </Space>
-            ),
+            render: (text, record, index) => {
+                // console.log(index);
+                console.log(record);
+                return (
+                    <Space size="middle">
+                        <Button onClick={() => handleEditClick(index, record)}>Edit</Button>
+                        <Button onClick={() => handleDeleteClick(index, record)}>Delete</Button>
+                    </Space>
+                )
+            },
         },
     ];
 
-    const[data, setData] = useState([]);
+    const [data, setData] = useState([]);
 
 
 
@@ -99,13 +124,23 @@ const ListAlbum = () => {
         setData(rp);
     }
 
-    useEffect(() => getAlbums(), []);   
+    useEffect(() => getAlbums(), []);
+
+    const onHandleShowModal = (e) => {
+        setIsShowModalEdit(e);
+    }
+
+    const onHandleShowModalConfirm = (value) => {
+        setIsShowModalConfirm(value);
+    }
+
+    console.log(data.data);
 
     return (<div>
         <h1>List Album </h1>
         <Button type="primary" onClick={showModal}>Create new album</Button>
         <br></br>
-        <Table columns={columns} dataSource={data} />
+        <Table columns={columns} dataSource={data.dataDisplay} />
         <Modal
             title="Add Album"
             visible={isShowModal}
@@ -114,7 +149,19 @@ const ListAlbum = () => {
         >
             <Demo />
         </Modal>
+        <FormEdit
+            isShowModal={isShowModalEdit}
+            setIsShowModal={onHandleShowModal}
+            indexOfRecord={indexSelected}
+            data={data.data} />
+
+        {/* modal xoa */}
+        <Confirmation
+            isShowModal={isShowModalConfirm}
+            setIsShowModal={onHandleShowModalConfirm}
+            indexOfRecord={indexSelected} data={data.data}
+        />
+        
     </div>);
 }
-
 export default ListAlbum;

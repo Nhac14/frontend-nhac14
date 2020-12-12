@@ -16,8 +16,6 @@ const getListAlbum = async (filter) => {
     const singers = await singer.getAllSingerAsync();
     const categories = await category.getAllCategory();
 
-
-    debugger
     let result = {};
 
     let temp = [];
@@ -72,8 +70,6 @@ const getListAlbum = async (filter) => {
             modifiedAt: element.modifiedDate
         }
 
-        debugger
-
         temp.push(abl);
 
     })
@@ -83,9 +79,12 @@ const getListAlbum = async (filter) => {
     return result;
 }
 
-const deleteAlbumById = async (id, userToken) => {
-    let token = userToken ? userToken : "";
-    // const response = await http.delete("albums")
+const deleteAlbumById = (id, userToken) => {
+    return http.delete(`admin/albums/${id}`, {
+        headers: {
+            'Authorization': 'Bearer ' + userToken
+        }
+    })
 }
 const getAlbumList = (page, limit) => {
     let select="cover_image,name,_id";
@@ -96,8 +95,36 @@ const getAlbumById = (albumId) => {
     return http.get(`albums/${albumId}`);
 }
 
+const createAlbum = (data, accesstoken) => {
+    return http.post('admin/albums', data, {
+        headers: {
+            'Authorization': 'Bearer ' + accesstoken,
+        }
+    });
+}
+
+const editAlbum = (id, token, data) => {
+    return http.put(`admin/albums/${id}`,data, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    })
+}
+
+const editCoverImage = (id, data, token) => {
+    return http.put(`admin/albums/updateCoverImage/${id}`, data, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    });
+}
+
 export default {
     getAlbumList,
     getAlbumById,
-    getListAlbum
+    getListAlbum,
+    deleteAlbumById,
+    createAlbum,
+    editAlbum,
+    editCoverImage
 }

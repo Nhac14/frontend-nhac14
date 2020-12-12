@@ -1,39 +1,22 @@
-import { Space, Table, Button, Modal, Form, Input, Checkbox, Select } from 'antd';
+import { Space, Table, Button, Modal, Form, Input, Checkbox, Select, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import Avatar from '../../Helper/Upload-image-preview.jsx';
 import categoryApi from '../../../api/category';
 import songApi from '../../../api/song';
 import singerApi from '../../../api/singer';
+import albumApi from '../../../api/album';
+import album from '../../../api/album';
+import ImageUpload from '../../Admin/Song/ImageUpload';
 
-const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
+const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) => {
 
     const [listCategory, setListCategory] = useState({});
     const [listSinger, setListSinger] = useState({});
     const [listSong, setListSong] = useState({});
 
-    console.log(data);
+    const [image, setImage] = useState({});
 
-    const [inputDefaultValue, setInputDefaultValue] = useState({
-        name: "name",
-        category: ["category"],
-        singer: ["singer"],
-        song: ["song"],
-        description: "description"
-    });
-
-    console.log(inputDefaultValue);
-
-    useEffect(() => {
-        if (!isEmpty(data)) {
-            setInputDefaultValue({
-                name: data[indexOfRecord].name,
-                category: data[indexOfRecord].category,
-                singer: data[indexOfRecord].singer,
-                song: data[indexOfRecord].musiicList,
-                description: data[indexOfRecord].description
-            })
-        }
-    }, [indexOfRecord, data]);
+    const [albumInfo, setAlbumInfo] = useState({});
 
     const { TextArea } = Input;
 
@@ -54,8 +37,23 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
         setIsShowModal(false)
     }
 
-    const onFinish = values => {
-        console.log('Success:', values);
+
+    // submit form
+    const onFinish = async (values) => {
+        // console.log('Success:', values);
+        let formDataImage = new FormData();
+        formDataImage.append("cover_image", image);
+
+        await album.editCoverImage(data[indexOfRecord]._id, formDataImage, token)
+
+        await album.editAlbum(data[indexOfRecord]._id, token, albumInfo);
+
+        // if (data) {
+        //     if (data.status === 1) {
+        //         notification.success({ message: "edit successfully" });
+        //         setTimeout(() => window.location.reload(), 1000);
+        //     }
+        // }
     };
 
     const onFinishFailed = errorInfo => {
@@ -76,13 +74,13 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
     console.log(listSong);
     console.log(listSinger);
 
-    const OPTIONS1 = !isEmpty(listCategory) ? listCategory.data.data.map(item => item.name) : [];
+    const OPTIONS1 = !isEmpty(listCategory) ? listCategory.data.data.map(item => item) : [];
 
     console.log(data);
 
     const category = () => {
-        const handleChange = () => {
-            setSelectedCategory(categoryValue);
+        const handleChange = (value) => {
+            setSelectedCategory(value);
         }
         const categoryValue = selectedCategory;
         const filteredOptions = OPTIONS1.filter(o => !categoryValue.includes(o));
@@ -91,13 +89,13 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
                 mode="tags"
                 placeholder="Inserted are removed"
                 //value={categoryValue}
-                value={inputDefaultValue.category}
+                // value={inputDefaultValue.category}
                 onChange={handleChange}
                 style={{ width: '100%' }}
             >
                 {filteredOptions.map(item => (
-                    <Select.Option key={item} value={item}>
-                        {item}
+                    <Select.Option key={item._id} value={item._id}>
+                        {item.name}
                     </Select.Option>
                 ))}
             </Select>
@@ -106,12 +104,12 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
 
     const [selectedSingers, setSelectedSingers] = useState([]);
 
-    const OPTIONS2 = !isEmpty(listSinger) ? listSinger.data.data.map(item => item.name) : [];
+    const OPTIONS2 = !isEmpty(listSinger) ? listSinger.data.data.map(item => item) : [];
 
 
     const singers = () => {
-        const handleChange = () => {
-            setSelectedSingers(singersValue);
+        const handleChange = (value) => {
+            setSelectedSingers(value);
         }
         const singersValue = selectedSingers;
         const filteredOptions = OPTIONS2.filter(o => !singersValue.includes(o));
@@ -124,8 +122,8 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
                 style={{ width: '100%' }}
             >
                 {filteredOptions.map(item => (
-                    <Select.Option key={item} value={item}>
-                        {item}
+                    <Select.Option key={item._id} value={item._id}>
+                        {item.name}
                     </Select.Option>
                 ))}
             </Select>
@@ -134,11 +132,11 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
 
     const [selectedSongs, setSelectedSongs] = useState([]);
 
-    const OPTIONS3 = !isEmpty(listSong) ? listSong.data.results.map(item => item.name) : [];
+    const OPTIONS3 = !isEmpty(listSong) ? listSong.data.results.map(item => item) : [];
 
     const songs = () => {
-        const handleChange = () => {
-            setSelectedSongs(songsValue);
+        const handleChange = (value) => {
+            setSelectedSongs(value);
         }
         const songsValue = selectedSongs;
         const filteredOptions = OPTIONS3.filter(o => !songsValue.includes(o));
@@ -151,8 +149,8 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
                 style={{ width: '100%' }}
             >
                 {filteredOptions.map(item => (
-                    <Select.Option key={item} value={item}>
-                        {item}
+                    <Select.Option key={item._id} value={item._id}>
+                        {item.name}
                     </Select.Option>
                 ))}
             </Select>
@@ -167,6 +165,24 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
         setListCategory(tmp1);
         setListSinger(tmp3);
         setListSong(tmp2);
+    }
+
+    const getName = (e) => {
+        const { text, value } = e.target;
+        setAlbumInfo({ ...albumInfo, name: value });
+    }
+
+    // {
+    //     name: data[indexOfRecord].name,
+    //     category: ["1", "2"],
+    //     singer: ["2", "1"],
+    //     song: ["23"],
+    //     description: data[indexOfRecord].description
+    // }
+
+    const getImage = (image) => {
+        setImage(image);
+        console.log(image);
     }
 
     useEffect(() => handleAsync(), []);
@@ -184,7 +200,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
                 name="name"
                 rules={[{ required: true, message: 'Please input album\'s name!' }]}
             >
-                <Input defaultValue={inputDefaultValue.name} name="name" />
+                <Input value={!isEmpty(albumInfo) ? albumInfo.name : ""} name="name" onChange={getName} />
             </Form.Item>
 
             <Form.Item
@@ -219,14 +235,14 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
             >
                 <TextArea rows={6} />
             </Form.Item>
-            {/* 
+
             <Form.Item
                 label="Avatar"
                 name="avatar"
                 rules={[{ required: false }]}
             >
-                <Avatar />
-            </Form.Item> */}
+                <ImageUpload onChange={getImage} />
+            </Form.Item>
 
 
             <Form.Item {...tailLayout}>
@@ -240,6 +256,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data }) => {
     return (
         <div>
             <Modal
+                width={1000}
                 title="Edit Album"
                 visible={isShowModal}
                 onOk={handleOk}

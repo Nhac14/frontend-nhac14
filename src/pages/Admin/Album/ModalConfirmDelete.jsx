@@ -1,10 +1,11 @@
 import {Modal} from 'antd';
+import album from '../../../api/album';
 
-const confirmation = ({isShowModal, setIsShowModal, indexOfRecord, data}) => {
+const confirmation = ({isShowModal, setIsShowModal, indexOfRecord, data, deleteAlbum}) => {
 
     const handleOk = () => {
         setIsShowModal(false);
-        
+        deleteAlbum(data[indexOfRecord]._id);
     }
 
     const handleCancel = () => {

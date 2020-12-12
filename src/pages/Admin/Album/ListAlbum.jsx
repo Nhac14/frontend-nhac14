@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Space, Table, Button, Modal } from 'antd';
-import Demo from './form-create-album.jsx';
+import { Space, Table, Button, Modal, notification} from 'antd';
+import FormCreate from './form-create-album.jsx';
 import getListAlbum from '../../../api/album';
 import FormEdit from './form-edit-album';
 import Confirmation from './ModalConfirmDelete';
+import album from '../../../api/album';
 
-const ListAlbum = () => {
+const ListAlbum = ({moderatorToken}) => {
     const [isShowModal, setIsShowModal] = useState(false);
 
     const [isShowModalEdit, setIsShowModalEdit] = useState(false);
@@ -134,6 +135,16 @@ const ListAlbum = () => {
         setIsShowModalConfirm(value);
     }
 
+    const deleteAlbum = async (id) => {
+        let {data} = await album.deleteAlbumById(id, moderatorToken);
+        if(data){
+            if(data.status === 1){
+                notification.success({message: "delete successfully"});
+                setTimeout(() => window.location.reload(), 1000);
+            }
+        }
+    }
+
     console.log(data.data);
 
     return (<div>
@@ -142,24 +153,28 @@ const ListAlbum = () => {
         <br></br>
         <Table columns={columns} dataSource={data.dataDisplay} />
         <Modal
+            width={1000}
             title="Add Album"
             visible={isShowModal}
             onOk={handleOk}
             onCancel={handleCancel}
         >
-            <Demo />
+            <FormCreate token={moderatorToken} />
         </Modal>
         <FormEdit
             isShowModal={isShowModalEdit}
             setIsShowModal={onHandleShowModal}
             indexOfRecord={indexSelected}
-            data={data.data} />
+            data={data.data} 
+            token={moderatorToken}/>
 
         {/* modal xoa */}
         <Confirmation
             isShowModal={isShowModalConfirm}
             setIsShowModal={onHandleShowModalConfirm}
-            indexOfRecord={indexSelected} data={data.data}
+            indexOfRecord={indexSelected} 
+            data={data.data}
+            deleteAlbum={deleteAlbum}
         />
         
     </div>);

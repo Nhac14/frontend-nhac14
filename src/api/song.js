@@ -19,8 +19,13 @@ const getAllVideo = (page, limit) => {
     return http.get(`songs?page=${page}&limit=${limit}&select=${select}`);
 }
 
-const getSongs = (page, limit) => {
-    return http.get(`songs?page=${page}&limit=${limit}`);
+const getSongs = (page, limit, filterType) => {
+    if(filterType != null && filterType.length == 1){
+        console.log("OKKKK");
+        return http.get(`songs?page=${page}&limit=${limit}&type=${filterType[0]}`);
+    }
+    else
+        return http.get(`songs?page=${page}&limit=${limit}`);
 }
 
 const getSongById = (songId, userToken) => {

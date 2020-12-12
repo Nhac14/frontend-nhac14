@@ -5,6 +5,7 @@ import Home from '../Home/Home';
 
 export default function MainLayout({children, user, logout}){
 
+    console.log("Mainlayout: ", user);
     return (
         <div>
             <HeaderX user={user} logout={(e) => logout(e)}/>

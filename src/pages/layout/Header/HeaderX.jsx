@@ -231,7 +231,7 @@ function HeaderX({ user, logout }) {
                                     size="large"
                                     style={{ border: '1px solid #fa8c16', borderRadius: '5px', verticalAlign: 'center' }}
                                     icon={<Avatar
-                                        src={user.avatar ? user.avatar : "https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png"}
+                                        src={user.avatar ? user.avatar.path : "https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png"}
                                         size="medium" icon={<UserOutlined />} />}>
                                     {user.name}
                                 </Dropdown.Button>

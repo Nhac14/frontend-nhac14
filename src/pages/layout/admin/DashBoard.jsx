@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
+    DesktopOutlined,
+    PieChartOutlined,
+    FileOutlined,
+    TeamOutlined,
     UserOutlined,
-    CustomerServiceOutlined,
-    BarsOutlined,
-    DingtalkOutlined,
-    TrademarkCircleOutlined
 } from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 
@@ -14,7 +14,7 @@ import './style.scss';
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const DashBoard = ({children, onLogout}) => {
+const DashBoard = ({children}) => {
 
 
     const [collapsed, setCollapsed] = useState(false);
@@ -23,30 +23,20 @@ const DashBoard = ({children, onLogout}) => {
         setCollapsed(!collapsed);
     }
 
-    const onLogoutModerator = () => {
-        onLogout(true);
-    }
-
     return (
         <Layout style={{ minHeight: '100vh' }}>
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
                 <div className="logoAd"><img src='/icons/nhacvn.png' alt="nhacvn"></img> </div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                    <Menu.Item key="1" icon={<BarsOutlined />}>
+                    <Menu.Item key="1" icon={<PieChartOutlined />}>
                         <Link to="/admin/albums">Album</Link>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<CustomerServiceOutlined />}>
+                    <Menu.Item key="2" icon={<DesktopOutlined />}>
                         <Link to="/admin/songs">Song</Link>
                     </Menu.Item>
-                    <Menu.Item key="3" icon={<DingtalkOutlined />}>
-                        <Link to="/admin/singers">Singer</Link>
-                    </Menu.Item>
-                    <Menu.Item key="4" icon={<UserOutlined />}>
+                    <Menu.Item key="3" icon={<DesktopOutlined />}>
                         <Link to="/admin/users">User</Link>
                     </Menu.Item>
-                    <SubMenu key="sub2" icon={<TrademarkCircleOutlined/>} title="Moderator">
-                        <Menu.Item key="5" onClick={onLogoutModerator}>Đăng xuất</Menu.Item>
-                    </SubMenu>
                 </Menu>
             </Sider>
             <Layout className="site-layout">

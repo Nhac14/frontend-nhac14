@@ -13,7 +13,6 @@ const CardVieo = ({ video }) => {
     }
 
     const onSelectVideo = () => {
-        window.scrollTo(0,0);
         history.push(`/video/${video._id}`);
     }
     
@@ -23,9 +22,7 @@ const CardVieo = ({ video }) => {
             <div className="cardVideo">
                 <div style={style.relative} className="image-card">
                 <span onClick={onSelectVideo} className="on-hover-video"><PlayCircleOutlined /></span>
-                    <a onClick={onSelectVideo}>
-                        <img src={video.cover_image ? video.cover_image.path : "https://e4t.edu.vn/resources/common/images/default/video-play.png"}/>
-                    </a>
+                    <a onClick={onSelectVideo}><img src={video.cover_image.path}></img></a>
                     <div className="durationVideo">
                         <span>03:32</span>       
                     </div>

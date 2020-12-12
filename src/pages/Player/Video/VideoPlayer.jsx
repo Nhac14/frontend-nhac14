@@ -13,7 +13,7 @@ import handleTime from '../../../utils/handleTime';
 
 
 const initialControl = {
-    url: "",
+    url: '',
     playing: true,
     volume: 0.8,
     muted: false,
@@ -26,13 +26,20 @@ const initialControl = {
 const VideoPlayer = ({video}) => {
 
 
+    const [controls, setControls] = useState({ ...initialControl });
+
+    useEffect(() => {
+        setControls({...controls, url: video.path})
+    })
+
+
     return (
         <div className="card-video">
             <ReactPlayer
                 //   ref={playerRef}
                 width='100%'
                 height='100%'
-                url={video.path}
+                url={controls.url}
                 controls
                 // playing={controls.playing}
                 // light={controls.light}

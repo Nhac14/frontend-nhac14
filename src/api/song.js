@@ -12,10 +12,6 @@ const getAllVideo = () => {
     return http.get('songs');
 }
 
-const getAllSongAsync = async () => {
-    return await http.get('songs');
-}
-
 const getSongById = (songId, userToken) => {
     let token = userToken ? userToken : "";
     return http.get(`users/songs/${songId}`, {
@@ -26,7 +22,7 @@ const getSongById = (songId, userToken) => {
 }
 
 export default {
-    getAllSongAsync,
+
     getSong,
     getAllVideo,
     getSongById

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, lazy } from 'react';
-import { Switch, BrowserRouter, Route } from 'react-router-dom';
-import { Redirect, useHistory } from 'react-router';
-import { useCookies } from 'react-cookie';
+import { Switch, BrowserRouter, Route} from 'react-router-dom';
+import {Redirect, useHistory} from 'react-router';
+import {useCookies} from 'react-cookie';
 import { Spin, Space } from 'antd';
 import adminRouter from '../pages/Admin/routes';
 import DashBoard from '../pages/layout/admin/DashBoard';
@@ -12,61 +12,47 @@ import PublicRouter from './PublicRouter';
 
 const AppRouter = (props) => {
 
-
-    const [isLoginedAdmin, setIsAdminLogined] = useState(false);
+    const history = useHistory();
+    const [isLoginedAdmin, setIsAdminLogined] = useState(true);
     const [userToken, setUserToken] = useState(null);
-    const [cookies, setCookie, removeCookie] = useCookies(["userToken", "user", "moderatorToken", "moderator"]);
-    const [user, setUser] = useState(null);
+    const [cookies, setCookie, removeCookie] = useCookies(["userToken", "user"]);
+    const [user, setUser] = useState('123');
 
     useEffect(() => {
-        getAuthUser();
-        getAuthAdmin();
+       getAuth();
+    }, [cookies]);
 
-    }, [cookies, isLoginedAdmin]);
-
-    const getAuthUser = async () => {
+    const getAuth = async () => {
         let token = await cookies.userToken;
         let userCookie = await cookies.user;
-        if (userCookie)
-            setUser({ name: userCookie.name, avatar: userCookie.avatar });
+        console.log("token: ", token);
+        console.log("user: ", user);
+        if(userCookie)
+            setUser({name: userCookie.name, avatar: userCookie.avatar});
     }
 
-    const getAuthAdmin = async () => {
-        let token = await cookies.moderatorToken;
-        let name = await cookies.moderator;
-        if(token)
-            setIsAdminLogined(true);
-            
-    }
-
-    const onLogoutUser = (e) => {
-        if (e) {
-            removeCookie("userToken", {path: '/'});
-            removeCookie("user",  {path: '/'});
+    const onLogout = (e) => {
+        if(e){
+            removeCookie("userToken");
+            removeCookie("user");
             setUser(null);
         }
-
+      
     }
 
-
-    const onLogoutAdmin = async (e) => {
-        if (e) {
-            removeCookie("moderatorToken",  {path: '/'});
-            removeCookie("moderator",  {path: '/'});
-            setIsAdminLogined(false);
-        }
-    }
 
 
     const AdminApp = () => {
         return (
-            <DashBoard onLogout={onLogoutAdmin}>
+            <DashBoard>
                 <Switch>
                     {
                         adminRouter.map(router => {
                             const { exact, path, component } = router;
+
+                            if(user) 
                             return (
-                                <AdminRouter exact={exact} path={path} component={component} moderatorToken={cookies.moderatorToken}/>
+                                <AdminRouter exact={exact} path={path} component={component} />
                             )
                         })
                     }
@@ -77,7 +63,7 @@ const AppRouter = (props) => {
     
     const PublicApp = () => {
         return (
-            <MainLayout user={user} logout={onLogoutUser}>
+            <MainLayout user={user} logout={onLogout}>
                 <Switch>
                     {
                         publicRouter.map(router => {
@@ -87,9 +73,9 @@ const AppRouter = (props) => {
                             )
                         })
                     }
-
+                    
                     {
-                        isLoginedAdmin ? '' : <Route exact path="/admin/login" component={lazy(() => import('../pages/Admin/Login/AdminLogin'))} />
+                        isLoginedAdmin ? '' :  <Route exact path="/admin/login" component={lazy(() => import('../pages/Admin/Login/AdminLogin'))} />
                     }
                 </Switch>
             </MainLayout>
@@ -110,7 +96,7 @@ const AppRouter = (props) => {
             <BrowserRouter>
                 {
                     isLoginedAdmin
-                        ? <AdminRouter component={AdminApp} />
+                         ? <AdminRouter component={AdminApp} />
                         : <PublicRouter component={PublicApp} />
                 }
 

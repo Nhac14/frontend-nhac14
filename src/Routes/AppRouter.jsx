@@ -1,5 +1,5 @@
 import React, { useEffect, useState, lazy } from 'react';
-import { Switch, BrowserRouter, Route} from 'react-router-dom';
+import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import { Redirect, useHistory } from 'react-router';
 import { useCookies } from 'react-cookie';
 import { Spin, Space } from 'antd';
@@ -12,33 +12,14 @@ import PublicRouter from './PublicRouter';
 
 const AppRouter = (props) => {
 
-
     const [isLoginedAdmin, setIsAdminLogined] = useState(false);
+    const [userToken, setUserToken] = useState(null);
     const [cookies, setCookie, removeCookie] = useCookies(["userToken", "user", "moderatorToken", "moderator"]);
     const [user, setUser] = useState(null);
+
     useEffect(() => {
         getAuthUser();
         getAuthAdmin();
-
-    const getAuth = async () => {
-        let token = await cookies.userToken;
-        let userCookie = await cookies.user;
-        console.log("token: ", token);
-        console.log("user: ", user);
-        if(userCookie)
-            setUser({name: userCookie.name, avatar: userCookie.avatar});
-
-
-    }
-
-    const onLogout = (e) => {
-        if(e){
-            removeCookie("userToken", {path: '/'});
-            removeCookie("user",  {path: '/'});
-            setUser(null);
-        }
-      
-    }
 
     }, [cookies, isLoginedAdmin]);
 
@@ -54,7 +35,6 @@ const AppRouter = (props) => {
         let name = await cookies.moderator;
         if(token)
             setIsAdminLogined(true);
-            
     }
 
     const onLogoutUser = (e) => {
@@ -90,9 +70,10 @@ const AppRouter = (props) => {
                     }
                 </Switch>
             </DashBoard>
+
         )
     }
-    
+
     const PublicApp = () => {
         return (
             <MainLayout user={user} logout={onLogoutUser}>

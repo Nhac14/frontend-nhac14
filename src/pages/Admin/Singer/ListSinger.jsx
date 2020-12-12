@@ -69,8 +69,8 @@ const ListSinger = () => {
             title: 'Action',
             key: 'action',
             render: (text, record, index) => {
-                // console.log(index);
-                console.log("record:", record);
+                console.log("index", index);
+                // console.log("record:", record);
                 return (
                     <Space size="middle">
                         <Button >Edit</Button>
@@ -88,8 +88,9 @@ const ListSinger = () => {
         console.log("data singers : ");
         const {data} = await singerAPI.getAllSinger(paging.current, paging.pageSize);
     
-        console.log("data singers : ", data.data);
+        
         setSinger(data.data);
+        console.log("singer: ", singer.result)
     }
 
     const onChangePaging = (page, limit) => {
@@ -123,6 +124,7 @@ const ListSinger = () => {
         </div>
         
         <Table columns={columns} dataSource={singer} pagination={configPagination} onChange={handleTableChange} />
+
         
         <Confirmation
             isShowModal={isShowModalConfirm}

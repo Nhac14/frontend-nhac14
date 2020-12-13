@@ -4,11 +4,11 @@ import { Card, Upload } from 'antd';
 
 import './style.scss';
 
-const ImageUpload = ({onChange}) => {
+const ImageUpload = ({onChange, previewUrl}) => {
 
 
-    const [previewImageUrl, setPreviewImageUrl] = useState(null)
-
+    const [previewImageUrl, setPreviewImageUrl] = useState(previewUrl)
+    console.log(previewUrl);
 
     const onChangeImage = async (e) => {
         let image = e.target.files[0]

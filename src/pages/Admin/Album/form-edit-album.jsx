@@ -18,6 +18,10 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
 
     const [albumInfo, setAlbumInfo] = useState({});
 
+    const [albumDisplay, setAlbumDisplay] = useState({});
+
+    console.log(data);
+
     const { TextArea } = Input;
 
     const layout = {
@@ -40,20 +44,17 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
 
     // submit form
     const onFinish = async (values) => {
-        // console.log('Success:', values);
         let formDataImage = new FormData();
         formDataImage.append("cover_image", image);
 
-        await album.editCoverImage(data[indexOfRecord]._id, formDataImage, token)
+        await album.editCoverImage(data[indexOfRecord]._id, formDataImage, token);
+
+        debugger;
 
         await album.editAlbum(data[indexOfRecord]._id, token, albumInfo);
 
-        // if (data) {
-        //     if (data.status === 1) {
-        //         notification.success({ message: "edit successfully" });
-        //         setTimeout(() => window.location.reload(), 1000);
-        //     }
-        // }
+        notification.success({ message: "edit successfully" });
+        setTimeout(() => window.location.reload(), 1000);
     };
 
     const onFinishFailed = errorInfo => {
@@ -81,17 +82,18 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
     const category = () => {
         const handleChange = (value) => {
             setSelectedCategory(value);
+            setAlbumInfo({ ...albumInfo, category: value })
         }
         const categoryValue = selectedCategory;
         const filteredOptions = OPTIONS1.filter(o => !categoryValue.includes(o));
+        console.log(albumDisplay.categories);
         return (
             <Select
                 mode="tags"
                 placeholder="Inserted are removed"
-                //value={categoryValue}
-                // value={inputDefaultValue.category}
                 onChange={handleChange}
                 style={{ width: '100%' }}
+                value={!isEmpty(albumDisplay) ? albumDisplay.categories : ["1"]}
             >
                 {filteredOptions.map(item => (
                     <Select.Option key={item._id} value={item._id}>
@@ -110,6 +112,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
     const singers = () => {
         const handleChange = (value) => {
             setSelectedSingers(value);
+            setAlbumInfo({ ...albumInfo, singers: value })
         }
         const singersValue = selectedSingers;
         const filteredOptions = OPTIONS2.filter(o => !singersValue.includes(o));
@@ -137,6 +140,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
     const songs = () => {
         const handleChange = (value) => {
             setSelectedSongs(value);
+            setAlbumInfo({ ...albumInfo, musicList: value });
         }
         const songsValue = selectedSongs;
         const filteredOptions = OPTIONS3.filter(o => !songsValue.includes(o));
@@ -157,6 +161,48 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
         );
     }
 
+    useEffect(() => {
+        if (!isEmpty(data)) {
+            let temp = {
+                name: data[indexOfRecord].name,
+                categories: data[indexOfRecord].category,
+                songs: data[indexOfRecord].musicList,
+                singers: data[indexOfRecord].singers,
+                description: data[indexOfRecord].description
+            }
+
+            if (!isEmpty(data[indexOfRecord].cover_image)) {
+                temp.image = data[indexOfRecord].cover_image;
+            }
+
+            if (!isEmpty(listSong)) {
+                temp.songs = temp.songs.map((value, index) => {
+                    const tmp = listSong.data.results.filter(e => e._id === value).map(e => e.name);
+                    return tmp[0];
+                });
+            }
+
+            if (!isEmpty(listSinger)) {
+                temp.singers = temp.singers.map((value, index) => {
+                    const tmp = listSinger.data.data.filter(e => e._id === value).map(e => e.name);
+                    return tmp[0];
+                });
+            }
+
+            if (!isEmpty(listCategory)) {
+                temp.categories = temp.categories.map((value, index) => {
+                    const tmp = listCategory.data.data.filter(e => e._id === value).map(e => e.name);
+                    return tmp[0];
+                });
+            }
+
+
+            setAlbumDisplay(temp);
+
+            debugger
+        }
+    }, [indexOfRecord, isShowModal, data]);
+
     const handleAsync = async () => {
         let tmp1 = await categoryApi.getAllCategory();
         let tmp2 = await songApi.getAllSongAsync();
@@ -165,12 +211,15 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
         setListCategory(tmp1);
         setListSinger(tmp3);
         setListSong(tmp2);
+
     }
 
     const getName = (e) => {
         const { text, value } = e.target;
         setAlbumInfo({ ...albumInfo, name: value });
     }
+
+
 
     // {
     //     name: data[indexOfRecord].name,
@@ -179,6 +228,10 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
     //     song: ["23"],
     //     description: data[indexOfRecord].description
     // }
+
+    const setDescription = (e) => {
+        setAlbumInfo({ ...albumInfo, description: e.target.value });
+    }
 
     const getImage = (image) => {
         setImage(image);
@@ -200,7 +253,11 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
                 name="name"
                 rules={[{ required: true, message: 'Please input album\'s name!' }]}
             >
-                <Input value={!isEmpty(albumInfo) ? albumInfo.name : ""} name="name" onChange={getName} />
+                <Input
+                    // value={!isEmpty(albumDisplay) ? albumDisplay.name : "1"}
+                    // defaultValue={!isEmpty(albumDisplay) ? albumDisplay.name : "1"}
+                    name="name"
+                    onChange={getName} />
             </Form.Item>
 
             <Form.Item
@@ -231,9 +288,9 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
                 label="Description"
                 name="description"
                 rules={[{ required: false }]}
-                defaultValue={data ? data[indexOfRecord].description : ""}
+            // defaultValue={data ? data[indexOfRecord].description : ""}
             >
-                <TextArea rows={6} />
+                <TextArea rows={6} onChange={setDescription} />
             </Form.Item>
 
             <Form.Item
@@ -241,7 +298,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
                 name="avatar"
                 rules={[{ required: false }]}
             >
-                <ImageUpload onChange={getImage} />
+                <ImageUpload onChange={getImage} previewUrl={image.path} />
             </Form.Item>
 
 

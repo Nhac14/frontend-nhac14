@@ -29,7 +29,6 @@ const getSongs = (page, limit, filterType) => {
 }
 
 const getSongById = (songId, userToken) => {
-    console.log("token axios ", userToken);
     let token = userToken ? userToken : "";
     return http.get(`users/songs/${songId}`, {
         headers: {
@@ -38,11 +37,47 @@ const getSongById = (songId, userToken) => {
     });
 }
 
+const deleteSongById = (songId, moderatorToken) => {
+    return http.delete(`admin/songs/${songId}`, {
+        headers: {
+            Authorization: 'Bearer ' + moderatorToken
+        }
+    });
+}
+
+const update = (songId, data, moderatorToken) => {
+    return http.put(`admin/songs/${songId}`, data, {
+        headers: {
+            Authorization: 'Bearer ' + moderatorToken
+        }
+    });
+}
+
+const updateImage = (songId, image, moderatorToken) => {
+    return http.put(`admin/songs/cover-image/${songId}`, image, {
+        headers: {
+            Authorization: 'Bearer ' + moderatorToken,
+            
+        }
+    })
+}
+
+const updateFile = (songId, file, moderatorToken) => {
+    return http.put(`admin/songs/file/${songId}`, file, {
+        headers: {
+            Authorization: 'Bearer ' + moderatorToken
+        }})
+}
+
 export default {
     createSong,
     getSong,
     getAllVideo,
     getSongById,
     getSongs,
+    deleteSongById,
+    update,
+    updateImage,
+    updateFile
 
 }

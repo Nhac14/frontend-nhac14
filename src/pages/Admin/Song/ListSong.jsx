@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Table, Tag, Space, Button } from 'antd';
+import { Table, Tag, Space, Button, notification, Modal } from 'antd';
 import songAPI from '../../../api/song';
 
 import './style.scss';
@@ -26,13 +26,15 @@ const inititalSong = {
 
 
 
-const ListSong = () => {
+const ListSong = ({ moderatorToken }) => {
 
   const history = useHistory();
   const [songs, setSongs] = useState([inititalSong]);
   const [paging, setPaging] = useState({ current: 1, pageSize: 2, total: 100, defaultCurrent: 1 });
   const [filters, setFilters] = useState(null);
   const [sorter, setSorter] = useState();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
 
   useEffect(() => {
     fetchSongs();
@@ -49,6 +51,16 @@ const ListSong = () => {
 
   const onChangePage = (p, l) => {
     setPaging({ ...paging, page: p });
+  }
+
+  const onDeleteSong = async (songId) => {
+    let { data } = await songAPI.deleteSongById(songId, moderatorToken);
+    if (data && data.status == 1) {
+      notification.success({ message: "Xóa bài hát thành công!" });
+      setTimeout(() => window.location.reload(), 1000);
+    }
+    else
+      notification.error({ message: "Có lỗi xảy ra!" });
   }
 
   const configPagination = {
@@ -75,10 +87,10 @@ const ListSong = () => {
       width: '20%',
       key: 'name',
       render: (name, record) => <Link to={{
-                      pathname: `/admin/songs/${name}`,
-                      state: { song: record }
-                    }} >{name}
-      </Link>
+                pathname: `/admin/songs/${name}`,
+                state: { song: record }
+              }} >{name}
+              </Link>
     },
     {
       title: 'Type',
@@ -131,16 +143,40 @@ const ListSong = () => {
 
     {
       title: 'Action',
-      key: 'action',
-      render: (text, song) => (
-        <Space size="middle">
-          <a>Edit</a>
-          <a>Delete</a>
-        </Space>
-
-      ),
+      key: 'index',
+      render: (index, song) => {
+        console.log(index)
+        return (
+          <Space size="middle">
+            <Button type="danger" onClick={showModal}>
+              Xóa
+          </Button>
+            <Modal
+              title="Basic Modal"
+              visible={false}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+             <h3>Bạn có chắc muốn xóa bài hát <strong>{song.name}</strong> không?</h3>
+            </Modal>
+          </Space>
+  
+        )
+      },
     },
   ];
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const handleTableChange = (pagination, filters, sorter) => {
     setPaging({ ...pagination });

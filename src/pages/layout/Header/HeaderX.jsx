@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { useCookies } from 'react-cookie';
@@ -6,6 +6,7 @@ import { Menu, Dropdown, Row, Col, Input, Avatar } from 'antd';
 import { SearchOutlined, UserOutlined} from '@ant-design/icons';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import './style.scss';
+import Search from '../../Search/Search';
 
 function HeaderX({ user, logout }) {
 
@@ -183,6 +184,7 @@ function HeaderX({ user, logout }) {
 
 
 
+
     const onLogout = () => {
         logout(true);
     }
@@ -198,6 +200,10 @@ function HeaderX({ user, logout }) {
     </Menu>);
 
 
+    const onSearchRedirect = (songId) => {
+
+    }
+
     return (
         <div className='header'>
             <div className="wrapper">
@@ -210,9 +216,9 @@ function HeaderX({ user, logout }) {
                         </div>
                     </div>
                     <div className='search-side'>
-                        <form action='#' method='get'>
-                            <Input size="large" className='search' placeholder="Từ khóa tìm kiếm..." suffix={<SearchOutlined />} />
 
+                        <form action='#' method='get' className="search">
+                            <Search searchRedirect={onSearchRedirect}/>
                         </form>
                     </div>
                     <div className='align14 search-option'>

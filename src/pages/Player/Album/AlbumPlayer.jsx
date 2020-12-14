@@ -26,8 +26,8 @@ const initialControl = {
 const AlbumPlayer = ({ }) => {
 
 
-    const [controls, setControls] = useState({ ...initialControl });
-    const playerRef = useRef();
+    const [controls, setControls] = useState(initialControl);
+    const [songActive, setSongActive] = useState(initialControl);
 
     const handleEnded = () => {
         // Chỗ này xử lý next bài đối với album, nhạc thì có thể cho phát lại

@@ -20,4 +20,6 @@ const createCategory = (name) => {
 export default {
     getAllCategory,
     getByIdAsync,
+    getListCategory,
+    createCategory
 }

@@ -87,8 +87,8 @@ const deleteAlbumById = (id, userToken) => {
     })
 }
 const getAlbumList = (page, limit) => {
-    let select="cover_image,name,_id";
-    return http.get(`albums?page=${page}&limit=${limit}&select=${select}`);
+    // let select="cover_image,name,_id";
+    return http.get(`albums?page=${page}&limit=${limit}`);
 }
 
 const getAlbumById = (albumId) => {

@@ -5,14 +5,16 @@ import { Table, Tag, Space, Button, notification, Modal } from 'antd';
 import songAPI from '../../../api/song';
 
 import './style.scss';
+
 const inititalSong = {
+  _id: null,
   name: '',
-  path: null,
+  cover_image: null,
   file: null,
   type: '',
   lyric: '',
   description: '',
-  musican: '',
+  musican: [],
   categories: [],
   singers: [],
   shares: 0,
@@ -45,7 +47,7 @@ const ListSong = ({ moderatorToken }) => {
     let { data } = await songAPI.getSongs(paging.current, paging.pageSize, filters ? filters.type : null);
     setSongs(data.results);
     setPaging({ ...paging, total: data.total });
-    console.log("data song: ", data);
+    console.log("data song: ", data.results);
 
   }
 
@@ -116,14 +118,21 @@ const ListSong = ({ moderatorToken }) => {
       width: '10%',
       dataIndex: 'singers',
       render: singers => singers ? singers.map((singer, index) => {
-        return <a>{singer.name}</a>
+        let ob = JSON.parse(singer);
+        return <a>{ob.name}</a>
       }) : ''
     },
     {
       title: 'Thể loại',
       dataIndex: 'categories',
       key: 'categories',
-      width: '10%'
+      width: '10%',
+      render: categories => categories ? categories.map((cate) => {
+        let obj = JSON.parse((cate));
+        return (
+          <a>{obj.name}, </a>
+        )
+      }) : ''
     },
     {
       title: 'Lượt xem',

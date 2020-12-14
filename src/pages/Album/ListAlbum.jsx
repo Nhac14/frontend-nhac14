@@ -21,11 +21,13 @@ const ListAlbum = ({onHome, page, limit}) => {
 
     const rechieveAlbumOnHome = async () => {
         let {data} = await albumAPI.getAlbumList(page, limit);
+        console.log("album: ", data.results)
         if(data.success)
             setListAlbum(data.results);
         }
 
     const rechieveAlbum = async () => {
+        
         let {data} = await albumAPI.getAlbumList(page, limit);
         if(data.success)
             setListAlbum(data.results);

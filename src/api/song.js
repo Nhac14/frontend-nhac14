@@ -16,16 +16,19 @@ const createSong = (data, accesstoken) => {
 
 const getAllVideo = (page, limit) => {
     let select="cover_image,name,_id";
-    return http.get(`songs?page=${page}&limit=${limit}&select=${select}`);
+    return http.get(`songs?page=${page}&limit=${limit}&select=${select}&type=MV`);
 }
 
 const getSongs = (page, limit, filterType) => {
     if(filterType != null && filterType.length == 1){
-        console.log("OKKKK");
         return http.get(`songs?page=${page}&limit=${limit}&type=${filterType[0]}`);
     }
     else
         return http.get(`songs?page=${page}&limit=${limit}`);
+}
+
+const searchSongs = (page, limit, key) => {
+    return http.get(`songs?page=${page}&limit=${limit}&name=${key}`);
 }
 
 const getSongById = (songId, userToken) => {

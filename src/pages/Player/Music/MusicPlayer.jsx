@@ -12,21 +12,22 @@ import {
 import handleTime from '../../../utils/handleTime';
 
 
-const initialControl = {
-    url: 'https://nhac14.s3.ap-northeast-2.amazonaws.com/music/Diem-Xua-Khanh-Ly.mp3',
-    playing: true,
-    volume: 0.8,
-    muted: false,
-    played: 0,
-    loaded: 0,
-    duration: 0,
-    loop: false
-}
-
-const MusicPlayer = ({ }) => {
 
 
-    const [controls, setControls] = useState({ ...initialControl });
+const MusicPlayer = ({song}) => {
+
+    const initialControl = {
+        url: song.path,
+        playing: true,
+        volume: 0.8,
+        muted: false,
+        played: 0,
+        loaded: 0,
+        duration: 0,
+        loop: false
+    }
+
+    const [controls, setControls] = useState(initialControl);
     const playerRef = useRef();
 
     const handleEnded = () => {
@@ -35,8 +36,11 @@ const MusicPlayer = ({ }) => {
     }
 
 
+
     useEffect(() => {
     })
+
+    
 
 
     const handleSeekMouseDown = e => {
@@ -93,7 +97,7 @@ const MusicPlayer = ({ }) => {
         <div className="card-music">
 
             <div className="cover-image">
-                <img src="/images/53885.jpg" alt="" />
+                <img src={song.cover_image ? song.cover_image.path : 'https://nicolasbrugneaux.me/web-player-react/dist/img/default.png'} alt="" />
             </div>
 
             {/* Info playing music */}
@@ -144,7 +148,7 @@ const MusicPlayer = ({ }) => {
                 className='react-player'
                 width='100%'
                 height='100%'
-                url={controls.url}
+                url={song.path}
                 playing={controls.playing}
                 light={controls.light}
                 loop={controls.loop}

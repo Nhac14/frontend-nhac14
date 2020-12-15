@@ -3,6 +3,7 @@ import { Table, Tag, Space,Image, AutoComplete, Pagination,notification } from '
 import { Button } from 'antd';
 import singerAPI from '../../../api/singer';
 import Confirmation from './ModalConfirmDelete';
+import FormEdit from 'form-edit-singer';
 import './style.css';
 
 
@@ -16,7 +17,11 @@ const ListSinger = ({moderatorToken}) => {
     const [indexSelected, setIndexSelected] = useState(0);
     const [recordSelected, setRecordSelected] = useState({});
     const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
-
+    const [isShowModalEdit, setIsShowModalEdit] = useState(false);
+    const onHandleShowModal = (e) => {
+            setIsShowModalEdit(e);
+        }
+   
     useEffect(() => {
         getSinger();
         
@@ -137,7 +142,12 @@ console.log("mode: ", moderatorToken);
         
         <Table columns={columns} dataSource={singer} pagination={configPagination} onChange={handleTableChange} />
 
-        
+        <FormEdit
+            isShowModal={isShowModalEdit}
+            setIsShowModal={onHandleShowModal}
+            indexOfRecord={indexSelected}
+            data={singer} 
+            token={moderatorToken}/>
         <Confirmation
             isShowModal={isShowModalConfirm}
             setIsShowModal={onHandleShowModalConfirm}

@@ -31,6 +31,21 @@ const deleteSingerById = (singerId,accesstoken)  => {
         }
     });
 }
+const editSinger = (id, token, data) => {
+    return http.put(`admin/singers/${id}`,data, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    })
+}
+
+const editAvatar = (id, data, token) => {
+    return http.put(`admin/singers/updateAvatar/${id}`, data, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    });
+}
 
 export default {
     getAllSinger,
@@ -38,6 +53,9 @@ export default {
     getAllSingerAsync,
     getByIdAsync,
     getById,
-    deleteSingerById
+    deleteSingerById,
+    editAvatar,
+    editSinger
+    
 
 }

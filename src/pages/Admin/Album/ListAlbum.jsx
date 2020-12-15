@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Space, Table, Button, Modal, notification} from 'antd';
+import { Space, Table, Button, Modal, notification } from 'antd';
 import FormCreate from './form-create-album.jsx';
 import getListAlbum from '../../../api/album';
 import FormEdit from './form-edit-album';
 import Confirmation from './ModalConfirmDelete';
 import album from '../../../api/album';
+import { Redirect, Link } from 'react-router-dom'
 
-const ListAlbum = ({moderatorToken}) => {
+const ListAlbum = ({ moderatorToken }) => {
     const [isShowModal, setIsShowModal] = useState(false);
 
     const [isShowModalEdit, setIsShowModalEdit] = useState(false);
 
     const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
+
+    const [data, setData] = useState([]);
 
     const [filterAlbum, setFilterAlbum] = useState(
         {
@@ -43,6 +46,7 @@ const ListAlbum = ({moderatorToken}) => {
         setIsShowModalEdit(true);
         setIndexSelected(index);
         setRecordSelected(record);
+
     }
 
     const handleDeleteClick = (index, record) => {
@@ -68,7 +72,7 @@ const ListAlbum = ({moderatorToken}) => {
             key: 'description'
         },
         {
-            title: 'Category',
+            title: 'Categories',
             dataIndex: 'category',
             key: 'category',
             sorter: {
@@ -77,9 +81,15 @@ const ListAlbum = ({moderatorToken}) => {
             }
         },
         {
-            title: 'Singer',
+            title: 'Singers',
             dataIndex: 'singer',
             key: 'singer',
+
+        },
+        {
+            title: 'Songs',
+            dataIndex: 'song',
+            key: 'song',
 
         },
         {
@@ -108,7 +118,16 @@ const ListAlbum = ({moderatorToken}) => {
                 console.log(record);
                 return (
                     <Space size="middle">
-                        <Button onClick={() => handleEditClick(index, record)}>Edit</Button>
+                        <Button onClick={() => handleEditClick(index, record)}>
+                            <Link to={{
+                                pathname: `/admin/albums/detail/${record.name}`,
+                                state: {
+                                    album: record,
+                                }
+                            }} >
+                                Edit
+                            </Link>
+                        </Button>
                         <Button onClick={() => handleDeleteClick(index, record)}>Delete</Button>
                     </Space>
                 )
@@ -116,8 +135,7 @@ const ListAlbum = ({moderatorToken}) => {
         },
     ];
 
-    const [data, setData] = useState([]);
-
+    
 
 
     const getAlbums = async () => {
@@ -136,10 +154,10 @@ const ListAlbum = ({moderatorToken}) => {
     }
 
     const deleteAlbum = async (id) => {
-        let {data} = await album.deleteAlbumById(id, moderatorToken);
-        if(data){
-            if(data.status === 1){
-                notification.success({message: "delete successfully"});
+        let { data } = await album.deleteAlbumById(id, moderatorToken);
+        if (data) {
+            if (data.status === 1) {
+                notification.success({ message: "delete successfully" });
                 setTimeout(() => window.location.reload(), 1000);
             }
         }
@@ -161,22 +179,22 @@ const ListAlbum = ({moderatorToken}) => {
         >
             <FormCreate token={moderatorToken} />
         </Modal>
-        <FormEdit
+        {/* <FormEdit
             isShowModal={isShowModalEdit}
             setIsShowModal={onHandleShowModal}
             indexOfRecord={indexSelected}
-            data={data.data} 
-            token={moderatorToken}/>
+            data={data.data}
+            token={moderatorToken} /> */}
 
         {/* modal xoa */}
         <Confirmation
             isShowModal={isShowModalConfirm}
             setIsShowModal={onHandleShowModalConfirm}
-            indexOfRecord={indexSelected} 
+            indexOfRecord={indexSelected}
             data={data.data}
             deleteAlbum={deleteAlbum}
         />
-        
+
     </div>);
 }
 export default ListAlbum;

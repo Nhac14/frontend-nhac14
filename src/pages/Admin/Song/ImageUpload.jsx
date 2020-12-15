@@ -16,6 +16,7 @@ const ImageUpload = ({onChange, previewUrl}) => {
         await reader.readAsDataURL(image);
         reader.onloadend = () => {
             setPreviewImageUrl({ url: reader.result });
+            debugger
             onChange(image);
         };
 

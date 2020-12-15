@@ -45,6 +45,7 @@ const editAvatar = (id, data, token) => {
             'Authorization': 'Bearer ' + token,
         }
     });
+    console.log("success !")
 }
 
 export default {

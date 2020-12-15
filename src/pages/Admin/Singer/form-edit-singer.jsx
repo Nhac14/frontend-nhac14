@@ -267,7 +267,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
         <div>
             <Modal
                 width={1000}
-                title="Edit Album"
+                title="Edit Singer"
                 visible={isShowModal}
                 onOk={handleOk}
                 onCancel={handleCancel}

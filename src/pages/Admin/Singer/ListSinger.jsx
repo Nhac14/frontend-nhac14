@@ -3,7 +3,7 @@ import { Table, Tag, Space,Image, AutoComplete, Pagination,notification } from '
 import { Button } from 'antd';
 import singerAPI from '../../../api/singer';
 import Confirmation from './ModalConfirmDelete';
-import FormEdit from 'form-edit-singer';
+import FormEdit from './form-edit-singer';
 import './style.css';
 
 
@@ -78,7 +78,7 @@ const ListSinger = ({moderatorToken}) => {
                 // console.log("record:", record.age);
                 return (
                     <Space size="middle">
-                        <Button >Edit</Button>
+                        <Button onClick={() => handleEditClick(index, record)}>Edit</Button>
                         <Button onClick={() => handleDeleteClick(index, record)}>Delete</Button>
                     </Space>
                 )
@@ -114,6 +114,11 @@ console.log("mode: ", moderatorToken);
         pageSize: paging.pageSize,
         page: paging.page,
         onChange: onChangePaging
+    }
+    const handleEditClick = (index, record) => {
+        setIsShowModalEdit(true);
+        setIndexSelected(index);
+        setRecordSelected(record);
     }
     const handleDeleteClick = async (index, record) => {
         setIsShowModalConfirm(true);

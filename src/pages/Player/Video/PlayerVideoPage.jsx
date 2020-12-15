@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
 import { Carousel, Col, Row } from 'antd';
 import VideoPlayer from './VideoPlayer';
 import songAPI from '../../../api/song';
@@ -12,19 +11,18 @@ const initialVideo = {
 }
 const PlayerVideoPage = (props) => {
 
-    const [cookies, setCookie] = useCookies(["userToken"]);
-
     const [musicVideo, setMusicVideo] = useState(initialVideo);
 
     useEffect(() => {
         let songId = props.match.params.videoId;
+        console.log("songId: ", songId);
         rechieveVideo(songId);
     }, []);
 
     const rechieveVideo = async (songId) => {
-        let { data } = await songAPI.getSongById(songId, cookies.userToken);
+        let { data } = await songAPI.getSongById(songId, props.userToken);
         let mv = data.result.song;
-        console.log("MV aaa: ", mv);
+        console.log("MV aaa: ", props.userToken);
         if (mv) {
             setMusicVideo({ path: mv.file.path, name: mv.name });
         }

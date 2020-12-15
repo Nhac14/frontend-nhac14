@@ -6,8 +6,10 @@ import {
     Button,
     Select,
     notification,
+    Upload,
      Row, Col
 } from 'antd';
+import {UploadOutlined} from '@ant-design/icons';
 import singerAPI from '../../../api/singer';
 import songAPI from '../../../api/song';
 import categoryAPI from '../../../api/category';
@@ -18,6 +20,7 @@ import TextArea from 'antd/lib/input/TextArea';
 
 
 const initialSong = {
+    _id: null,
     name: '',
     description: '',
     lyric: '',
@@ -30,16 +33,19 @@ const SongDetail = ({moderatorToken}) => {
 
     const location = useLocation();
     const [song, setSong] = useState(initialSong);
-    const [fileMusic, setFileMusic] = useState();
-    const [image, setImage] = useState();
     const [singerList, setSingerList] = useState([]);
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        setDetail();
+        if(song._id == null)
+            setDetail();
+        console.log("song update: ", song);
+    }, [song, song.cover_image, song.file])
+
+    useEffect(() => {
         fetchCategories();
         fetchSingers();
-    }, [song])
+    }, [])
 
     const fetchCategories = async () => {
         let {data} = await categoryAPI.getListCategory();
@@ -56,16 +62,34 @@ const SongDetail = ({moderatorToken}) => {
 
     const setDetail = () => {
         let song = location.state.song;
-        console.log("id nè: ", song);
         setSong(song);
     }
 
-    const onChangeImage = (image) => {
-        setImage(image);
+    const onChangeImage = async (e) => {
+        let image = e.target.files[0];
+        let imageForm = new FormData();
+        imageForm.append('cover_image', image);
+        const {data} = await songAPI.updateImage(song._id, imageForm, moderatorToken);
+        console.log(data);
+        if(data && data.status == 1){
+            setSong({...song, cover_image: data.result.coverImage});
+            notification.success({message: "Thay đổi ảnh bìa thành công!"});
+        }
+        else
+            notification.error({message: "Có lỗi xảy ra: " + data.message});
     }
 
-    const onChangeFile = (file) => {
-        setFileMusic(file);
+    const onChangeFile = async (e) => {
+        let fileForm = new FormData();
+        fileForm.append('file', e.target.files[0]);
+        const {data} = await songAPI.updateFile(song._id, fileForm, moderatorToken);
+        if(data && data.status == 1){
+            setSong({...song, file: data.result.file});
+            notification.success({message: "Thay đổi File nhac thành công!"});
+        }
+        else
+            notification.error({message: "Có lỗi xảy ra: " + data.message});
+        // setFileMusic(file);
     }
 
     const onChangeInput = (e) => {
@@ -84,21 +108,17 @@ const SongDetail = ({moderatorToken}) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         console.log("song submit: ", song);
-        
-        let dataF = new FormData();
-        let fileAndImage = [fileMusic, image];
-        dataF.append("fileAndImage", fileMusic);
-        dataF.append("fileAndImage", image);
 
-        dataF.append("name",song.name)
-        dataF.append("description",song.description)
-        dataF.append("lyric",song.lyric)
-        dataF.append("categories",song.categories)   
-        dataF.append("singers",song.singers)
-
-        let {data} = await songAPI.createSong(dataF, moderatorToken);
-        if(data.result === 1){
-            notification.success({message: "Tạo Bài Hát Thành Công"})
+        let dataF = {
+            name: song.name,
+            description: song.description,
+            lyric: song.lyric,
+            categories: song.categories,
+            singers: song.singers,
+        }
+        let {data} = await songAPI.update(song._id, dataF, moderatorToken);
+        if(data && data.status == 1){
+            notification.success({message: "Cập nhật bài hát thành công!"});
         }
         else{
             notification.error({message: "Có lỗi xảy ra, xin thử lại sau! \n" + data.message});
@@ -111,7 +131,7 @@ const SongDetail = ({moderatorToken}) => {
     return (
 
         <div>
-            <h1 style={{ fontSize: '30px' }}>Tạo mới bài hát</h1>
+            <h1 style={{ fontSize: '30px' }}>{song.name}</h1>
             <Button type="primary" onClick={onSubmit}>Lưu</Button>
             <br/>
             <br/>
@@ -142,6 +162,7 @@ const SongDetail = ({moderatorToken}) => {
                             mode="multiple"
                             style={{ width: '100%' }}
                             placeholder="Chọn thể loại cho bài hát"
+                            // defaultValue={song.categories}
                             onChange={handleChangeSelectCategory}
                             optionLabelProp="label">
                                 {
@@ -181,9 +202,29 @@ const SongDetail = ({moderatorToken}) => {
                     </Form>
                 </Col>
                 <Col span={12}>
-                    <ImageUpload onChange={onChangeImage} />
-
-                    <FileUpload onChange={onChangeFile} />
+                <div className="image-preview">
+                    <img className="img-preview"
+                     src={ song.cover_image 
+                        ? song.cover_image.path
+                        : "https://kangsblackbeltacademy.com/wp-content/uploads/2017/04/default-image-620x600.jpg"} alt=""/>
+                </div> 
+                <label className="custom-file-upload">
+                    <input type="file" onChange={onChangeImage}/>
+                    Thay đổi ảnh bìa
+                </label>
+                    <br/>
+                    <br/>
+                {
+                song.file ? 
+                <video autoBuffer="autobuffer" autoPlay="autoplay" width="240" height="240"
+                 controls src={song.file.path}/>
+                : <h4>Chưa có file nghe nào!</h4>
+                }
+                <br/>
+                <label className="custom-file-upload">
+                    <input type="file" onChange={onChangeFile}/>
+                    Thay đổi File nhạc
+                </label>
                 </Col>
             </Row>
 

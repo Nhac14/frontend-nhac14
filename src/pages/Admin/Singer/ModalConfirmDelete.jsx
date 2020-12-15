@@ -1,12 +1,14 @@
 import {Modal} from 'antd';
+import singerAPI from '../../../api/singer';
 
-const confirmation = ({isShowModal, setIsShowModal, indexOfRecord, data}) => {
+
+const confirmation = ({isShowModal, setIsShowModal, indexOfRecord, data, deleteSinger}) => {
 
     const handleOk = () => {
         setIsShowModal(false);
         
+        deleteSinger(data[indexOfRecord]._id);
     }
-
     const handleCancel = () => {
         setIsShowModal(false);
     }

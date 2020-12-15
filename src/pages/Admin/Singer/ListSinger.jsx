@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Tag, Space,Image, AutoComplete, Pagination } from 'antd';
+import { Table, Tag, Space,Image, AutoComplete, Pagination,notification } from 'antd';
 import { Button } from 'antd';
 import singerAPI from '../../../api/singer';
 import Confirmation from './ModalConfirmDelete';
@@ -114,11 +114,20 @@ console.log("mode: ", moderatorToken);
         setIsShowModalConfirm(true);
         setIndexSelected(index);
         setRecordSelected(record);
-        return await singerAPI.deleteSinger(record._id,moderatorToken);
-        console.log("record id: ",record._id);
+        // console.log("record id: ",record._id);
     }
     const onHandleShowModalConfirm = (value) => {
         setIsShowModalConfirm(value);
+    }
+    const deleteSinger = async (id) => {
+        let {data} = await singerAPI.deleteSingerById(id, moderatorToken);
+        console.log("data status: ",data.status);
+        if(data){
+            if(data.status === 1){
+                notification.success({message: "delete successfully"});
+                setTimeout(() => window.location.reload(), 1000);
+            }
+        }
     }
     return ( <div>
         <h1>ListSinger</h1>
@@ -133,7 +142,7 @@ console.log("mode: ", moderatorToken);
             isShowModal={isShowModalConfirm}
             setIsShowModal={onHandleShowModalConfirm}
             indexOfRecord={indexSelected} data={singer}
-            
+            deleteSinger={deleteSinger}
         />
        
     </div> );

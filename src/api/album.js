@@ -72,7 +72,7 @@ const getListAlbum = async (filter) => {
             modifiedAt: element.modifiedDate
         }
 
-        debugger
+        // debugger
 
         temp.push(abl);
 

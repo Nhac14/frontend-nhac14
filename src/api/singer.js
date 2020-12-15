@@ -23,13 +23,21 @@ const getAllSingerAsync = async () => {
 const getByIdAsync = async (singerId) => {
     return await http.get(`/singers/${singerId}`);
 }
+const deleteSinger = (singerId,accesstoken)  => {
+    return http.delete(`/admin/singers/${singerId}`,singerId,{
+        headers: {
+            'Authorization': 'Bearer ' + accesstoken,
+            
+        }
+    });
+}
 
 export default {
     getAllSinger,
     createSinger,
     getAllSingerAsync,
     getByIdAsync,
-    getById
-    
+    getById,
+    deleteSinger
 
 }

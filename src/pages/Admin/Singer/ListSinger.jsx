@@ -7,7 +7,7 @@ import './style.css';
 
 
 
-const ListSinger = () => {
+const ListSinger = ({moderatorToken}) => {
 
     const [singer, setSinger] = useState([]);
     const [paging, setPaging] = useState({current: 1, pageSize: 5, total: 100, defaultCurrent: 1});
@@ -69,8 +69,8 @@ const ListSinger = () => {
             title: 'Action',
             key: 'action',
             render: (text, record, index) => {
-                console.log("index", index);
-                // console.log("record:", record);
+                // console.log("index", index);
+                // console.log("record:", record.age);
                 return (
                     <Space size="middle">
                         <Button >Edit</Button>
@@ -90,17 +90,18 @@ const ListSinger = () => {
     
         
         setSinger(data.data);
-        console.log("singer: ", singer.result)
+        // console.log("singer: ", singer.result)
     }
-
+console.log("mode: ", moderatorToken);
     const onChangePaging = (page, limit) => {
         setPaging({...paging, page: page});
     }
     const handleTableChange = (pagination, filters, sorter) => {
-        console.log("pagi: ", pagination);
+        // console.log("pagi: ", pagination);
         setPaging({...pagination});
         setFilters({...filters});
         setSorter({...sorter});
+
     }
     const configPagination = {
         total: 50,
@@ -109,10 +110,12 @@ const ListSinger = () => {
         page: paging.page,
         onChange: onChangePaging
     }
-    const handleDeleteClick = (index, record) => {
+    const handleDeleteClick = async (index, record) => {
         setIsShowModalConfirm(true);
         setIndexSelected(index);
         setRecordSelected(record);
+        return await singerAPI.deleteSinger(record._id,moderatorToken);
+        console.log("record id: ",record._id);
     }
     const onHandleShowModalConfirm = (value) => {
         setIsShowModalConfirm(value);
@@ -130,6 +133,7 @@ const ListSinger = () => {
             isShowModal={isShowModalConfirm}
             setIsShowModal={onHandleShowModalConfirm}
             indexOfRecord={indexSelected} data={singer}
+            
         />
        
     </div> );

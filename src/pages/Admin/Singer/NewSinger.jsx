@@ -51,6 +51,7 @@ const Demo = ({moderatorToken}) => {
 
         let {data} = await singerAPI.createSinger(dataF, moderatorToken);
         console.log("result song new: ", data);
+        
     }
 
   return (
@@ -72,7 +73,7 @@ const Demo = ({moderatorToken}) => {
         name="gender"
         rules={[{ required:false}]}
       >
-         <SelectGender  value={singer.gender}/>
+          <Input value={singer.gender} name="gender" onChange={onchange}/>
       </Form.Item>
 
       <Form.Item

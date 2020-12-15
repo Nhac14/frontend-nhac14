@@ -5,6 +5,7 @@ import { Table, Tag, Space, Button, notification, Modal } from 'antd';
 import songAPI from '../../../api/song';
 
 import './style.scss';
+import ModalDelete from './ModalDelete';
 
 const inititalSong = {
   _id: null,
@@ -36,7 +37,9 @@ const ListSong = ({ moderatorToken }) => {
   const [filters, setFilters] = useState(null);
   const [sorter, setSorter] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
+  const [indexSelected, setIndexSelected] = useState(0);
+  const [recordSelected, setRecordSelected] = useState({});
 
   useEffect(() => {
     fetchSongs();
@@ -55,15 +58,6 @@ const ListSong = ({ moderatorToken }) => {
     setPaging({ ...paging, page: p });
   }
 
-  const onDeleteSong = async (songId) => {
-    let { data } = await songAPI.deleteSongById(songId, moderatorToken);
-    if (data && data.status == 1) {
-      notification.success({ message: "Xóa bài hát thành công!" });
-      setTimeout(() => window.location.reload(), 1000);
-    }
-    else
-      notification.error({ message: "Có lỗi xảy ra!" });
-  }
 
   const configPagination = {
     total: paging.total,
@@ -89,10 +83,10 @@ const ListSong = ({ moderatorToken }) => {
       width: '20%',
       key: 'name',
       render: (name, record) => <Link to={{
-                pathname: `/admin/songs/${name}`,
-                state: { song: record }
-              }} >{name}
-              </Link>
+        pathname: `/admin/songs/${name}`,
+        state: { song: record }
+      }} >{name}
+      </Link>
     },
     {
       title: 'Type',
@@ -118,8 +112,8 @@ const ListSong = ({ moderatorToken }) => {
       width: '10%',
       dataIndex: 'singers',
       render: singers => singers ? singers.map((singer, index) => {
-        let ob = JSON.parse(singer);
-        return <a>{ob.name}</a>
+        let obj = JSON.parse(singer);
+        return <a>{obj && obj.name ? obj.name : ''} </a>
       }) : ''
     },
     {
@@ -130,7 +124,7 @@ const ListSong = ({ moderatorToken }) => {
       render: categories => categories ? categories.map((cate) => {
         let obj = JSON.parse((cate));
         return (
-          <a>{obj.name}, </a>
+          <a>{obj && obj.name ? obj.name : ''} <br /> </a>
         )
       }) : ''
     },
@@ -153,39 +147,44 @@ const ListSong = ({ moderatorToken }) => {
     {
       title: 'Action',
       key: 'index',
-      render: (index, song) => {
-        console.log(index)
+      render: (text, record, index) => {
         return (
           <Space size="middle">
-            <Button type="danger" onClick={showModal}>
+            <Button type="danger" onClick={() => handleDeleteClick(index, record)}>
               Xóa
           </Button>
-            <Modal
-              title="Basic Modal"
-              visible={false}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-             <h3>Bạn có chắc muốn xóa bài hát <strong>{song.name}</strong> không?</h3>
-            </Modal>
           </Space>
-  
+
         )
       },
     },
   ];
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+  const handleDeleteClick = (index, record) => {
+    setIsShowModalConfirm(true);
+    setIndexSelected(index);
+    setRecordSelected(record);
+}
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
+  const onDeleteSong = async (songId) => {
+    try{
+      let { data } = await songAPI.deleteSongById(songId, moderatorToken);
+      if (data && data.status == 1) {
+        notification.success({ message: "Xóa bài hát thành công!" });
+        setTimeout(() => window.location.reload(), 1000);
+      }
+      else
+        notification.error({ message: "Có lỗi xảy ra!" });
+    }catch(e){
+      notification.error({ message: e.response.data.message });
+    }
+    
+  }
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  const onHandleShowModalConfirm = (value) => {
+    setIsShowModalConfirm(value);
+}
+
 
   const handleTableChange = (pagination, filters, sorter) => {
     setPaging({ ...pagination });
@@ -209,6 +208,15 @@ const ListSong = ({ moderatorToken }) => {
         pagination={configPagination}
         onChange={handleTableChange}
       />
+
+      {/* modal xoa */}
+      <ModalDelete
+            isShowModal={isShowModalConfirm}
+            setIsShowModal={onHandleShowModalConfirm}
+            indexOfRecord={indexSelected} 
+            data={songs}
+            deleteSong={onDeleteSong}
+        />
 
     </div>);
 }

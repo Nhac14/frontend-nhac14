@@ -82,7 +82,7 @@ const AppRouter = (props) => {
                         publicRouter.map(router => {
                             const { exact, path, component } = router;
                             return (
-                                <PublicRouter exact={exact} path={path} component={component} />
+                                <PublicRouter exact={exact} path={path} component={component} userToken={cookies.userToken}/>
                             )
                         })
                     }

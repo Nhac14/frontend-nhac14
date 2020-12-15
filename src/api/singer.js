@@ -1,7 +1,8 @@
 import http from './config';
 
 const getAllSinger = () => {
-    return http.get('/singers/:singerId');
+    let select='_id,name';
+    return http.get(`/singers?page=1&limit=100&select=${select}`);
 }
 
 const getById = (singerId) => {

@@ -22,6 +22,7 @@ const getListAlbum = async (filter) => {
 
     let temp = [];
 
+
     response.data.results.forEach(async function (element, index) {
         let singerList = [];
         let categoryList = [];
@@ -30,7 +31,12 @@ const getListAlbum = async (filter) => {
         singerList = singers.data.data.filter(e => {
             const singersJson = element.singers.map(e => JSON.parse(e));
 
-            return singersJson.some(el => el._id === e._id);
+            return singersJson.some(el => {
+                if(el!== null){
+                    return el._id === e._id
+                }
+                return false;
+            });
             
         }).map((value, index) => {
             if(index == 0){
@@ -43,7 +49,12 @@ const getListAlbum = async (filter) => {
         categoryList = categories.data.data.filter(e => {
             const categoriesJson = element.category.map(e => JSON.parse(e));
             
-            return categoriesJson.some(el => el._id === e._id);
+            return categoriesJson.some(el => {
+                if(el!== null){
+                    return el._id === e._id
+                }
+                return false;
+            });
             
         }).map((value, index) => {
             if(index == 0){
@@ -55,7 +66,12 @@ const getListAlbum = async (filter) => {
         songList = songs.data.results.filter(e => {
             const songsJson = element.musicList.map(e => JSON.parse(e));
             
-            return songsJson.some(el => el._id === e._id);
+            return songsJson.some(el => {
+                if(el!== null){
+                    return el._id === e._id
+                }
+                return false;
+            });
             
         }).map((value, index) => {
             if(index == 0){
@@ -87,10 +103,10 @@ const getListAlbum = async (filter) => {
     return result;
 }
 
-const deleteAlbumById = (id, userToken) => {
+const deleteAlbumById = (id, accesstoken) => {
     return http.delete(`admin/albums/${id}`, {
         headers: {
-            'Authorization': 'Bearer ' + userToken
+            'Authorization': 'Bearer ' + accesstoken
         }
     })
 }

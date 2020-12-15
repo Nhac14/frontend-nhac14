@@ -154,6 +154,7 @@ const ListAlbum = ({ moderatorToken }) => {
     }
 
     const deleteAlbum = async (id) => {
+        debugger
         let { data } = await album.deleteAlbumById(id, moderatorToken);
         if (data) {
             if (data.status === 1) {

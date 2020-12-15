@@ -1,11 +1,8 @@
 import { Space, Table, Button, Modal, Form, Input, Checkbox, Select, notification } from 'antd';
 import { useEffect, useState } from 'react';
-import Avatar from '../../Helper/Upload-image-preview.jsx';
-import categoryApi from '../../../api/category';
-import songApi from '../../../api/song';
+
 import singerApi from '../../../api/singer';
-import albumApi from '../../../api/album';
-import album from '../../../api/album';
+
 import ImageUpload from '../../Admin/Song/ImageUpload';
 
 const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) => {

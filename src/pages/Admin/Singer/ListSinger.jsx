@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import singerAPI from '../../../api/singer';
 import Confirmation from './ModalConfirmDelete';
 import FormEdit from './form-edit-singer';
-// import './style.css';
+import './style.css';
 
 
 
@@ -97,7 +97,7 @@ const ListSinger = ({moderatorToken}) => {
         setSinger(data.data);
         // console.log("singer: ", singer.result)
     }
-console.log("mode: ", moderatorToken);
+// console.log("mode: ", moderatorToken);
     const onChangePaging = (page, limit) => {
         setPaging({...paging, page: page});
     }
@@ -161,6 +161,6 @@ console.log("mode: ", moderatorToken);
         />
        
     </div> );
-}
+};
 
 export default ListSinger;

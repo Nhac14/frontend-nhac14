@@ -15,36 +15,36 @@ function FooterX() {
                 <Col xs={20} sm={16} md={12} lg={16} xl={16} className='footer-top'>
                     <div className='info'>
                         <ul>
-                            <li><h3 class='color-white'>Thông Tin</h3></li>
-                            <li><a href="#">Giới thiệu</a></li>
-                            <li><a href="#">Điều khoản sử dụng</a></li>
-                            <li><a href="#">Quyền riêng tư</a></li>
+                            <li><h3 className='color-white'>Thông Tin</h3></li>
+                            <li><a className='color-wheat' href="#">Giới thiệu</a></li>
+                            <li><a className='color-wheat' href="#">Điều khoản sử dụng</a></li>
+                            <li><a className='color-wheat' href="#">Quyền riêng tư</a></li>
                         </ul>
                     </div>
                     <div className='musics'>
                         <ul>
-                            <li><h3 class='color-white'>Bài hát</h3></li>
-                            <li><a href="#">Album</a></li>
-                            <li><a href="#">Hotlist</a></li>
+                            <li><h3 className='color-white'>Bài hát</h3></li>
+                            <li><a className='color-white' href="#">Album</a></li>
+                            <li><a className='color-white' href="#">Hotlist</a></li>
                         </ul>
                     </div>
                     <div className='rank'>
                         <ul>
-                            <li><h3 class='color-white'>BXH</h3></li>
-                            <li><a href="#">MV</a></li>
-                            <li><a href="#">Nghệ sỹ</a></li>
+                            <li><h3 className='color-white'>BXH</h3></li>
+                            <li><a className='color-white' href="#">MV</a></li>
+                            <li><a className='color-white' href="#">Nghệ sỹ</a></li>
                         </ul>
                     </div>
                     <div className='connect-us'>
                         <ul>
-                            <li><h3 class='color-white'>Kết nối với chúng tôi</h3></li>
+                            <li><h3 className='color-white'>Kết nối với chúng tôi</h3></li>
                             <li><a href="#"><FacebookOutlined /></a></li>
                         </ul>
                     </div>
                     <div className='download-app'>
                         <ul>
-                            <li><h3 class='color-white'>Tải ứng dụng</h3></li>
-                            <li><a href="#">Dịch vụ nhac.vn đã có ứng dụng choMobile, Smart TV</a></li>
+                            <li><h3 className='color-white'>Tải ứng dụng</h3></li>
+                            <li><a  className='color-white' href="#">Dịch vụ nhac.vn đã có ứng dụng choMobile, Smart TV</a></li>
                             <li id='download-option'>
                                 <img src='/images/icon-code-bottom.png'></img>
                                 <div>
@@ -60,17 +60,19 @@ function FooterX() {
                             </li>
 
                         </ul>
-                    </div>
+                    </div>  
                     <div className='association'>
                         <ul>
-                            <li><h3 class='color-white'>Liên kết</h3></li>
-                            <li><a href="#">Hopamchuan.com</a></li>
-                            <li><a href="#">tudienwiki.com</a></li>
-                            <li><a href="#">thuthuattienich.com</a></li>
-                            <li><a href="#">blogradio.vn</a></li>
-                            <li><a href="#">Lendbox.vn</a></li>
+                            <li><h3 className='color-white'>Liên kết</h3></li>
+                            <li><a className='color-white' href="#">Hopamchuan.com</a></li>
+                            <li><a className='color-white' href="#">tudienwiki.com</a></li>
+                            <li><a className='color-white' href="#">thuthuattienich.com</a></li>
+                            <li><a className='color-white' href="#">blogradio.vn</a></li>
+                            <li><a className='color-white' href="#">Lendbox.vn</a></li>
                         </ul>
                     </div>
+
+                    
                     <div className='footer-bottom'>
                         <hr></hr>
                         <div>
@@ -81,7 +83,7 @@ function FooterX() {
                                     </div>
                                 </Col>
                                 <Col xs={15} sm={15} md={15} lg={15} xl={15}>
-                                    <div className='note-message'>
+                                    <div className='note-message color-wheat'>
                                         <p>Cơ quan chủ quản Công ty Cổ phần Bạch Minh - Địa chỉ: P804, Tòa nhà VET, 98 Hoàng Quốc Việt, Hà Nội
                                         Email: Nhac@vega.com.vn Tel: 024 37554190 - Người chịu trách nhiệm nội dung: Ông Lê Hữu Toàn
                                     Giấy phép MXH số 311/GP-BTTTT do Bộ Thông Tin và Truyền thông cấp ngày 04/07/2017 © 2015 Vega Corporation</p>

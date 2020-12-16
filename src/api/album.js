@@ -14,10 +14,6 @@ const getListAlbum = async (filter) => {
     if (!filter.limit)
         url = url.concat('&&limit=' + filter.limit);
     const response = await http.get(url);
-    const singers = await singer.getAllSingerAsync();
-    const categories = await category.getAllCategory();
-    const songs = await song.getAllSongAsync();
-
     let result = {};
 
     let temp = [];
@@ -28,58 +24,24 @@ const getListAlbum = async (filter) => {
         let categoryList = [];
         let songList = [];
 
-        singerList = singers.data.data.filter(e => {
-            const singersJson = element.singers.map(e => JSON.parse(e));
-
-            return singersJson.some(el => {
-                if(el!== null){
-                    return el._id === e._id
-                }
-                return false;
-            });
-            
-        }).map((value, index) => {
-            if(index == 0){
-                return value.name;
-            }
-            return ", "+value.name;
+        categoryList = element.category.map(e => {
+            let jsonCate = JSON.parse(e);
+            if (jsonCate)
+                return jsonCate.name
         });
 
-        
-        categoryList = categories.data.data.filter(e => {
-            const categoriesJson = element.category.map(e => JSON.parse(e));
-            
-            return categoriesJson.some(el => {
-                if(el!== null){
-                    return el._id === e._id
-                }
-                return false;
-            });
-            
-        }).map((value, index) => {
-            if(index == 0){
-                return value.name;
-            }
-            return ", "+value.name;
+        singerList = element.singers.map(e => {
+            let jsonCate = JSON.parse(e);
+            if (jsonCate)
+                return jsonCate.name
         });
 
-        songList = songs.data.results.filter(e => {
-            const songsJson = element.musicList.map(e => JSON.parse(e));
-            
-            return songsJson.some(el => {
-                if(el!== null){
-                    return el._id === e._id
-                }
-                return false;
-            });
-            
-        }).map((value, index) => {
-            if(index == 0){
-                return value.name;
-            }
-            return ", "+value.name;
+        songList = element.musicList.map(e => {
+            let jsonCate = JSON.parse(e);
+            if (jsonCate)
+                return jsonCate.name
         });
-        
+        debugger
 
         const abl = {
             key: index,
@@ -90,7 +52,8 @@ const getListAlbum = async (filter) => {
             createdAt: element.createdDate,
             modifiedAt: element.modifiedDate,
             song: songList,
-            id: element._id
+            id: element._id,
+            cover_image: element.cover_image
         }
 
         temp.push(abl);
@@ -128,7 +91,7 @@ const createAlbum = (data, accesstoken) => {
 }
 
 const editAlbum = (id, token, data) => {
-    return http.put(`admin/albums/${id}`,data, {
+    return http.put(`admin/albums/${id}`, data, {
         headers: {
             'Authorization': 'Bearer ' + token,
         }

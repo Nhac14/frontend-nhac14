@@ -6,7 +6,7 @@ import FormEdit from './form-edit-album';
 import Confirmation from './ModalConfirmDelete';
 import album from '../../../api/album';
 import { Redirect, Link } from 'react-router-dom'
-
+import './style.scss';
 const ListAlbum = ({ moderatorToken }) => {
     const [isShowModal, setIsShowModal] = useState(false);
 
@@ -55,7 +55,19 @@ const ListAlbum = ({ moderatorToken }) => {
         setRecordSelected(record);
     }
 
+    const[imagePath, setImagePath] = useState("");
+
+   
+    // data.dataDisplay ? data.dataDisplay.cover_image.path
     const columns = [
+        {
+            title: 'Ảnh bìa',
+            dataIndex: 'cover_image',
+            key: 'cover_image',
+            render: cover_image => <div className="image-list-item">
+              <img className="image-item" src={cover_image ? cover_image.path : "https://kangsblackbeltacademy.com/wp-content/uploads/2017/04/default-image-620x600.jpg"} />
+            </div>,
+          },
         {
             title: 'Name',
             dataIndex: 'name',
@@ -92,24 +104,7 @@ const ListAlbum = ({ moderatorToken }) => {
             key: 'song',
 
         },
-        {
-            title: 'CreatedAt',
-            dataIndex: 'createdAt',
-            key: 'createAt',
-            sorter: {
-                compare: (a, b) => a.createdAt > b.createdAt,
-                multiple: 4,
-            },
-        },
-        {
-            title: 'ModifiedAt',
-            dataIndex: 'modifiedAt',
-            key: 'modifiedAt',
-            sorter: {
-                compare: (a, b) => a.modifiedAt > b.modifiedAt,
-                multiple: 3,
-            },
-        },
+       
         {
             title: 'Action',
             key: 'action',
@@ -141,6 +136,9 @@ const ListAlbum = ({ moderatorToken }) => {
     const getAlbums = async () => {
         const rp = await getListAlbum.getListAlbum(filterAlbum);
         setData(rp);
+        if(data.dataDisplay){
+            setImagePath(data.dataDisplay.cover_image.path)
+        }
     }
 
     useEffect(() => {

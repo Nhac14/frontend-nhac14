@@ -183,7 +183,7 @@ const DetailAlbum = ({ moderatorToken }) => {
         setListSong(tmp2);
 
     }
-    useEffect(() => handleAsync(), []);
+   
 
     const getName = (e) => {
         const name = e.target.value;
@@ -200,11 +200,18 @@ const DetailAlbum = ({ moderatorToken }) => {
         setImage(img);
     }
 
+    const [inputDisplay, setInputDisplay] = useState("");
+
+    useEffect(() => {
+        handleAsync();
+        setInputDisplay(location.state.album.name);
+    }, []);
+
     return (<div>
 
         <Button onClick={() => {
             history.push({
-                pathname:"/admin/albums"
+                pathname: "/admin/albums"
             })
         }}>Back</Button>
         <Form
@@ -221,7 +228,8 @@ const DetailAlbum = ({ moderatorToken }) => {
                 <Input
                     name="albumName"
                     onChange={getName}
-                    value={location.state.album.name}
+                    value={inputDisplay}
+                    defaultValue={inputDisplay}
                 />
             </Form.Item>
 

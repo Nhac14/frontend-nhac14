@@ -145,9 +145,9 @@ const FormCreate = ({ token }) => {
 
     const dataForm = new FormData();
 
-    if(!isEmpty(image)){
+    // if(!isEmpty(image)){
       dataForm.append("cover_image", image)
-    }
+    // }
 
     dataForm.append("name", albumName);
     dataForm.append("description", description);

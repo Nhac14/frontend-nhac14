@@ -26,6 +26,7 @@ const AppRouter = (props) => {
     const getAuthUser = async () => {
         let token = await cookies.userToken;
         let userCookie = await cookies.user;
+
         if (userCookie)
             setUser({ name: userCookie.name, avatar: userCookie.avatar });
     }
@@ -33,14 +34,14 @@ const AppRouter = (props) => {
     const getAuthAdmin = async () => {
         let token = await cookies.moderatorToken;
         let name = await cookies.moderator;
-        if(token)
+        if (token)
             setIsAdminLogined(true);
     }
 
     const onLogoutUser = (e) => {
         if (e) {
-            removeCookie("userToken", {path: '/'});
-            removeCookie("user",  {path: '/'});
+            removeCookie("userToken", { path: '/' });
+            removeCookie("user", { path: '/' });
             setUser(null);
         }
 
@@ -49,8 +50,8 @@ const AppRouter = (props) => {
 
     const onLogoutAdmin = async (e) => {
         if (e) {
-            removeCookie("moderatorToken",  {path: '/'});
-            removeCookie("moderator",  {path: '/'});
+            removeCookie("moderatorToken", { path: '/' });
+            removeCookie("moderator", { path: '/' });
             setIsAdminLogined(false);
         }
     }
@@ -64,7 +65,7 @@ const AppRouter = (props) => {
                         adminRouter.map(router => {
                             const { exact, path, component } = router;
                             return (
-                                <AdminRouter exact={exact} path={path} component={component} moderatorToken={cookies.moderatorToken}/>
+                                <AdminRouter exact={exact} path={path} component={component} moderatorToken={cookies.moderatorToken} />
                             )
                         })
                     }
@@ -82,7 +83,7 @@ const AppRouter = (props) => {
                         publicRouter.map(router => {
                             const { exact, path, component } = router;
                             return (
-                                <PublicRouter exact={exact} path={path} component={component} />
+                                <PublicRouter exact={exact} path={path} component={component} userToken={cookies.userToken}/>
                             )
                         })
                     }

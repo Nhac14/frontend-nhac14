@@ -1,26 +1,23 @@
-import { Space, Table, Button, Modal, Form, Input, Checkbox, Select } from 'antd';
+import { Space, Table, Button, Modal, Form, Input, Checkbox, Select, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import SelectWithHiddenSelectedOptions from '../../Helper/Selected-input-component.jsx';
 import Avatar from '../../Helper/Upload-image-preview.jsx';
 import categoryApi from '../../../api/category';
 import songApi from '../../../api/song';
 import singerApi from '../../../api/singer';
+import ImageUpload from '../../Admin/Song/ImageUpload';
+import albumApi from '../../../api/album';
 
-
-const layout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-
-const { TextArea } = Input;
-
-const Demo = () => {
-  const onFinish = values => {
-    console.log('Success:', values);
+const FormCreate = ({ token }) => {
+  const layout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 },
   };
+  const tailLayout = {
+    wrapperCol: { offset: 8, span: 16 },
+  };
+
+  const { TextArea } = Input;
 
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
@@ -38,14 +35,18 @@ const Demo = () => {
   const [listSinger, setListSinger] = useState({});
   const [listSong, setListSong] = useState({});
 
-  const OPTIONS1 = !isEmpty(listCategory) ? listCategory.data.data.map(item => item.name) : [];
+  const [image, setImage] = useState({});
+
+  const OPTIONS1 = !isEmpty(listCategory) ? listCategory.data.data.map(item => item) : [];
 
   const [selectedCategory, setSelectedCategory] = useState([]);
 
+  const handleChangeCategory = (value) => {
+    setSelectedCategory([...value]);
+    console.log(selectedCategory);
+  }
+
   const category = () => {
-    const handleChange = () => {
-      setSelectedCategory(categoryValue);
-    }
     const categoryValue = selectedCategory;
     const filteredOptions = OPTIONS1.filter(o => !categoryValue.includes(o));
     return (
@@ -54,12 +55,12 @@ const Demo = () => {
         placeholder="Inserted are removed"
         //value={categoryValue}
         // value={}
-        onChange={handleChange}
+        onChange={handleChangeCategory}
         style={{ width: '100%' }}
       >
         {filteredOptions.map(item => (
-          <Select.Option key={item} value={item}>
-            {item}
+          <Select.Option key={item._id} value={item._id}>
+            {item.name}
           </Select.Option>
         ))}
       </Select>
@@ -68,13 +69,13 @@ const Demo = () => {
 
   const [selectedSingers, setSelectedSingers] = useState([]);
 
-  const OPTIONS2 = !isEmpty(listSinger) ? listSinger.data.data.map(item => item.name) : [];
+  const OPTIONS2 = !isEmpty(listSinger) ? listSinger.data.data.map(item => item) : [];
 
 
+  const handleChangeSinger = (value) => {
+    setSelectedSingers(value);
+  }
   const singers = () => {
-    const handleChange = () => {
-      setSelectedSingers(singersValue);
-    }
     const singersValue = selectedSingers;
     const filteredOptions = OPTIONS2.filter(o => !singersValue.includes(o));
     return (
@@ -82,12 +83,12 @@ const Demo = () => {
         mode="tags"
         placeholder="Inserted are removed"
         value={singersValue}
-        onChange={handleChange}
+        onChange={handleChangeSinger}
         style={{ width: '100%' }}
       >
         {filteredOptions.map(item => (
-          <Select.Option key={item} value={item}>
-            {item}
+          <Select.Option key={item._id} value={item._id}>
+            {item.name}
           </Select.Option>
         ))}
       </Select>
@@ -96,12 +97,12 @@ const Demo = () => {
 
   const [selectedSongs, setSelectedSongs] = useState([]);
 
-  const OPTIONS3 = !isEmpty(listSong) ? listSong.data.results.map(item => item.name) : [];
+  const OPTIONS3 = !isEmpty(listSong) ? listSong.data.results.map(item => item) : [];
 
+  const handleChangeSong = (value) => {
+    setSelectedSongs(value);
+  }
   const songs = () => {
-    const handleChange = () => {
-      setSelectedSongs(songsValue);
-    }
     const songsValue = selectedSongs;
     const filteredOptions = OPTIONS3.filter(o => !songsValue.includes(o));
     return (
@@ -109,12 +110,12 @@ const Demo = () => {
         mode="tags"
         placeholder="Inserted are removed"
         value={songsValue}
-        onChange={handleChange}
+        onChange={handleChangeSong}
         style={{ width: '100%' }}
       >
         {filteredOptions.map(item => (
-          <Select.Option key={item} value={item}>
-            {item}
+          <Select.Option key={item._id} value={item._id}>
+            {item.name}
           </Select.Option>
         ))}
       </Select>
@@ -133,12 +134,55 @@ const Demo = () => {
 
   useEffect(() => handleAsync(), []);
 
+  const imageResult = (image) => {
+    setImage(image);
+  }
+
+  const[albumName, setAlbumName] = useState("");
+  const[description, setDescription] = useState("");
+
+  const postAlbum = async () => {
+
+    const dataForm = new FormData();
+
+    if(!isEmpty(image)){
+      dataForm.append("cover_image", image)
+    }
+
+    dataForm.append("name", albumName);
+    dataForm.append("description", description);
+    dataForm.append("category", selectedCategory);
+    dataForm.append("musicList", selectedSongs);
+    dataForm.append("singers", selectedSingers);
+    
+    debugger
+
+    const { data } = await albumApi.createAlbum(dataForm, token);
+    if (data) {
+      if (data.status === 1) {
+        notification.success({ message: "create successfully" });
+        setTimeout(() => window.location.reload(), 1000);
+      }
+    }
+
+  }
+
+  const getName = (event) => {
+    const {name, value} = event.target;
+    setAlbumName(value);
+  }
+
+  const getDescription = (event) => {
+    const {name, value} = event.target;
+    setDescription(value);
+  }
+
   return (
     <Form
       {...layout}
       name="basic"
       initialValues={{ remember: true }}
-      onFinish={onFinish}
+      onFinish={postAlbum}
       onFinishFailed={onFinishFailed}
     >
       <Form.Item
@@ -146,7 +190,7 @@ const Demo = () => {
         name="name"
         rules={[{ required: true, message: 'Please input album\'s name!' }]}
       >
-        <Input />
+        <Input onChange={getName}/>
       </Form.Item>
 
       <Form.Item
@@ -179,7 +223,7 @@ const Demo = () => {
         name="description"
         rules={[{ required: false }]}
       >
-        <TextArea rows={6} />
+        <TextArea rows={6} onChange={getDescription}/>
       </Form.Item>
 
       <Form.Item
@@ -187,7 +231,8 @@ const Demo = () => {
         name="avatar"
         rules={[{ required: false }]}
       >
-        <Avatar />
+        {/* <Avatar /> */}
+        <ImageUpload onChange={imageResult} />
       </Form.Item>
 
       <Form.Item {...tailLayout}>
@@ -199,5 +244,5 @@ const Demo = () => {
   );
 };
 
-export default Demo;
+export default FormCreate;
 

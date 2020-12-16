@@ -1,11 +1,11 @@
-import {Modal} from 'antd';
-import album from '../../../api/album';
+import Modal from 'antd/lib/modal/Modal';
+import React, { useState } from 'react';
 
-const confirmation = ({isShowModal, setIsShowModal, indexOfRecord, data, deleteAlbum}) => {
-
+const ModalDelete = ({isShowModal, setIsShowModal, indexOfRecord, data, deleteSong}) => {
+    
     const handleOk = () => {
         setIsShowModal(false);
-        deleteAlbum(data[indexOfRecord]._id);
+        deleteSong(data[indexOfRecord]._id);
     }
 
     const handleCancel = () => {
@@ -19,9 +19,9 @@ const confirmation = ({isShowModal, setIsShowModal, indexOfRecord, data, deleteA
             onOk={handleOk}
             onCancel={handleCancel}
         >
-            <h1>Are you sure about that ?</h1>
+            <h3>Bạn có chắc muốn xóa bài hát này ?</h3>
         </Modal>
     )
 }
-
-export default confirmation;
+ 
+export default ModalDelete;

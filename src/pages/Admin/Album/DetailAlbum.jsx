@@ -1,61 +1,74 @@
 import { Space, Table, Button, Modal, Form, Input, Checkbox, Select, notification } from 'antd';
 import { useEffect, useState } from 'react';
-import Avatar from '../../Helper/Upload-image-preview.jsx';
 import categoryApi from '../../../api/category';
 import songApi from '../../../api/song';
 import singerApi from '../../../api/singer';
 import albumApi from '../../../api/album';
 import album from '../../../api/album';
 import ImageUpload from '../../Admin/Song/ImageUpload';
+import { useHistory, useLocation } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
-const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) => {
+
+const layout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 },
+};
+
+const tailLayout = {
+    wrapperCol: { offset: 8, span: 16 },
+};
+
+const initialAlbum = {
+    categories: [],
+    description: "thien nhac",
+    name: "Nhac Thien",
+    singers: [],
+    songs: []
+}
+
+
+const DetailAlbum = ({ moderatorToken }) => {
+
+    const location = useLocation();
+
+    const history = useHistory();
 
     const [listCategory, setListCategory] = useState({});
     const [listSinger, setListSinger] = useState({});
     const [listSong, setListSong] = useState({});
-
     const [image, setImage] = useState({});
-
     const [albumInfo, setAlbumInfo] = useState({});
-
-    const [albumDisplay, setAlbumDisplay] = useState({});
-
-    console.log(data);
-
+    const [albumDisplay, setAlbumDisplay] = useState({ initialAlbum });
     const { TextArea } = Input;
 
-    const layout = {
-        labelCol: { span: 6 },
-        wrapperCol: { span: 18 },
-    };
-
-    const tailLayout = {
-        wrapperCol: { offset: 8, span: 16 },
-    };
-
-    const handleOk = () => {
-        setIsShowModal(false);
+    const setAlbum = () => {
+        setAlbumDisplay(location.state.album);
     }
-
-    const handleCancel = () => {
-        setIsShowModal(false)
-    }
-
 
     // submit form
     const onFinish = async (values) => {
         let formDataImage = new FormData();
         formDataImage.append("cover_image", image);
 
-        await album.editCoverImage(data[indexOfRecord]._id, formDataImage, token);
 
-        debugger;
+        const { data } = await album.editCoverImage(location.state.album.id, formDataImage, moderatorToken);
+        const res = await album.editAlbum(location.state.album.id, moderatorToken, values);
+        debugger
 
-        await album.editAlbum(data[indexOfRecord]._id, token, albumInfo);
+        if (data.status == 1 && res.data.status == 1) {
+            notification.success({ message: "edit successfully" });
+        } else {
+            notification.warning({ message: "something went wrong, please try again" });
+        }
+        setTimeout(() => {
+            history.push({
+                pathname: "/admin/albums"
+            })
+        }, 1000);
 
-        notification.success({ message: "edit successfully" });
-        setTimeout(() => window.location.reload(), 1000);
     };
+
 
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
@@ -69,16 +82,10 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
         return true;
     }
 
+
+    // categories
     const [selectedCategory, setSelectedCategory] = useState([]);
-
-    console.log(listCategory);
-    console.log(listSong);
-    console.log(listSinger);
-
     const OPTIONS1 = !isEmpty(listCategory) ? listCategory.data.data.map(item => item) : [];
-
-    console.log(data);
-
     const category = () => {
         const handleChange = (value) => {
             setSelectedCategory(value);
@@ -93,7 +100,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
                 placeholder="Inserted are removed"
                 onChange={handleChange}
                 style={{ width: '100%' }}
-                value={!isEmpty(albumDisplay) ? albumDisplay.categories : ["1"]}
+                value={location.state.album.category}
             >
                 {filteredOptions.map(item => (
                     <Select.Option key={item._id} value={item._id}>
@@ -104,6 +111,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
         );
     }
 
+    // singers
     const [selectedSingers, setSelectedSingers] = useState([]);
 
     const OPTIONS2 = !isEmpty(listSinger) ? listSinger.data.data.map(item => item) : [];
@@ -120,7 +128,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
             <Select
                 mode="tags"
                 placeholder="Inserted are removed"
-                value={singersValue}
+                value={location.state.album.singer}
                 onChange={handleChange}
                 style={{ width: '100%' }}
             >
@@ -133,6 +141,8 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
         );
     }
 
+
+    // songs
     const [selectedSongs, setSelectedSongs] = useState([]);
 
     const OPTIONS3 = !isEmpty(listSong) ? listSong.data.results.map(item => item) : [];
@@ -148,7 +158,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
             <Select
                 mode="tags"
                 placeholder="Inserted are removed"
-                value={songsValue}
+                value={location.state.album.song}
                 onChange={handleChange}
                 style={{ width: '100%' }}
             >
@@ -161,49 +171,9 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
         );
     }
 
-    useEffect(() => {
-        if (!isEmpty(data)) {
-            let temp = {
-                name: data[indexOfRecord].name,
-                categories: data[indexOfRecord].category,
-                songs: data[indexOfRecord].musicList,
-                singers: data[indexOfRecord].singers,
-                description: data[indexOfRecord].description
-            }
-
-            if (!isEmpty(data[indexOfRecord].cover_image)) {
-                temp.image = data[indexOfRecord].cover_image;
-            }
-
-            if (!isEmpty(listSong)) {
-                temp.songs = temp.songs.map((value, index) => {
-                    const tmp = listSong.data.results.filter(e => e._id === value).map(e => e.name);
-                    return tmp[0];
-                });
-            }
-
-            if (!isEmpty(listSinger)) {
-                temp.singers = temp.singers.map((value, index) => {
-                    const tmp = listSinger.data.data.filter(e => e._id === value).map(e => e.name);
-                    return tmp[0];
-                });
-            }
-
-            if (!isEmpty(listCategory)) {
-                temp.categories = temp.categories.map((value, index) => {
-                    const tmp = listCategory.data.data.filter(e => e._id === value).map(e => e.name);
-                    return tmp[0];
-                });
-            }
-
-
-            setAlbumDisplay(temp);
-
-            debugger
-        }
-    }, [indexOfRecord, isShowModal, data]);
-
     const handleAsync = async () => {
+        setAlbum();
+
         let tmp1 = await categoryApi.getAllCategory();
         let tmp2 = await songApi.getAllSongAsync();
         let tmp3 = await singerApi.getAllSingerAsync();
@@ -213,38 +183,33 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
         setListSong(tmp2);
 
     }
-
-    const getName = (e) => {
-        const { text, value } = e.target;
-        setAlbumInfo({ ...albumInfo, name: value });
-    }
-
-
-
-    // {
-    //     name: data[indexOfRecord].name,
-    //     category: ["1", "2"],
-    //     singer: ["2", "1"],
-    //     song: ["23"],
-    //     description: data[indexOfRecord].description
-    // }
-
-    const setDescription = (e) => {
-        setAlbumInfo({ ...albumInfo, description: e.target.value });
-    }
-
-    const getImage = (image) => {
-        setImage(image);
-        console.log(image);
-    }
-
     useEffect(() => handleAsync(), []);
 
-    const form = () => (
+    const getName = (e) => {
+        const name = e.target.value;
+        setAlbumDisplay({ ...albumDisplay, name: name });
+    }
+
+    const setDescription = (e) => {
+        const des = e.value;
+        setAlbumDisplay({ ...albumDisplay, description: des });
+    }
+
+    const getImage = (e) => {
+        const img = e;
+        setImage(img);
+    }
+
+    return (<div>
+
+        <Button onClick={() => {
+            history.push({
+                pathname:"/admin/albums"
+            })
+        }}>Back</Button>
         <Form
             {...layout}
             name="basic"
-            initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
         >
@@ -254,10 +219,10 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
                 rules={[{ required: true, message: 'Please input album\'s name!' }]}
             >
                 <Input
-                    // value={!isEmpty(albumDisplay) ? albumDisplay.name : "1"}
-                    // defaultValue={!isEmpty(albumDisplay) ? albumDisplay.name : "1"}
-                    name="name"
-                    onChange={getName} />
+                    name="albumName"
+                    onChange={getName}
+                    value={location.state.album.name}
+                />
             </Form.Item>
 
             <Form.Item
@@ -290,7 +255,7 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
                 rules={[{ required: false }]}
             // defaultValue={data ? data[indexOfRecord].description : ""}
             >
-                <TextArea rows={6} onChange={setDescription} />
+                <TextArea value={location.state.album.description} rows={6} onChange={setDescription} />
             </Form.Item>
 
             <Form.Item
@@ -308,21 +273,8 @@ const FormEdit = ({ isShowModal, setIsShowModal, indexOfRecord, data, token }) =
         </Button>
             </Form.Item>
         </Form>
-    )
-
-    return (
-        <div>
-            <Modal
-                width={1000}
-                title="Edit Album"
-                visible={isShowModal}
-                onOk={handleOk}
-                onCancel={handleCancel}
-            >
-                {form()}
-            </Modal>
-        </div>
+    </div>
     )
 }
 
-export default FormEdit;
+export default DetailAlbum;

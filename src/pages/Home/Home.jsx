@@ -54,7 +54,7 @@ class Home extends React.Component {
                                             <NewReleaseMusic />
                                             <div className='top-artist'>
                                                 <div>
-                                                    <h1>Nghệ Sĩ Nổi Bật</h1>
+                                                    <h1 className="hd-white" style={{margin: '5px'}}>Nghệ Sĩ Nổi Bật</h1>
                                                 </div>
                                                 <div>
                                                     <Row gutter={[16, 16]}>
@@ -84,7 +84,7 @@ class Home extends React.Component {
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <div className='right-side'>
                                             <div className='title-music-rank'>
-                                                <h1>BXH Bài Hát</h1>
+                                                <h1 className="hd-white">BXH Bài Hát</h1>
                                                 <a>Việt Nam</a>
                                                 <span> / </span>
                                                 <a>Âu Mỹ</a>
@@ -119,7 +119,7 @@ class Home extends React.Component {
                                         </div>
                                         <div className='title-MV-rank'>
                                             <div>
-                                                <h1>BXH MV</h1>
+                                                <h1 className="hd-white">BXH MV</h1>
                                                 <a>Việt Nam</a>
                                                 <span> / </span>
                                                 <a>Âu Mỹ</a>

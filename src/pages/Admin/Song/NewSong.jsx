@@ -25,28 +25,6 @@ const initialSong = {
 
 }
 
-const singerFake = [
-    {
-    id: '123',
-    name: 'lytuan',
-    },
-    {
-        id: '124',
-        name: 'lytu',
-    }
-]
-
-const categoryFake = [
-    {
-    id: '123',
-    name: 'nhactre',
-    },
-    {
-        id: '124',
-        name: 'tru tinh',
-    }
-]
-
 const NewSong = ({moderatorToken}) => {
 
     const [song, setSong] = useState(initialSong);
@@ -59,15 +37,18 @@ const NewSong = ({moderatorToken}) => {
         console.log(moderatorToken)
         fetchCategories();
         fetchSingers();
-    })
+    }, [song])
 
     const fetchCategories = async () => {
-        // let {data} = await 
-        setCategories(categoryFake);
+        let {data} = await categoryAPI.getListCategory();
+        console.log("category: ", data);
+        setCategories(data.data);
     }
 
     const fetchSingers = async () => {
-        setSingerList(singerFake);
+        let {data} = await singerAPI.getAllSinger();
+        console.log("singer: ", data);
+        setSingerList(data.data);
 
     }
 
@@ -97,18 +78,22 @@ const NewSong = ({moderatorToken}) => {
         console.log("song submit: ", song);
         
         let dataF = new FormData();
-        let fileAndImage = [fileMusic, image];
         dataF.append("fileAndImage", fileMusic);
         dataF.append("fileAndImage", image);
 
         dataF.append("name",song.name)
         dataF.append("description",song.description)
         dataF.append("lyric",song.lyric)
-        // dataF.append("categories",song.categories)   chỗ này khi request về server nó đổi từ mảng thành chuỗi 123,123,123 => cần xử lý bên server
-        // dataF.append("singers",song.singers)
+        dataF.append("categories",song.categories)   
+        dataF.append("singers",song.singers)
 
         let {data} = await songAPI.createSong(dataF, moderatorToken);
-        console.log("result song new: ", data);
+        if(data.result === 1){
+            notification.success({message: "Tạo Bài Hát Thành Công"})
+        }
+        else{
+            notification.error({message: "Có lỗi xảy ra, xin thử lại sau! \n" + data.message});
+        }
 
     }
 
@@ -153,7 +138,7 @@ const NewSong = ({moderatorToken}) => {
                                 {
                                     categories && categories.map((item, index) => {
                                         return (
-                                        <Select.Option key={index} value={item.id} label={item.name}>{item.name}</Select.Option>
+                                        <Select.Option key={index} value={item._id} label={item.name}>{item.name}</Select.Option>
                                         )
                                     })
                                 }
@@ -170,7 +155,7 @@ const NewSong = ({moderatorToken}) => {
                                 {
                                     singerList && singerList.map((item, index) => {
                                         return (
-                                        <Select.Option key={index} value={item.id} label={item.name}>{item.name}</Select.Option>
+                                        <Select.Option key={index} value={item._id} label={item.name}>{item.name}</Select.Option>
                                         )
                                     })
                                 }

@@ -143,7 +143,10 @@ const ListAlbum = ({ moderatorToken }) => {
         setData(rp);
     }
 
-    useEffect(() => getAlbums(), []);
+    useEffect(() => {
+        console.log("data album: ", data.data);
+        getAlbums()
+    }, []);
 
     const onHandleShowModal = (e) => {
         setIsShowModalEdit(e);

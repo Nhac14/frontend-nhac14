@@ -35,8 +35,11 @@ const NewSong = ({moderatorToken}) => {
 
     useEffect(() => {
         console.log("cate: ", song);
-        fetchCategories();
-        fetchSingers();
+        if(categories.length == 0 && singerList.length == 0){
+            fetchCategories();
+            fetchSingers();
+        }
+       
     }, [song])
 
     const fetchCategories = async () => {

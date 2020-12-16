@@ -1,29 +1,23 @@
 import React, { useState } from 'react';
 
-import { Card, Upload, notification} from 'antd';
+import { Card, Upload } from 'antd';
 
 import './style.scss';
 
-const ImageUpload = ({onChange, previewUrl}) => {
+const ImageUpload = ({onChange}) => {
 
 
-    const [previewImageUrl, setPreviewImageUrl] = useState(previewUrl)
-    console.log(previewUrl);
+    const [previewImageUrl, setPreviewImageUrl] = useState(null)
+
 
     const onChangeImage = async (e) => {
         let image = e.target.files[0]
-        if(!image.type.includes('image')){
-            notification.error({message: 'phải chọn file ảnh'});
-        }else{
-            let reader = new FileReader();
-            await reader.readAsDataURL(image);
-            reader.onloadend = () => {
-                setPreviewImageUrl({ url: reader.result });
-            debugger
-                onChange(image);
-            };
-    
-        }
+        let reader = new FileReader();
+        await reader.readAsDataURL(image);
+        reader.onloadend = () => {
+            setPreviewImageUrl({ url: reader.result });
+            onChange(image);
+        };
 
     }
     return (
@@ -36,10 +30,7 @@ const ImageUpload = ({onChange, previewUrl}) => {
                         : "https://kangsblackbeltacademy.com/wp-content/uploads/2017/04/default-image-620x600.jpg"} alt=""/>
                 </div> 
             }
-             <label className="custom-file-upload">
-                    <input type="file" onChange={onChangeImage}/>
-                    Chọn file ảnh
-                </label>
+            <input type="file" onChange={onChangeImage} />
         </Card>);
 }
 

@@ -18,7 +18,7 @@ function PartnerSlide() {
 
     
 
-    const arrData = ["/images/vng.jpg","/images/mtp.jpg","/images/pnc.jpg", "/images/vcpmc.jpg", "/images/universal.jpg", "/images/thang_long.jpg", "/images/ht.jpg"];
+    const arrData = ["/images/vng.jpg","/images/vng.jpg","/images/vng.jpg", "/images/vng.jpg", "/images/vng.jpg", "/images/vng.jpg", "/images/vng.jpg"];
 
 
     return (

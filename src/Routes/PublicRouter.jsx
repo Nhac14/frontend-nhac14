@@ -6,7 +6,7 @@ function AdminRouter({component: Component, ...rest}){
     return (
         <Route
         {...rest}
-        render={props => <Component {...props} userToken={rest.userToken}/>}
+        render={props => <Component {...props}/>}
         />  // chỗ này khi có auth sẽ có check token để ridirect sau
 
     )

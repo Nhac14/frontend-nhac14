@@ -11,7 +11,7 @@ const getHistory = (userId, token) => {
 const deleteHistory = (userId, token) => {
     return http.delete(`histories/${userId}`, {
         headers: {
-            'Authorization': 'Bearer ' + token
+            'Bearer': token
         }
     })
 }

@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons';
 import handleTime from '../../../utils/handleTime';
 
+
 const initialControl = {
     url: 'https://nhac14.s3.ap-northeast-2.amazonaws.com/music/Diem-Xua-Khanh-Ly.mp3',
     playing: true,
@@ -22,24 +23,21 @@ const initialControl = {
     loop: false
 }
 
-const AlbumPlayer = ({album}) => {
+const AlbumPlayer = ({ }) => {
 
 
-    const [controls, setControls] = useState(initialControl);
-    const [songActive, setSongActive] = useState(initialControl);
-    const [playlistSong, setPlaylistSong] = useState([]);
+    const [controls, setControls] = useState({ ...initialControl });
+    const playerRef = useRef();
 
     const handleEnded = () => {
         // Chỗ này xử lý next bài đối với album, nhạc thì có thể cho phát lại
         setControls({ ...controls, playing: controls.loop })
     }
 
-    useEffect(() => {
-        if(playlistSong.length == 0 && album.musicList > 0)
-            setPlaylistSong(album);
-    }, []);
 
-    
+    useEffect(() => {
+    })
+
 
     const handleSeekMouseDown = e => {
         setControls({ ...controls, seeking: true });
@@ -95,7 +93,7 @@ const AlbumPlayer = ({album}) => {
         <div className="card-album">
 
             <div className="cover-image">
-                <img src={album.cover_image ? album.cover_image.path : 'https://nicolasbrugneaux.me/web-player-react/dist/img/default.png'} alt="" />
+                <img src="/images/53885.jpg" alt="" />
             </div>
 
             {/* Info playing music */}

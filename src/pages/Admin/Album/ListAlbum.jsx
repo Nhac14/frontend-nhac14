@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Space, Table, Button, Modal, notification } from 'antd';
-import FormCreate from './form-create-album.jsx';
+import { Space, Table, Button, Modal } from 'antd';
+import Demo from './form-create-album.jsx';
 import getListAlbum from '../../../api/album';
 import FormEdit from './form-edit-album';
 import Confirmation from './ModalConfirmDelete';
-import album from '../../../api/album';
-import { Redirect, Link } from 'react-router-dom'
+import singer from '../../../api/singer.js';
 
-const ListAlbum = ({ moderatorToken }) => {
+const ListAlbum = () => {
     const [isShowModal, setIsShowModal] = useState(false);
 
     const [isShowModalEdit, setIsShowModalEdit] = useState(false);
 
     const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
-
-    const [data, setData] = useState([]);
 
     const [filterAlbum, setFilterAlbum] = useState(
         {
@@ -46,7 +43,6 @@ const ListAlbum = ({ moderatorToken }) => {
         setIsShowModalEdit(true);
         setIndexSelected(index);
         setRecordSelected(record);
-
     }
 
     const handleDeleteClick = (index, record) => {
@@ -72,7 +68,7 @@ const ListAlbum = ({ moderatorToken }) => {
             key: 'description'
         },
         {
-            title: 'Categories',
+            title: 'Category',
             dataIndex: 'category',
             key: 'category',
             sorter: {
@@ -81,15 +77,9 @@ const ListAlbum = ({ moderatorToken }) => {
             }
         },
         {
-            title: 'Singers',
+            title: 'Singer',
             dataIndex: 'singer',
             key: 'singer',
-
-        },
-        {
-            title: 'Songs',
-            dataIndex: 'song',
-            key: 'song',
 
         },
         {
@@ -118,16 +108,7 @@ const ListAlbum = ({ moderatorToken }) => {
                 console.log(record);
                 return (
                     <Space size="middle">
-                        <Button onClick={() => handleEditClick(index, record)}>
-                            <Link to={{
-                                pathname: `/admin/albums/detail/${record.name}`,
-                                state: {
-                                    album: record,
-                                }
-                            }} >
-                                Edit
-                            </Link>
-                        </Button>
+                        <Button onClick={() => handleEditClick(index, record)}>Edit</Button>
                         <Button onClick={() => handleDeleteClick(index, record)}>Delete</Button>
                     </Space>
                 )
@@ -135,7 +116,8 @@ const ListAlbum = ({ moderatorToken }) => {
         },
     ];
 
-    
+    const [data, setData] = useState([]);
+
 
 
     const getAlbums = async () => {
@@ -153,17 +135,7 @@ const ListAlbum = ({ moderatorToken }) => {
         setIsShowModalConfirm(value);
     }
 
-    const deleteAlbum = async (id) => {
-        debugger
-        let { data } = await album.deleteAlbumById(id, moderatorToken);
-        if (data) {
-            if (data.status === 1) {
-                notification.success({ message: "delete successfully" });
-                setTimeout(() => window.location.reload(), 1000);
-            }
-        }
-    }
-
+    console.log("singer: ", singer.data);
 
     return (<div>
         <h1>List Album </h1>
@@ -171,30 +143,26 @@ const ListAlbum = ({ moderatorToken }) => {
         <br></br>
         <Table columns={columns} dataSource={data.dataDisplay} />
         <Modal
-            width={1000}
             title="Add Album"
             visible={isShowModal}
             onOk={handleOk}
             onCancel={handleCancel}
         >
-            <FormCreate token={moderatorToken} />
+            <Demo />
         </Modal>
-        {/* <FormEdit
+        <FormEdit
             isShowModal={isShowModalEdit}
             setIsShowModal={onHandleShowModal}
             indexOfRecord={indexSelected}
-            data={data.data}
-            token={moderatorToken} /> */}
+            data={data.data} />
 
         {/* modal xoa */}
         <Confirmation
             isShowModal={isShowModalConfirm}
             setIsShowModal={onHandleShowModalConfirm}
-            indexOfRecord={indexSelected}
-            data={data.data}
-            deleteAlbum={deleteAlbum}
+            indexOfRecord={indexSelected} data={singer.data}
         />
-
+        
     </div>);
 }
  

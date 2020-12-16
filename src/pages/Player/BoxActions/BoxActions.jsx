@@ -4,7 +4,7 @@ import {PlusCircleOutlined, HeartOutlined, ShareAltOutlined} from '@ant-design/i
 
 import './style.scss';
 
-const BoxActions = ({song}) => {
+const BoxActions = ({}) => {
     return ( 
     <div className="box-actions">
         <ul>

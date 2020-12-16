@@ -7,7 +7,7 @@ import './style.scss'
 
 const { TabPane } = Tabs;
 
-const ListVideo = ({ onHome, page, limit, setTotal }) => {
+const ListVideo = ({ onHome, page, limit }) => {
 
     // Nếu inHome thì chỉ gen ra 1 số lượng nhất định cardVieo
     const [listVideo, setListVideo] = useState([]);
@@ -32,7 +32,6 @@ const ListVideo = ({ onHome, page, limit, setTotal }) => {
         if(data.success){
             console.log("data MVs: ", data);
             setListVideo(data.results);
-            setTotal(data.total);
         }
 
 

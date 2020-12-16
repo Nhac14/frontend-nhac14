@@ -1,7 +1,7 @@
 import {lazy} from "react";
 
 export default {
-        path: "/album/:idAlbum",
+        path: "/albums/:idAlbum",
         exact: true,
         component: lazy(() => import("./PlayerAlbumPage"))
 };

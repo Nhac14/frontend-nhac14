@@ -35,7 +35,7 @@ const onSelectSong = (item) => {
     console.log("title item: ", item.title);
 }
 
-const ListPlayerAlbum = ({ }) => {
+const ListPlayerAlbum = ({listPlayer}) => {
 
 
     return (

@@ -31,7 +31,14 @@ const CardVieo = ({ video }) => {
                     </div>
                 </div>
                 <p className="nameSong">{video.name}</p>
-                <p className="nameSinger">"Default"</p>
+                <p className="nameSinger">
+                    {
+                        video.singers.length > 0 ? video.singers.map((singer, index) => {
+                            let obj = JSON.parse(singer);
+                            return obj && obj.name ? obj.name : ''
+                          }): 'unknown'
+                    }
+                </p>
             </div>
     );
 }

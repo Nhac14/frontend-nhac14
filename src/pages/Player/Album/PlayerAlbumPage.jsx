@@ -8,8 +8,39 @@ import BoxActions from '../BoxActions/BoxActions';
 import Lyric from '../Music/Lyric';
 import './style.scss';
 import ListPlayerAlbum from './ListPlayerAlbum';
+import albumAPI from '../../../api/album';
 
-const PlayerMusicPage = ({ }) => {
+
+const initialAlbum = {
+    _id: '',
+    name: '',
+    description: '',
+    musicList: [],
+    category: [],
+    singers: [],
+    shares: 0,
+    views: 0,
+    favorites: 0,
+    cover_image: null
+}
+
+
+const PlayerMusicPage = (props) => {
+
+    const [album, setAlbum] = useState(initialAlbum);
+
+    useEffect(() => {
+        fetchAlbum();
+    }, [])
+
+    const fetchAlbum = async () => {
+        let albumId = props.match.params.idAlbum;
+        let {data} = await albumAPI.getAlbumById(albumId);
+        console.log("album player: ", data.result);
+        setAlbum(data.result);
+
+    }
+
 
     return (
         <div className="content-side">
@@ -23,15 +54,23 @@ const PlayerMusicPage = ({ }) => {
                             <Col xs={18} sm={18} md={18} lg={18} xl={18}>
                                 <div className='left-side'>
                                     <div className="infor-music">
-                                        <h1 className="hd-white">Đời là thế thôi</h1>
-                                        <p>Thể loại: <span className="hd-white"> Nhạc trẻ</span></p>
-                                        <h4 className="hd-white">Đôi khi bạn sống quá phức tạp thì mọi thứ dường như rất khó
-                                        khăn nhưng bạn nên nghĩ thoáng hơn vì sống đơn giản cũng có thể
-                                        cực chất cực ngầu. Hãy để Nhac.vn tạo thêm màu sắc cho bạn qua
-                                        Playlist Sống Đơn Giản Nhưng Cực Chất này nhé</h4>
+                                        <h1 className="hd-white">{album.name}</h1>
+                                        <p>Thể loại: <span className="hd-white"> 
+                                        {
+                                             album.category > 0 ? album.category.map((singer, index) => {
+                                                let obj = JSON.parse(singer);
+                                                return obj && obj.name ? obj.name : ''
+                                              }): 'unknown'
+                                        }
+                                        </span></p>
+                                        <h4 className="hd-white">
+                                            {
+                                                album.description
+                                            }
+                                        </h4>
                                     </div>
 
-                                    <AlbumPlayer/>
+                                    <AlbumPlayer album={album}/>
                                 </div>
 
                                 <Row  gutter={24}>
@@ -39,7 +78,7 @@ const PlayerMusicPage = ({ }) => {
                                         <Lyric/>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <BoxActions/>
+                                        <BoxActions />
                                     </Col>
                                 </Row>
                             </Col>

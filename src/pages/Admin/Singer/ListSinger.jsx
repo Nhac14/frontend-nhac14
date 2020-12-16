@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import singerAPI from '../../../api/singer';
 import Confirmation from './ModalConfirmDelete';
 import FormEdit from './form-edit-singer';
-import './style.css';
+// import './style.css';
 
 
 
@@ -161,6 +161,6 @@ const ListSinger = ({moderatorToken}) => {
         />
        
     </div> );
-};
+}
 
 export default ListSinger;

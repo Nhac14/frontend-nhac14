@@ -34,7 +34,6 @@ const NewSong = ({moderatorToken}) => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        console.log("cate: ", song);
         if(categories.length == 0 && singerList.length == 0){
             fetchCategories();
             fetchSingers();
@@ -91,8 +90,9 @@ const NewSong = ({moderatorToken}) => {
         dataF.append("singers",song.singers)
 
         let {data} = await songAPI.createSong(dataF, moderatorToken);
-        if(data.result === 1){
-            notification.success({message: "Tạo Bài Hát Thành Công"})
+        console.log()
+        if(data.status === 1){
+            notification.success({message: "Tạo Bài Hát Thành Công!"})
         }
         else{
             notification.error({message: "Có lỗi xảy ra, xin thử lại sau! \n" + data.message});

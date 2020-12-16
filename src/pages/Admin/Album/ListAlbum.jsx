@@ -69,7 +69,7 @@ const ListAlbum = ({ moderatorToken }) => {
             </div>,
           },
         {
-            title: 'Name',
+            title: 'Tên',
             dataIndex: 'name',
             key: 'name',
             sorter: {
@@ -79,12 +79,7 @@ const ListAlbum = ({ moderatorToken }) => {
 
         },
         {
-            title: 'Description',
-            dataIndex: 'description',
-            key: 'description'
-        },
-        {
-            title: 'Categories',
+            title: 'Thể loại',
             dataIndex: 'category',
             key: 'category',
             sorter: {
@@ -93,20 +88,19 @@ const ListAlbum = ({ moderatorToken }) => {
             }
         },
         {
-            title: 'Singers',
+            title: 'Ca sỹ',
             dataIndex: 'singer',
             key: 'singer',
 
         },
         {
-            title: 'Songs',
+            title: 'danh sách bài hát',
             dataIndex: 'song',
             key: 'song',
 
         },
-       
         {
-            title: 'Action',
+            title: 'Hành động',
             key: 'action',
             render: (text, record, index) => {
                 // console.log(index);
@@ -159,7 +153,7 @@ const ListAlbum = ({ moderatorToken }) => {
         let { data } = await album.deleteAlbumById(id, moderatorToken);
         if (data) {
             if (data.status === 1) {
-                notification.success({ message: "delete successfully" });
+                notification.success({ message: "Xóa thành công" });
                 setTimeout(() => window.location.reload(), 1000);
             }
         }
@@ -168,8 +162,8 @@ const ListAlbum = ({ moderatorToken }) => {
     console.log(data.data);
 
     return (<div>
-        <h1>List Album </h1>
-        <Button type="primary" onClick={showModal}>Create new album</Button>
+        <h1>Danh sách Album </h1>
+        <Button type="primary" onClick={showModal} style={{float: 'right'}}>Tạo mới album</Button>
         <br></br>
         <Table columns={columns} dataSource={data.dataDisplay} />
         <Modal

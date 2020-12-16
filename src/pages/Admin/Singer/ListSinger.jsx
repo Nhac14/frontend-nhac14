@@ -43,27 +43,27 @@ const ListSinger = ({moderatorToken}) => {
         },
         
         {
-            title: 'Name',
+            title: 'Tên',
             dataIndex: 'name',
             key: 'name',
         
 
         },
         {
-            title: 'Gender',
+            title: 'giới tính',
             dataIndex: 'gender',
             key: 'gender'
         },
         {
           
-            title: 'Age',
+            title: 'Tuổi',
             dataIndex: 'age',
             key: 'age',
             render: age => <span>{age != null ? age : ''}</span>
            
         },
         {
-            title: 'Favorites',
+            title: 'Lượt thích',
             dataIndex: 'favorites',
             key: 'favorites',
 
@@ -71,7 +71,7 @@ const ListSinger = ({moderatorToken}) => {
         
         
         {
-            title: 'Action',
+            title: 'Hành động',
             key: 'action',
             render: (text, record, index) => {
                 // console.log("index", index);
@@ -134,7 +134,7 @@ const ListSinger = ({moderatorToken}) => {
         console.log("data status: ",data.status);
         if(data){
             if(data.status === 1){
-                notification.success({message: "delete successfully"});
+                notification.success({message: "Xóa thành công"});
                 setTimeout(() => window.location.reload(), 1000);
             }
         }

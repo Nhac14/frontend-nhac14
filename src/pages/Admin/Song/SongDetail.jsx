@@ -35,6 +35,9 @@ const SongDetail = ({moderatorToken}) => {
     const [song, setSong] = useState(initialSong);
     const [singerList, setSingerList] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [cateSelected, setCateSelected] = useState([]);
+    const [singerSelected, setSingerSelected] = useState([]);
+
 
     useEffect(() => {
         if(song._id == null)
@@ -99,24 +102,27 @@ const SongDetail = ({moderatorToken}) => {
 
     const handleChangeSelectCategory = (value) => {
         setSong({...song, categories: [...value]});
+        setCateSelected(value);
+
     }
 
     const handleChangeSelectSinger = (value) => {
         setSong({...song, singers: [...value]});
+        setSingerSelected(value);
     }
 
     const onSubmit = async (e) => {
         e.preventDefault();
         console.log("song submit: ", song);
-        let cate = song.categories.reduce(item => {if(item) return item._id});
-        let sing = song.singers.reduce(item => {if(item) return item._id});
+       
         let dataF = {
             name: song.name,
             description: song.description,
             lyric: song.lyric,
-            categories: cate,
-            singers: sing,
+            categories: cateSelected,
+            singers: singerSelected,
         }
+        console.log(dataF);
         let {data} = await songAPI.update(song._id, dataF, moderatorToken);
         if(data && data.status == 1){
             notification.success({message: "Cập nhật bài hát thành công!"});

@@ -11,7 +11,7 @@ const getByIdAsync = async (categoryID) => {
 
 const getListCategory = () => {
     let select = '_id,name';
-    return http.get(`categorys?page=${1}&limit=${50}&select=${select}`);
+    return http.get(`categorys?page=${1}&limit=${50}`);
 }
 
 const createCategory = (name) => {

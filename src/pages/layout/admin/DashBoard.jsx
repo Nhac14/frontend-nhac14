@@ -36,15 +36,15 @@ const DashBoard = ({children, onLogout}) => {
                         <Link to="/admin/albums">Album</Link>
                     </Menu.Item>
                     <Menu.Item key="2" icon={<CustomerServiceOutlined />}>
-                        <Link to="/admin/songs">Song</Link>
+                        <Link to="/admin/songs">Bài hát</Link>
                     </Menu.Item>
                     <Menu.Item key="3" icon={<DingtalkOutlined />}>
-                        <Link to="/admin/singers">Singer</Link>
+                        <Link to="/admin/singers">Ca sỹ</Link>
                     </Menu.Item>
                     <Menu.Item key="4" icon={<UserOutlined />}>
-                        <Link to="/admin/users">User</Link>
+                        <Link to="/admin/users">Người dùng</Link>
                     </Menu.Item>
-                    <SubMenu key="sub2" icon={<TrademarkCircleOutlined/>} title="Moderator">
+                    <SubMenu key="sub2" icon={<TrademarkCircleOutlined/>} title="Quản trị">
                         <Menu.Item key="5" onClick={onLogoutModerator}>Đăng xuất</Menu.Item>
                     </SubMenu>
                 </Menu>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Table, Tag, Space, Button, notification, Modal } from 'antd';
+import { Table, Tag, Space, Button, notification, Modal, Select } from 'antd';
 import songAPI from '../../../api/song';
 
 import './style.scss';
@@ -33,7 +33,7 @@ const ListSong = ({ moderatorToken }) => {
 
   const history = useHistory();
   const [songs, setSongs] = useState([inititalSong]);
-  const [paging, setPaging] = useState({ current: 1, pageSize: 2, total: 100, defaultCurrent: 1 });
+  const [paging, setPaging] = useState({ current: 1, pageSize: 10, total: 100, defaultCurrent: 1 });
   const [filters, setFilters] = useState(null);
   const [sorter, setSorter] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -43,7 +43,7 @@ const ListSong = ({ moderatorToken }) => {
 
   useEffect(() => {
     fetchSongs();
-  }, [paging.current, filters])
+  }, [paging.current, paging.pageSize, filters])
 
 
   const fetchSongs = async () => {
@@ -164,10 +164,10 @@ const ListSong = ({ moderatorToken }) => {
     setIsShowModalConfirm(true);
     setIndexSelected(index);
     setRecordSelected(record);
-}
+  }
 
   const onDeleteSong = async (songId) => {
-    try{
+    try {
       let { data } = await songAPI.deleteSongById(songId, moderatorToken);
       if (data && data.status == 1) {
         notification.success({ message: "Xóa bài hát thành công!" });
@@ -175,15 +175,15 @@ const ListSong = ({ moderatorToken }) => {
       }
       else
         notification.error({ message: "Có lỗi xảy ra!" });
-    }catch(e){
+    } catch (e) {
       notification.error({ message: e.response.data.message });
     }
-    
+
   }
 
   const onHandleShowModalConfirm = (value) => {
     setIsShowModalConfirm(value);
-}
+  }
 
 
   const handleTableChange = (pagination, filters, sorter) => {
@@ -208,15 +208,29 @@ const ListSong = ({ moderatorToken }) => {
         pagination={configPagination}
         onChange={handleTableChange}
       />
-
+      <p>Tối đa một trang:</p>
+      <Select
+        labelInValue
+        defaultValue={{ value: paging.pageSize }}
+        style={{ width: 120 }}
+        onChange={(value) => {
+          console.log("limit: ", value);
+          setPaging({...paging, pageSize: value.value});
+        }}
+      >
+        <Select.Option value="5">5</Select.Option>
+        <Select.Option value="10">10</Select.Option>
+        <Select.Option value="20">20</Select.Option>
+        <Select.Option value="50">50</Select.Option>
+      </Select>
       {/* modal xoa */}
       <ModalDelete
-            isShowModal={isShowModalConfirm}
-            setIsShowModal={onHandleShowModalConfirm}
-            indexOfRecord={indexSelected} 
-            data={songs}
-            deleteSong={onDeleteSong}
-        />
+        isShowModal={isShowModalConfirm}
+        setIsShowModal={onHandleShowModalConfirm}
+        indexOfRecord={indexSelected}
+        data={songs}
+        deleteSong={onDeleteSong}
+      />
 
     </div>);
 }

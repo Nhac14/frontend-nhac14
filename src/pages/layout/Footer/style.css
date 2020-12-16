@@ -9,16 +9,20 @@
 
 .musics{
     float: left;
+    margin-left: 40px;
 }
 
 .rank{
     float: left;
+    margin-left: 40px;
 }
 .connect-us{
     float: left;
+    margin-left: 40px;
 }
 .download-app{
     float: left;
+    margin-left: 40px;
 }
     .download-app #download-option{
         display: flex;
@@ -31,6 +35,7 @@
 .association{
     float: left;
     clear: right;
+    margin-left: 40px;
 }
 
 .footer-bottom{
@@ -61,4 +66,12 @@
 
 a{
     cursor: pointer;
+}
+
+.color-white{
+    color: white
+}
+
+.color-wheat{
+    color:wheat
 }

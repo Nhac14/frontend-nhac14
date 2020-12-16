@@ -108,13 +108,14 @@ const SongDetail = ({moderatorToken}) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         console.log("song submit: ", song);
-
+        let cate = song.categories.reduce(item => {if(item) return item._id});
+        let sing = song.singers.reduce(item => {if(item) return item._id});
         let dataF = {
             name: song.name,
             description: song.description,
             lyric: song.lyric,
-            categories: song.categories,
-            singers: song.singers,
+            categories: cate,
+            singers: sing,
         }
         let {data} = await songAPI.update(song._id, dataF, moderatorToken);
         if(data && data.status == 1){

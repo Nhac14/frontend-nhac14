@@ -1,6 +1,7 @@
 import http from './config';
 import category from './category';
 import singer from './singer';
+import song from './song';
 
 const getListAlbum = async (filter) => {
     let url = 'albums';
@@ -15,51 +16,71 @@ const getListAlbum = async (filter) => {
     const response = await http.get(url);
     const singers = await singer.getAllSingerAsync();
     const categories = await category.getAllCategory();
+    const songs = await song.getAllSongAsync();
 
     let result = {};
 
     let temp = [];
 
+
     response.data.results.forEach(async function (element, index) {
         let singerList = [];
         let categoryList = [];
+        let songList = [];
 
-        // const getName = async () => {
-        //     if (element.singers.length > 0) {
-        //         element.singers.forEach(async e => {
-        //             const sn = await singer.getByIdAsync(e);
-        //             singerList.push(sn.data.result.singer.name);
-        //             debugger
-        //         });
-        //     }
+        singerList = singers.data.data.filter(e => {
+            const singersJson = element.singers.map(e => JSON.parse(e));
 
-        //     if (element.category.length > 0) {
-        //         element.category.forEach(async e => {
-        //             const sn = await category.getByIdAsync(e);
-        //             categoryList.push(sn.data.result.category.name);
-        //         });
-        //     }
-        // }
-
-        // await getName();
-
-        singerList = singers.data.data.filter(e => (
-            element.singers.includes(e._id)
-        )).map((value, index) => {
+            return singersJson.some(el => {
+                if(el!== null){
+                    return el._id === e._id
+                }
+                return false;
+            });
+            
+        }).map((value, index) => {
             if(index == 0){
                 return value.name;
             }
             return ", "+value.name;
         });
 
-        categoryList = categories.data.data.filter(e => (
-            element.category.includes(e._id)
-        )).map((value, index) => {
+        
+        categoryList = categories.data.data.filter(e => {
+            const categoriesJson = element.category.map(e => JSON.parse(e));
+            
+            return categoriesJson.some(el => {
+                if(el!== null){
+                    return el._id === e._id
+                }
+                return false;
+            });
+            
+        }).map((value, index) => {
             if(index == 0){
                 return value.name;
             }
             return ", "+value.name;
         });
+
+        songList = songs.data.results.filter(e => {
+            const songsJson = element.musicList.map(e => JSON.parse(e));
+            
+            return songsJson.some(el => {
+                if(el!== null){
+                    return el._id === e._id
+                }
+                return false;
+            });
+            
+        }).map((value, index) => {
+            if(index == 0){
+                return value.name;
+            }
+            return ", "+value.name;
+        });
+        
+
         const abl = {
             key: index,
             name: element.name,
@@ -67,7 +88,9 @@ const getListAlbum = async (filter) => {
             category: categoryList,
             singer: singerList,
             createdAt: element.createdDate,
-            modifiedAt: element.modifiedDate
+            modifiedAt: element.modifiedDate,
+            song: songList,
+            id: element._id
         }
 
         temp.push(abl);
@@ -76,13 +99,14 @@ const getListAlbum = async (filter) => {
 
     result.data = response.data.results;
     result.dataDisplay = temp;
+
     return result;
 }
 
-const deleteAlbumById = (id, userToken) => {
+const deleteAlbumById = (id, accesstoken) => {
     return http.delete(`admin/albums/${id}`, {
         headers: {
-            'Authorization': 'Bearer ' + userToken
+            'Authorization': 'Bearer ' + accesstoken
         }
     })
 }

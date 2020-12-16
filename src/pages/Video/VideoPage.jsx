@@ -4,9 +4,9 @@ import ListVideo from './ListVideo';
 
 const initialPaging = {
     page: 1,
-    limit: 2,
+    limit: 20,
     prevPage: 1,
-    total: 1,
+    total: 50,
 }
 
 const VideoPage = () => {
@@ -19,6 +19,7 @@ const VideoPage = () => {
     }
 
     const onTotal = (value) => {
+        console.log("total video: ", value);
         setPaging({...paging, total: value});
     }
 

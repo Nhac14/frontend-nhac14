@@ -32,7 +32,7 @@ const ListVideo = ({ onHome, page, limit, setTotal }) => {
         if(data.success){
             console.log("data MVs: ", data);
             setListVideo(data.results);
-            setTotal = data.total;
+            setTotal(data.total);
         }
 
 

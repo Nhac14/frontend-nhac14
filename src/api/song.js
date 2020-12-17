@@ -38,7 +38,7 @@ const getSongById = (songId, userToken) => {
     let token = userToken ? userToken : "";
     return http.get(`users/songs/${songId}`, {
         headers: {
-            'Bearer': token
+            Authorization: 'Bearer  ' + token
         }
     });
 }

@@ -18,9 +18,9 @@ const register = (data) => {
 
 
 const getUserInfo = (token) => {
-    return http.get('users', {
+    return http.get('get_user_info', {
         headers: {
-            'Bearer': token
+            'Authorization': 'Bearer ' + token
         }
     })
 }

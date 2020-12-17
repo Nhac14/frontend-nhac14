@@ -15,7 +15,7 @@ export default function TopContent(props) {
         adaptiveHeight: true
     };
 
-    const arrData = ["images/2909.jpg", "images/2909.jpg", "images/2909.jpg", "images/2909.jpg", "images/2909.jpg", "images/2909.jpg"]
+    const arrData = ["images/2909.jpg", "images/3981.jpg", "images/3972.jpg", "images/3984.jpg", "images/3981.jpg", "images/3984.jpg"]
 
     return (
         <div class='top-content-slide'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs, Row, Col, Button} from 'antd';
 import {useCookies} from 'react-cookie';
 import './style.scss';
@@ -24,8 +24,9 @@ function UserProfile() {
     const [cookie, setCookie] = useCookies(["userToken","user"]);
     const [user, setUser] = useState(initialUser);
     const [playLists, setPlayLists] = useState([]);
-    const [mvHistory, setMvHistory] = useState([]);
-    const [maHistory, setMaHistory] = useState([]);
+    const [favoriteMV, setFavoriteMV] = useState([]);
+    const [favoriteMA, setFavoriteMA] = useState([]);
+
     const [favoriteSingers, setFavoriteSinger] = useState([]);
 
 
@@ -36,10 +37,15 @@ function UserProfile() {
    
     const { TabPane } = Tabs;
 
+    useEffect(() => {
+        rechieveUserInfo();
+    }, []);
 
     const rechieveUserInfo = async () => {
-        let userToken = await userAPI.getUserInfo(cookie.userToken);
-
+        let {data} = await userAPI.getUserInfo(cookie.userToken);
+        setFavoriteMA(data.favoriteMAs);
+        setFavoriteMV(data.favoriteMVs);
+        console.log("data user info: ", data);
 
     }
 
@@ -71,14 +77,14 @@ function UserProfile() {
                                     <Tabs defaultActiveKey="1" onChange={callback} style={{marginBottom: '30px'}}>
                                         <TabPane class='color-white' tab={<h4 className="hd-white">NHẠC YÊU THÍCH</h4>} key="1">
                                             <Row gutter={24}>
-                                                <FavoriteMusic />
+                                                <FavoriteMusic audioList={favoriteMA} videoList={favoriteMV}/>
 
                                                 <Playlist />
                                             </Row>
                                         </TabPane>
 
                                         <TabPane tab={<h4 className="hd-white">NHẠC ĐÃ NGHE</h4>} key="3">
-                                            <History/>
+                                            <History userToken={cookie.userToken}/>
                                         </TabPane>
 
                                         <TabPane tab={<h4 className="hd-white">TÙY CHỌN</h4>} key="4">

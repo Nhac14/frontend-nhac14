@@ -1,15 +1,15 @@
 import http from './config';
 
-const getHistory = (userId, token) => {
-    return http.get(`histories/${userId}`, {
+const getHistory = (token) => {
+    return http.get(`histories`, {
         headers: {
-            'Bearer': token
+            'Authorization': 'Bearer ' + token
         }
     });
 }
 
 const deleteHistory = (userId, token) => {
-    return http.delete(`histories/${userId}`, {
+    return http.delete(`histories`, {
         headers: {
             'Authorization': 'Bearer ' + token
         }

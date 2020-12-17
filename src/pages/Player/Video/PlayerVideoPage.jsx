@@ -20,6 +20,7 @@ const PlayerVideoPage = (props) => {
     }, []);
 
     const rechieveVideo = async (songId) => {
+        console.log("play video: ", props.userToken);
         let { data } = await songAPI.getSongById(songId, props.userToken);
         let mv = data.result.song;
         console.log("MV aaa: ", props.userToken);
